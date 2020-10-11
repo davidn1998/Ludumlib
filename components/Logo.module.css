@@ -1,0 +1,39 @@
+.logo {
+  font-weight: 500;
+  font-size: 24px;
+  background: -webkit-linear-gradient(#bf47d2, #4058d6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-decoration: none;
+  -webkit-transition: 0.4s ease;
+  transition: 0.4s ease;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo svg {
+  margin-right: 0.5rem;
+}
+
+.logo:hover {
+  background: -webkit-linear-gradient(#4058d6, #bf47d2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo stop {
+  -webkit-transition: 0.4s ease;
+  transition: 0.4s ease;
+}
+
+/* Use the colors to transition to */
+.logo:hover stop:first-child {
+  stop-color: #4058d6;
+}
+
+.logo:hover stop:last-child {
+  stop-color: #bf47d2;
+}

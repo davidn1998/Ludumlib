@@ -1,0 +1,14 @@
+.container {
+  padding: 3rem;
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+.container header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.main {
+  margin: 0 5%;
+}

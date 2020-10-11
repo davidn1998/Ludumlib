@@ -1,0 +1,118 @@
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+#heroText {
+  font-weight: 500;
+  font-size: 48px;
+  position: absolute;
+  animation: moveText 1400ms ease;
+  z-index: 200;
+}
+
+@keyframes moveText {
+  0% {
+    transform: translateX(-700px) translateY(100px);
+  }
+  50% {
+    transform: translateX(100px) translateY(100px);
+  }
+  100% {
+    transform: translateX(0px) translateY(0px);
+  }
+}
+
+.heroImage {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 0 auto;
+}
+
+/* .heroImage img {
+  width: 100%;
+  height: auto;
+} */
+
+#circle {
+  position: absolute;
+  top: -4rem;
+  left: 3rem;
+  z-index: 100;
+  animation: scaleCircle 1400ms ease;
+}
+
+@keyframes scaleCircle {
+  0% {
+    transform: scale(0) translateY(100px);
+  }
+  50% {
+    transform: scale(2) translateY(100px);
+  }
+  100% {
+    transform: scale(1);
+    transform: translateY(0px);
+  }
+}
+
+#gamer {
+  top: 4rem;
+  z-index: 200;
+  animation: showGamer 1400ms ease;
+}
+
+@keyframes showGamer {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+    transform: translateX(-40px) translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0px) translateY(0px);
+  }
+}
+
+#getStarted {
+  display: flex;
+  background: linear-gradient(90deg, #4458d6 0%, #a34bd4 100%);
+  transition: 0.4s ease;
+  border-style: none;
+  border-radius: 15px;
+  width: 386px;
+  height: 84px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 36px;
+  z-index: 300;
+  text-align: center;
+  text-decoration: none;
+  justify-content: center;
+  align-items: center;
+  animation: moveGetStarted 1400ms ease;
+}
+
+#getStarted:hover {
+  background: linear-gradient(90deg, #a34bd4 0%, #4458d6 100%);
+}
+
+@keyframes moveGetStarted {
+  0% {
+    transform: translateX(700px) translateY(50px);
+  }
+  50% {
+    transform: translateX(0px) translateY(50px);
+  }
+  100% {
+    transform: translateX(0px) translateY(0px);
+  }
+}
