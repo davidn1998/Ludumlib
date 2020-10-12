@@ -1,11 +1,14 @@
 import React from "react";
-import styles from '../components/GameCard.module.css'
+import styles from "../components/GameCard.module.css";
+import Link from "next/link";
 
 const GameCard = ({ imgSrc }) => {
   return (
-    <div className={styles.gameCard}>
-      <img src={imgSrc} alt="" />
-    </div>
+    <Link href="/">
+      <a className={styles.gameCard}>
+        <img src={imgSrc} alt="" />
+      </a>
+    </Link>
   );
 };
 

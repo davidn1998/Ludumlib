@@ -5,6 +5,19 @@
   height: 300px;
 }
 
+.gameCard {
+  height: 350px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.gameCard:focus,
+.gameCard:focus-within,
+.gameCard:visited,
+.gameCard:active {
+  /* outline: none !important; */
+}
+
 #gc1 {
   animation: moveCard 0.8s ease;
 }

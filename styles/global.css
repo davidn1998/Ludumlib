@@ -17,6 +17,15 @@ body {
   align-self: center;
 }
 
+/* show full item */
 .rec-item-wrapper {
   overflow: visible !important;
+  height: 400px;
+  display: flex;
+  align-items: center;
+}
+
+/* hide disabled buttons */
+.rec.rec-arrow:disabled {
+  visibility: hidden;
 }
