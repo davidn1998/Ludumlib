@@ -9,6 +9,14 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import GameCarousel from "../components/GameCarousel";
+import InfoCard from "../components/InfoCard";
+import Gamepad from "../components/SVGIcons/Gamepad";
+import LightBulb from "../components/SVGIcons/LightBulb";
+import Pencil from "../components/SVGIcons/Pencil";
+import Heart from "../components/SVGIcons/Heart";
+import List from "../components/SVGIcons/List";
+import Graph from "../components/SVGIcons/Graph";
+import MainButton from "../components/MainButton";
 
 export default function Home({ isConnected }) {
   return (
@@ -25,6 +33,21 @@ export default function Home({ isConnected }) {
       <div className={styles.main}>
         <Hero />
         <GameCarousel slideUp={true} />
+        <div className={styles.infoCards}>
+          <InfoCard svgIcon={<Gamepad />} />
+          <InfoCard svgIcon={<LightBulb />} />
+          <InfoCard svgIcon={<Pencil />} />
+        </div>
+        <div className={styles.infoCards}>
+          <InfoCard svgIcon={<Heart />} />
+          <InfoCard svgIcon={<List />} />
+          <InfoCard svgIcon={<Graph />} />
+        </div>
+        <div className={styles.joinButton}>
+          <Link href="">
+            <MainButton buttonText="JOIN NOW" animated={false} />
+          </Link>
+        </div>
       </div>
 
       <Footer />

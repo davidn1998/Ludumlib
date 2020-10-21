@@ -1,7 +1,9 @@
 import React from "react";
-import Link from 'next/link'
+import Link from "next/link";
 
 import styles from "../components/Hero.module.css";
+
+import MainButton from "../components/MainButton";
 
 const Hero = () => {
   return (
@@ -20,7 +22,7 @@ const Hero = () => {
         />
         <img id={styles.gamer} src="/images/hero_gamer.png" alt="hero_gamer" />
         <Link href="">
-        <a id={styles.getStarted}>GET STARTED</a>
+          <MainButton buttonText="GET STARTED" animated={true}/>
         </Link>
       </div>
     </section>

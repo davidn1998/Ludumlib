@@ -1,0 +1,38 @@
+.mainButton {
+  display: flex;
+  background: linear-gradient(90deg, #4458d6 0%, #a34bd4 100%);
+  transition: 0.4s ease;
+  border-style: none;
+  border-radius: 15px;
+  width: 386px;
+  height: 84px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 36px;
+  z-index: 300;
+  text-align: center;
+  text-decoration: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.animated {
+  animation: moveGetStarted 1400ms ease;
+}
+
+.mainButton:hover {
+  background: linear-gradient(90deg, #a34bd4 0%, #4458d6 100%);
+  cursor: pointer;
+}
+
+@keyframes moveGetStarted {
+  0% {
+    transform: translateX(700px) translateY(50px);
+  }
+  50% {
+    transform: translateX(0px) translateY(50px);
+  }
+  100% {
+    transform: translateX(0px) translateY(0px);
+  }
+}
