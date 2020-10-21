@@ -21,9 +21,7 @@ const Hero = () => {
           alt="hero_circle"
         />
         <img id={styles.gamer} src="/images/hero_gamer.png" alt="hero_gamer" />
-        <Link href="">
-          <MainButton buttonText="GET STARTED" animated={true}/>
-        </Link>
+        <MainButton buttonText="GET STARTED" animated={true} />
       </div>
     </section>
   );

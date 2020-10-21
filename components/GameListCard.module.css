@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.listName {
+  z-index: 500;
+  text-align: center;
+}
+
+.gameListCard {
+  display: block;
+  position: relative;
+  height: 260px;
+  width: 300px;
+}
+
+.gameListCard #card1 {
+  position: absolute;
+  left: 0;
+  z-index: 100;
+}
+.gameListCard #card2 {
+  position: absolute;
+  left: 50px;
+  z-index: 200;
+}
+.gameListCard #card3 {
+  position: absolute;
+  left: 100px;
+  z-index: 100;
+}
+
+.gameListCard img {
+  border-radius: 100px;
+  border: solid 2px #fff;
+  width: 191px;
+  height: 255px;
+}
+
+.gameListCard:hover {
+  cursor: pointer;
+}

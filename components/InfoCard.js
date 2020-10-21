@@ -3,12 +3,12 @@ import styles from "./InfoCard.module.css";
 import { Icon, InlineIcon } from "@iconify/react";
 import gamepadIcon from "@iconify/icons-fa-solid/gamepad";
 
-const InfoCard = ({ svgIcon }) => {
+const InfoCard = ({ svgIcon, infoText }) => {
   return (
     <div className={styles.infoCard}>
       {svgIcon}
       <p className={styles.infoText}>
-        Keep track of all the games you’ve played with a personal journal
+        {infoText}
       </p>
     </div>
   );

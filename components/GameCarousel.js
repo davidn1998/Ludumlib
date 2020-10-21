@@ -22,7 +22,7 @@ const GameCarousel = ({ slideUp }) => {
     },
     {
       width: 1500,
-      itemsToShow: 5,
+      itemsToShow: 6,
       itemsToScroll: 1,
     },
   ];

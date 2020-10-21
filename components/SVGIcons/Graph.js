@@ -22,8 +22,8 @@ const Graph = () => {
           y2="88.125"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#934ED4" />
-          <stop offset="1" stop-color="#4458D6" />
+          <stop stopColor="#934ED4" />
+          <stop offset="1" stopColor="#4458D6" />
         </linearGradient>
       </defs>
     </svg>

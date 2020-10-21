@@ -9,6 +9,7 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import GameCarousel from "../components/GameCarousel";
+import GameListCarousel from "../components/GameListCarousel";
 import InfoCard from "../components/InfoCard";
 import Gamepad from "../components/SVGIcons/Gamepad";
 import LightBulb from "../components/SVGIcons/LightBulb";
@@ -34,20 +35,40 @@ export default function Home({ isConnected }) {
         <Hero />
         <GameCarousel slideUp={true} />
         <div className={styles.infoCards}>
-          <InfoCard svgIcon={<Gamepad />} />
-          <InfoCard svgIcon={<LightBulb />} />
-          <InfoCard svgIcon={<Pencil />} />
+          <InfoCard
+            svgIcon={<Gamepad />}
+            infoText="Keep track of all the games you’ve played with a personal journal"
+          />
+          <InfoCard
+            svgIcon={<LightBulb />}
+            infoText="Get new game recommendations tailored to you"
+          />
+          <InfoCard
+            svgIcon={<Pencil />}
+            infoText="Write and read reviews, follow others and expand your network"
+          />
         </div>
         <div className={styles.infoCards}>
-          <InfoCard svgIcon={<Heart />} />
-          <InfoCard svgIcon={<List />} />
-          <InfoCard svgIcon={<Graph />} />
+          <InfoCard
+            svgIcon={<Heart />}
+            infoText="Rate your favorite games, reviews and lists with a like"
+          />
+          <InfoCard
+            svgIcon={<List />}
+            infoText="Create, share and view custom game lists in the community"
+          />
+          <InfoCard
+            svgIcon={<Graph />}
+            infoText="Analyze your gaming habits with custom stats based on your games"
+          />
         </div>
         <div className={styles.joinButton}>
-          <Link href="">
-            <MainButton buttonText="JOIN NOW" animated={false} />
-          </Link>
+          <MainButton buttonText="JOIN NOW" animated={false} />
         </div>
+        <h2 className={styles.subHeading}>Popular Games...</h2>
+        <GameCarousel slideUp={false} />
+        <h2 className={styles.subHeading}>Popular Lists...</h2>
+        <GameListCarousel slideUp={false} />
       </div>
 
       <Footer />

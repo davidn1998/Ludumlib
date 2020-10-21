@@ -24,3 +24,10 @@
   display: flex;
   justify-content: center;
 }
+
+.subHeading {
+  font-weight: 600;
+  font-size: 36px;
+  margin-left: 7rem;
+  margin-bottom: 5rem;
+}
