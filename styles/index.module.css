@@ -31,3 +31,10 @@
   margin-left: 7rem;
   margin-bottom: 5rem;
 }
+
+.miniReviews {
+  display: flex;
+  justify-content: space-around;
+  margin: 0 2rem;
+  margin-bottom: 5rem;
+}

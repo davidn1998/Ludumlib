@@ -18,6 +18,7 @@ import Heart from "../components/SVGIcons/Heart";
 import List from "../components/SVGIcons/List";
 import Graph from "../components/SVGIcons/Graph";
 import MainButton from "../components/MainButton";
+import MiniReview from "../components/MiniReview";
 
 export default function Home({ isConnected }) {
   return (
@@ -69,6 +70,29 @@ export default function Home({ isConnected }) {
         <GameCarousel slideUp={false} />
         <h2 className={styles.subHeading}>Popular Lists...</h2>
         <GameListCarousel slideUp={false} />
+        <h2 className={styles.subHeading}>Popular Reviews...</h2>
+        <div className={styles.miniReviews}>
+          <MiniReview
+            imgSrc="/images/Fall_Guys_cover.jpg"
+            reviewTitle="Fall Guys"
+            reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing. Integer vulputate aenean diam nisl, at vitae id sed lorem. Mi ut eget mi aliquam sit neque, in... more"
+            reviewerName="John Smith"
+            reviewDate="10/10/2020"
+            reviewerIcon="/images/pfp1.png"
+            fullStarsNum={4}
+            halfStarsNum={1}
+          />
+          <MiniReview
+            imgSrc="/images/control_cover.png"
+            reviewTitle="Control"
+            reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing. Integer vulputate aenean diam nisl, at vitae id sed lorem. Mi ut eget mi aliquam sit neque, in... more"
+            reviewerName="Katiieee"
+            reviewDate="26/09/2020"
+            reviewerIcon="/images/pfp2.png"
+            fullStarsNum={4}
+            halfStarsNum={0}
+          />
+        </div>
       </div>
 
       <Footer />
