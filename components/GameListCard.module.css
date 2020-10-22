@@ -6,6 +6,8 @@
 .listName {
   z-index: 500;
   text-align: center;
+  font-weight: 700;
+  font-size: 18px;
 }
 
 .gameListCard {
