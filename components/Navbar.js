@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-import styles from "../components/Navbar.module.css";
+import styles from "../components/Navbar.module.scss";
 
 const Navbar = () => {
   return (

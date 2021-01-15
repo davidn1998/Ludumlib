@@ -4,14 +4,38 @@
   justify-content: flex-start;
   margin-bottom: 50px;
   position: relative;
-}
 
-#heroText {
-  font-weight: 500;
-  font-size: 48px;
-  position: absolute;
-  animation: moveText 1400ms ease;
-  z-index: 200;
+  #heroText {
+    font-weight: 500;
+    font-size: 48px;
+    position: absolute;
+    animation: moveText 1400ms ease;
+    z-index: 200;
+  }
+
+  .heroImage {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 0 auto;
+
+    #circle {
+      position: absolute;
+      top: -4rem;
+      left: 3rem;
+      z-index: 100;
+      animation: scaleCircle 1400ms ease;
+    }
+
+    #gamer {
+      top: 4rem;
+      z-index: 200;
+      animation: showGamer 1400ms ease;
+    }
+  }
 }
 
 @keyframes moveText {
@@ -26,29 +50,6 @@
   }
 }
 
-.heroImage {
-  display: flex;
-  flex-direction: column;
-  justify-self: center;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  margin: 0 auto;
-}
-
-/* .heroImage img {
-  width: 100%;
-  height: auto;
-} */
-
-#circle {
-  position: absolute;
-  top: -4rem;
-  left: 3rem;
-  z-index: 100;
-  animation: scaleCircle 1400ms ease;
-}
-
 @keyframes scaleCircle {
   0% {
     transform: scale(0) translateY(100px);
@@ -60,12 +61,6 @@
     transform: scale(1);
     transform: translateY(0px);
   }
-}
-
-#gamer {
-  top: 4rem;
-  z-index: 200;
-  animation: showGamer 1400ms ease;
 }
 
 @keyframes showGamer {

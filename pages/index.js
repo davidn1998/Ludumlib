@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { connectToDatabase } from "../util/mongodb";
 
-import styles from "../styles/index.module.css";
+import styles from "../styles/index.module.scss";
 
 import Logo from "../components/Logo";
 import Footer from "../components/Footer";

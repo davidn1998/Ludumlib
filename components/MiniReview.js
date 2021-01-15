@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./MiniReview.module.css";
+import styles from "./MiniReview.module.scss";
 import FullStar from "./SVGIcons/FullStar";
 import HalfStar from "./SVGIcons/HalfStar";
 

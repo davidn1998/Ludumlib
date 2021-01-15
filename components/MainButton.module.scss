@@ -15,15 +15,15 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 2rem;
+
+  &:hover {
+    background: linear-gradient(90deg, #a34bd4 0%, #4458d6 100%);
+    cursor: pointer;
+  }
 }
 
 .animated {
   animation: moveGetStarted 1400ms ease;
-}
-
-.mainButton:hover {
-  background: linear-gradient(90deg, #a34bd4 0%, #4458d6 100%);
-  cursor: pointer;
 }
 
 @keyframes moveGetStarted {

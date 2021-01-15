@@ -4,11 +4,11 @@
   width: 191px;
   height: 255px;
   transition: 0.5s;
-}
 
-.gameCard img:hover {
-  border-radius: 0;
-  width: 253.97px;
-  height: 338.84px;
-  cursor: pointer;
+  &:hover {
+    border-radius: 0;
+    width: 253.97px;
+    height: 338.84px;
+    cursor: pointer;
+  }
 }

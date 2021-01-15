@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../components/GameListCard.module.css";
+import styles from "../components/GameListCard.module.scss";
 import Link from "next/link";
 
 const GameListCard = ({ imgSrc1, imgSrc2, imgSrc3, listName }) => {

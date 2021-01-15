@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-import styles from "../components/Hero.module.css";
+import styles from "../components/Hero.module.scss";
 
 import MainButton from "../components/MainButton";
 

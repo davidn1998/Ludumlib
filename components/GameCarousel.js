@@ -1,6 +1,6 @@
 import React from "react";
 import GameCard from "./GameCard";
-import styles from "./GameCarousel.module.css";
+import styles from "./GameCarousel.module.scss";
 import Carousel from "react-elastic-carousel";
 
 const GameCarousel = ({ slideUp }) => {

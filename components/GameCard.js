@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../components/GameCard.module.css";
+import styles from "../components/GameCard.module.scss";
 import Link from "next/link";
 
 const GameCard = ({ imgSrc }) => {

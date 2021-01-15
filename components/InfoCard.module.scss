@@ -10,14 +10,14 @@
   color: #000;
   padding: 1rem 2rem;
   margin: 1rem;
-}
 
-.infoText {
-  text-align: center;
-  background: -webkit-linear-gradient(#4458d6, #934ed4);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 500;
-  font-size: 18px;
-  padding: 0 2rem;
+  .infoText {
+    text-align: center;
+    background: -webkit-linear-gradient(#4458d6, #934ed4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 500;
+    font-size: 18px;
+    padding: 0 2rem;
+  }
 }
