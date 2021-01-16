@@ -3,7 +3,7 @@ import React from "react";
 const Gamepad = () => {
   return (
     <svg
-      width="106"
+      width="50%"
       height="84"
       viewBox="0 0 106 84"
       fill="none"

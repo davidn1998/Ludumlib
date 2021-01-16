@@ -1,6 +1,9 @@
 .container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 
   .listName {
     z-index: 500;
@@ -12,34 +15,33 @@
   .gameListCard {
     display: block;
     position: relative;
-    height: 260px;
-    width: 300px;
+    width: 40%;
+    transition: 0.5s;
 
     #card1 {
       position: absolute;
-      left: 0;
+      left: -40%;
       z-index: 100;
     }
     #card2 {
-      position: absolute;
-      left: 50px;
-      z-index: 200;
+      position: relative;
+      z-index: 500;
     }
     #card3 {
       position: absolute;
-      left: 100px;
+      left: 40%;
       z-index: 100;
     }
 
     img {
       border-radius: 100px;
       border: solid 2px #fff;
-      width: 191px;
-      height: 255px;
+      width: 100%;
     }
 
     &:hover {
       cursor: pointer;
+      width: 60%;
     }
   }
 }

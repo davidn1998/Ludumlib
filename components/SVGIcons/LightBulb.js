@@ -3,7 +3,7 @@ import React from "react";
 const LightBulb = () => {
   return (
     <svg
-      width="52"
+      width="50%"
       height="76"
       viewBox="0 0 52 76"
       fill="none"

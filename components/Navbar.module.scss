@@ -1,10 +1,10 @@
 .navbar {
-  width: 25%;
+  width: 100%;
 
   ul {
     list-style: none;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     font-weight: 600;
     font-size: 20px;
   }
@@ -13,6 +13,7 @@
     text-decoration: none;
     color: #fff;
     position: relative;
+    margin-right: 1rem;
 
     &:before {
       content: "";

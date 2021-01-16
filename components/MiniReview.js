@@ -21,7 +21,9 @@ const MiniReview = ({
 
   return (
     <div className={styles.miniReview}>
-      <img src={imgSrc} alt="" />
+      <div className={styles.imgContainer}>
+        <img src={imgSrc} alt="" />
+      </div>
       <div className={styles.content}>
         <div className={styles.header}>
           <h2>{reviewTitle}</h2>

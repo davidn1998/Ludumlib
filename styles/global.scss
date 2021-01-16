@@ -22,7 +22,7 @@ body {
 /* show full item */
 .rec-item-wrapper {
   overflow: visible !important;
-  height: 400px;
+  height: 100%;
   display: flex;
   align-items: center;
 }
@@ -30,4 +30,10 @@ body {
 /* hide disabled buttons */
 .rec.rec-arrow:disabled {
   visibility: hidden;
+}
+
+@media only screen and (max-width: 992px) {
+  // .rec-item-wrapper {
+  //   height: 100%;
+  // }
 }

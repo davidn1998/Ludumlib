@@ -3,7 +3,7 @@ import React from "react";
 const Graph = () => {
   return (
     <svg
-      width="94"
+      width="50%"
       height="94"
       viewBox="0 0 94 94"
       fill="none"

@@ -8,8 +8,8 @@ import Logo from "../components/Logo";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
-import GameCarousel from "../components/GameCarousel";
-import GameListCarousel from "../components/GameListCarousel";
+import GameCarousel from "../components/GamesList";
+import GameLists from "../components/GameListsList";
 import InfoCard from "../components/InfoCard";
 import Gamepad from "../components/SVGIcons/Gamepad";
 import LightBulb from "../components/SVGIcons/LightBulb";
@@ -30,7 +30,7 @@ export default function Home({ isConnected }) {
 
       <header>
         <Logo />
-        <Navbar />
+        {/* <Navbar /> */}
       </header>
       <div className={styles.main}>
         <Hero />
@@ -69,7 +69,7 @@ export default function Home({ isConnected }) {
         <h2 className={styles.subHeading}>Popular Games...</h2>
         <GameCarousel slideUp={false} />
         <h2 className={styles.subHeading}>Popular Lists...</h2>
-        <GameListCarousel slideUp={false} />
+        <GameLists slideUp={false} />
         <h2 className={styles.subHeading}>Popular Reviews...</h2>
         <div className={styles.miniReviews}>
           <MiniReview

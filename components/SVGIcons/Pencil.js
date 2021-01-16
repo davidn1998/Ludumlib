@@ -3,7 +3,7 @@ import React from "react";
 const Pencil = () => {
   return (
     <svg
-      width="90"
+      width="50%"
       height="90"
       viewBox="0 0 90 90"
       fill="none"

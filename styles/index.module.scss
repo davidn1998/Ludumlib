@@ -2,7 +2,7 @@
 @use './colors';
 
 .container {
-  padding: 3rem;
+  padding: 1rem;
   max-width: 1920px;
   margin: 0 auto;
 
@@ -17,11 +17,11 @@
     .infoCards {
       display: flex;
       justify-content: space-around;
-      padding: 0 2rem;
     }
 
     .joinButton {
-      margin: 3rem 0;
+      width: 35%;
+      margin: 3rem auto;
       display: flex;
       justify-content: center;
     }
@@ -29,12 +29,11 @@
     .subHeading {
       font-weight: 600;
       font-size: 36px;
-      margin-left: 7rem;
-      margin-bottom: 5rem;
     }
 
     .miniReviews {
       display: flex;
+      flex-direction: column;
       justify-content: space-around;
       margin: 0 2rem;
       margin-bottom: 5rem;

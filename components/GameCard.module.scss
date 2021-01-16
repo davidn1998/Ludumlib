@@ -1,14 +1,19 @@
-.gameCard img {
-  border-radius: 100px;
-  border: solid 2px #fff;
-  width: 191px;
-  height: 255px;
-  transition: 0.5s;
+.gameCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  img {
+    border-radius: 100px;
+    border: solid 2px #fff;
+    width: 75%;
+    transition: 0.5s;
 
-  &:hover {
-    border-radius: 0;
-    width: 253.97px;
-    height: 338.84px;
-    cursor: pointer;
+    &:hover {
+      border-radius: 0;
+      width: 100%;
+      cursor: pointer;
+      z-index: 1000;
+    }
   }
 }
