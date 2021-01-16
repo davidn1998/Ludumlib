@@ -1,7 +1,6 @@
 .gameCarousel {
   display: flex;
   align-items: center;
-  margin-bottom: 5rem;
   width: 100%;
 
   .gameCard {
@@ -49,11 +48,6 @@
 
 @media only screen and (max-width: 992px) {
   .gameCarousel {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5rem;
-    width: 100%;
-
     .gameCard:last-child {
       display: none;
     }

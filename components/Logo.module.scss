@@ -1,10 +1,14 @@
 .logo {
   font-weight: 500;
   font-size: 24px;
-  background: -webkit-linear-gradient(#bf47d2, #4058d6);
   background-color: #4058d6;
+  background-image: linear-gradient(#bf47d2, #4058d6);
+  background-image: -webkit-linear-gradient(#bf47d2, #4058d6);
+  background-size: 100%;
   -webkit-background-clip: text;
+  -moz-background-clip: text;
   -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
   text-decoration: none;
   -webkit-transition: 0.4s ease;
   transition: 0.4s ease;
@@ -16,10 +20,12 @@
   }
 
   &:hover {
-    background: linear-gradient(#4058d6, #bf47d2);
-    background: -webkit-linear-gradient(#4058d6, #bf47d2);
-    background-clip: text;
+    background-image: linear-gradient(#4058d6, #bf47d2);
+    background-image: -webkit-linear-gradient(#4058d6, #bf47d2);
     -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
 
     /* Use the colors to transition to */
     stop:first-child {
