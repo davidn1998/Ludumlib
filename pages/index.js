@@ -8,8 +8,8 @@ import Logo from "../components/Logo";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
-import GameCarousel from "../components/GamesList";
-import GameLists from "../components/GameListsList";
+import GamesList from "../components/GamesList";
+import GameListsList from "../components/GameListsList";
 import InfoCard from "../components/InfoCard";
 import Gamepad from "../components/SVGIcons/Gamepad";
 import LightBulb from "../components/SVGIcons/LightBulb";
@@ -34,7 +34,7 @@ export default function Home({ isConnected }) {
       </header>
       <div className={styles.main}>
         <Hero />
-        <GameCarousel slideUp={true} />
+        <GamesList slideUp={true} />
         <div className={styles.infoCards}>
           <InfoCard
             svgIcon={<Gamepad />}
@@ -67,9 +67,9 @@ export default function Home({ isConnected }) {
           <MainButton buttonText="JOIN NOW" animated={false} />
         </div>
         <h2 className={styles.subHeading}>Popular Games...</h2>
-        <GameCarousel slideUp={false} />
+        <GamesList slideUp={false} />
         <h2 className={styles.subHeading}>Popular Lists...</h2>
-        <GameLists slideUp={false} />
+        <GameListsList slideUp={false} />
         <h2 className={styles.subHeading}>Popular Reviews...</h2>
         <div className={styles.miniReviews}>
           <MiniReview

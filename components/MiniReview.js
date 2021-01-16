@@ -21,23 +21,27 @@ const MiniReview = ({
 
   return (
     <div className={styles.miniReview}>
-      <div className={styles.imgContainer}>
-        <img src={imgSrc} alt="" />
-      </div>
-      <div className={styles.content}>
-        <div className={styles.header}>
-          <h2>{reviewTitle}</h2>
-          {fullStars}
-          {halfStarsNum > 0 ? <HalfStar /> : ""}
+      <div className={styles.reviewDetails}>
+        <div className={styles.imgContainer}>
+          <img src={imgSrc} alt="" />
         </div>
-        <div className={styles.reviewerInfo}>
-          <img src={reviewerIcon} alt="" />
-          <p>
-            <span>{reviewerName}</span> - {reviewDate}
-          </p>
+        <div className={styles.content}>
+          <div className={styles.header}>
+            <h2>{reviewTitle}</h2>
+          </div>
+          <div className={styles.stars}>
+            {fullStars}
+            {halfStarsNum > 0 ? <HalfStar /> : ""}
+          </div>
+          <div className={styles.reviewerInfo}>
+            <img src={reviewerIcon} alt="" />
+            <p>
+              <span>{reviewerName}</span> - {reviewDate}
+            </p>
+          </div>
         </div>
-        <p>{reviewText}</p>
       </div>
+      <p>{reviewText}</p>
     </div>
   );
 };

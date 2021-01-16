@@ -21,6 +21,9 @@ const GamesList = ({ slideUp }) => {
       <div id={slideUp ? styles.gc5 : ""} className={styles.gameCard}>
         <GameCard id={styles.gc5} imgSrc="/images/cyberpunk_cover.png" />
       </div>
+      <div id={slideUp ? styles.gc6 : ""} className={styles.gameCard}>
+        <GameCard id={styles.gc6} imgSrc="/images/spelunky2_cover.jpg" />
+      </div>
     </div>
   );
 };

@@ -29,21 +29,32 @@
 
     .subHeading {
       font-weight: 600;
-      font-size: 36px;
+      font-size: 2rem;
     }
 
     .miniReviews {
       display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      margin: 0 2rem;
+      justify-content: space-between;
+      align-items: center;
+      // margin: 0 2rem;
       margin-bottom: 5rem;
     }
   }
 }
 
 @media only screen and (max-width: 992px) {
-  .infoCards {
-    flex-direction: column;
+  .container {
+    .main {
+      .infoCards {
+        flex-direction: column;
+      }
+      .subHeading {
+        font-size: 1.5rem;
+      }
+
+      .miniReviews {
+        flex-direction: column;
+      }
+    }
   }
 }
