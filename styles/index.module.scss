@@ -21,21 +21,22 @@
     }
 
     .joinButton {
-      width: 35%;
+      width: 15rem;
       margin: 3rem auto;
       display: flex;
       justify-content: center;
     }
 
     .subHeading {
-      font-weight: 600;
+      font-weight: 500;
       font-size: 2rem;
+      border-bottom: 1px solid #fff;
     }
 
     .miniReviews {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       // margin: 0 2rem;
       margin-bottom: 5rem;
     }

@@ -75,7 +75,7 @@ export default function Home({ isConnected }) {
           <MiniReview
             imgSrc="/images/Fall_Guys_cover.jpg"
             reviewTitle="Fall Guys"
-            reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing. Integer vulputate aenean diam nisl, at vitae id sed lorem. Mi ut eget mi aliquam sit neque, in... more"
+            reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing. Integer vulputate aenean diam nisl, at vitae id sed lorem. Mi ut eget mi aliquam sit neque, in"
             reviewerName="John Smith"
             reviewDate="10/10/2020"
             reviewerIcon="/images/pfp1.png"
@@ -85,7 +85,7 @@ export default function Home({ isConnected }) {
           <MiniReview
             imgSrc="/images/control_cover.png"
             reviewTitle="Control"
-            reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing. Integer vulputate aenean diam nisl, at vitae id sed lorem. Mi ut eget mi aliquam sit neque, in... more"
+            reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing"
             reviewerName="Katiieee"
             reviewDate="26/09/2020"
             reviewerIcon="/images/pfp2.png"

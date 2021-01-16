@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import styles from "./MiniReview.module.scss";
 import FullStar from "./SVGIcons/FullStar";
 import HalfStar from "./SVGIcons/HalfStar";
@@ -41,7 +42,12 @@ const MiniReview = ({
           </div>
         </div>
       </div>
-      <p>{reviewText}</p>
+      <p>
+        {reviewText}{" "}
+        <Link href="#">
+          <a className={styles.link}>... more</a>
+        </Link>
+      </p>
     </div>
   );
 };
