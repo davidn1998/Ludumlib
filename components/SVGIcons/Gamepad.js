@@ -3,8 +3,8 @@ import React from "react";
 const Gamepad = () => {
   return (
     <svg
-      width="50%"
-      height="84"
+      width="100%"
+      // height="84"
       viewBox="0 0 106 84"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -3,8 +3,8 @@ import React from "react";
 const List = () => {
   return (
     <svg
-      width="50%"
-      height="82"
+      width="100%"
+      // height="82"
       viewBox="0 0 82 82"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-bottom: 50px;
+  padding: 1rem;
   position: relative;
 
   #heroText {
@@ -21,20 +21,19 @@
     justify-content: center;
     position: relative;
     margin: 0 auto;
-    // margin-top: 100px;
 
     #circle {
       position: absolute;
       top: -2rem;
       z-index: 100;
       animation: scaleCircle 1400ms ease;
-      width: 50%;
+      width: 60%;
     }
 
     #gamer {
       z-index: 200;
       animation: showGamer 1400ms ease;
-      width: 50%;
+      width: 60%;
     }
 
     .heroButton {

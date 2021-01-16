@@ -6,7 +6,7 @@ import gamepadIcon from "@iconify/icons-fa-solid/gamepad";
 const InfoCard = ({ svgIcon, infoText }) => {
   return (
     <div className={styles.infoCard}>
-      {svgIcon}
+      <div className={styles.infoIcon}>{svgIcon}</div>
       <p className={styles.infoText}>{infoText}</p>
     </div>
   );

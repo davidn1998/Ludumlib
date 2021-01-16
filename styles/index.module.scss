@@ -17,6 +17,7 @@
     .infoCards {
       display: flex;
       justify-content: space-around;
+      align-items: stretch;
     }
 
     .joinButton {
@@ -38,5 +39,11 @@
       margin: 0 2rem;
       margin-bottom: 5rem;
     }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .infoCards {
+    flex-direction: column;
   }
 }

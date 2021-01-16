@@ -3,8 +3,8 @@ import React from "react";
 const Graph = () => {
   return (
     <svg
-      width="50%"
-      height="94"
+      width="100%"
+      // height="94"
       viewBox="0 0 94 94"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
