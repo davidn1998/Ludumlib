@@ -17,9 +17,8 @@
 
   &:hover {
     background: linear-gradient(#4058d6, #bf47d2);
-    background-clip: text;
-
     background: -webkit-linear-gradient(#4058d6, #bf47d2);
+    background-clip: text;
     -webkit-background-clip: text;
 
     /* Use the colors to transition to */

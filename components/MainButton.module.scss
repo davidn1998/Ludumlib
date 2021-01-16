@@ -36,3 +36,9 @@
     transform: translateX(0px) translateY(0px);
   }
 }
+
+@media only screen and (max-width: 992px) {
+  .animated {
+    animation: none;
+  }
+}
