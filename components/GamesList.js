@@ -1,11 +1,10 @@
 import React from "react";
 import GameCard from "./GameCard";
 import styles from "./GamesList.module.scss";
-import Carousel from "react-elastic-carousel";
 
 const GamesList = ({ slideUp }) => {
   return (
-    <div className={styles.gameCarousel}>
+    <div className={styles.gameList}>
       <div id={slideUp ? styles.gc1 : ""} className={styles.gameCard}>
         <GameCard imgSrc="/images/Fall_Guys_cover.jpg" />
       </div>

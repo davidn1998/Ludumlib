@@ -4,7 +4,7 @@ import styles from "./GameListsList.module.scss";
 
 const GameLists = ({ slideUp }) => {
   return (
-    <div className={styles.gameCarousel}>
+    <div className={styles.gameList}>
       <div id={slideUp ? styles.gc1 : ""} className={styles.gameCard}>
         <GameListCard
           imgSrc1="/images/hades_cover.jpg"
