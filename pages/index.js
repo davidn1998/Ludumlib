@@ -30,7 +30,7 @@ export default function Home({ isConnected }) {
 
       <header>
         <Logo />
-        {/* <Navbar /> */}
+        <Navbar />
       </header>
       <div className={styles.main}>
         <Hero />

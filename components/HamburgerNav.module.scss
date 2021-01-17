@@ -1,25 +1,20 @@
-.navbar {
-  width: 100%;
-
-  ul {
-    list-style: none;
-    display: flex;
-    justify-content: flex-end;
-    font-weight: 600;
-    font-size: 20px;
-  }
+.hamburgerMenu {
+  display: none;
 
   a {
     text-decoration: none;
-    color: #fff;
     position: relative;
-    margin-right: 1rem;
+    margin: auto;
+    text-align: center;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 600;
 
     &:before {
       content: "";
       position: absolute;
       width: 100%;
-      height: 2px;
+      height: 3px;
       bottom: 0;
       left: 0;
       background-color: #fff;
@@ -36,7 +31,7 @@
 }
 
 @media only screen and (max-width: 992px) {
-  .navbar {
-    display: none;
+  .hamburgerMenu {
+    display: block;
   }
 }

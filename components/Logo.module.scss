@@ -1,6 +1,14 @@
 .logo {
-  font-weight: 500;
-  font-size: 24px;
+  .logoText {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: none;
+    -webkit-text-fill-color: #fff;
+    -moz-text-fill-color: #fff;
+  }
+
+  font-weight: 600;
+  font-size: 28px;
   background-color: #4058d6;
   background-image: linear-gradient(#bf47d2, #4058d6);
   background-image: -webkit-linear-gradient(#bf47d2, #4058d6);

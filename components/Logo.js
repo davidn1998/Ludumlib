@@ -35,7 +35,7 @@ const Logo = () => {
             </linearGradient>
           </defs>
         </svg>
-        <span>Ludumlib</span>
+        <span className={styles.logoText}>Ludumlib</span>
       </a>
     </Link>
   );
