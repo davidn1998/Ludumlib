@@ -8,7 +8,7 @@ const Navbar = () => {
   const router = useRouter();
 
   return (
-    <div>
+    <>
       <HamburgerNav />
       <nav className={styles.navbar}>
         <ul>
@@ -48,7 +48,7 @@ const Navbar = () => {
           </li>
         </ul>
       </nav>
-    </div>
+    </>
   );
 };
 

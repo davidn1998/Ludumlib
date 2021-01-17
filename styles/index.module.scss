@@ -2,7 +2,6 @@
 @use './colors';
 
 .container {
-  // padding: 1rem;
   max-width: 1920px;
   margin: 0 auto;
 
@@ -41,7 +40,6 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      // margin: 0 2rem;
       margin-bottom: 5rem;
     }
   }
