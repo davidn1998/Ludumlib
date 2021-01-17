@@ -1,21 +1,50 @@
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import styles from "./HamburgerNav.module.scss";
 import { fallDown as Menu } from "react-burger-menu";
 
 const HamburgerNav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
   return (
     <div className={styles.hamburgerMenu}>
       <Menu styles={burgerStyles} isOpen={false} noOverlay disableAutoFocus>
-        <Link href="#">
-          <a className="bm-item menu-item">GAMES</a>
+        <Link href="/">
+          <a
+            className={`"bm-item menu-item" ${
+              router.pathname == "/" ? styles.active : null
+            }`}
+          >
+            HOME
+          </a>
         </Link>
-        <Link href="#">
-          <a className="bm-item menu-item">LOGIN</a>
+        <Link href="/games">
+          <a
+            className={`"bm-item menu-item" ${
+              router.pathname == "/games" ? styles.active : null
+            }`}
+          >
+            GAMES
+          </a>
         </Link>
-        <Link href="#">
-          <a className="bm-item menu-item">SIGN UP</a>
+        <Link href="/login">
+          <a
+            className={`"bm-item menu-item" ${
+              router.pathname == "/login" ? styles.active : null
+            }`}
+          >
+            LOGIN
+          </a>
+        </Link>
+        <Link href="/signup">
+          <a
+            className={`"bm-item menu-item" ${
+              router.pathname == "/signup" ? styles.active : null
+            }`}
+          >
+            SIGN UP
+          </a>
         </Link>
       </Menu>
     </div>

@@ -8,6 +8,13 @@
     font-weight: 600;
     font-size: 20px;
     animation: moveNav 1s ease;
+
+    .active {
+      &::before {
+        visibility: visible;
+        transform: scaleX(1);
+      }
+    }
   }
 
   a {
@@ -16,7 +23,7 @@
     position: relative;
     margin-right: 2rem;
 
-    &:before {
+    &::before {
       content: "";
       position: absolute;
       width: 100%;
@@ -29,7 +36,7 @@
       transition: all 0.3s ease-in-out;
     }
 
-    &:hover:before {
+    &:hover::before {
       visibility: visible;
       transform: scaleX(1);
     }

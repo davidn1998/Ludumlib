@@ -1,6 +1,13 @@
 .hamburgerMenu {
   display: none;
 
+  .active {
+    &::before {
+      visibility: visible;
+      transform: scaleX(1);
+    }
+  }
+
   a {
     text-decoration: none;
     position: relative;
