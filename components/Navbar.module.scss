@@ -7,13 +7,14 @@
     justify-content: flex-end;
     font-weight: 600;
     font-size: 20px;
+    animation: moveNav 1s ease;
   }
 
   a {
     text-decoration: none;
     color: #fff;
     position: relative;
-    margin-right: 1rem;
+    margin-right: 2rem;
 
     &:before {
       content: "";
@@ -32,6 +33,15 @@
       visibility: visible;
       transform: scaleX(1);
     }
+  }
+}
+
+@keyframes moveNav {
+  0% {
+    transform: translateX(400px);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
 

@@ -4,7 +4,7 @@
   transition: 0.4s ease;
   border-style: none;
   border-radius: 15px;
-  width: 100%;
+  width: 90%;
   padding: 1rem;
   color: #fff;
   font-weight: 700;
@@ -16,8 +16,8 @@
   align-items: center;
 
   &:hover {
-    background: linear-gradient(90deg, #a34bd4 0%, #4458d6 100%);
     cursor: pointer;
+    width: 100%;
   }
 }
 
