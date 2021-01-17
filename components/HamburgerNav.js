@@ -60,7 +60,7 @@ var burgerStyles = {
     top: "36px",
   },
   bmBurgerBars: {
-    background: "#373a47",
+    background: "#fff",
   },
   bmBurgerBarsHover: {
     background: "#a90000",
@@ -70,7 +70,7 @@ var burgerStyles = {
     width: "24px",
   },
   bmCross: {
-    background: "#bdc3c7",
+    background: "#fff",
   },
   bmMenuWrap: {
     position: "absolute",

@@ -1,5 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
+import useSWR from "swr";
+import axios from "axios";
 import { connectToDatabase } from "../util/mongodb";
 
 import styles from "../styles/index.module.scss";
@@ -20,7 +22,19 @@ import Graph from "../components/SVGIcons/Graph";
 import MainButton from "../components/MainButton";
 import MiniReview from "../components/MiniReview";
 
+const fetcher = (url) => axios.get(url).then((res) => res.data);
+
 export default function Home({ isConnected }) {
+  const { data, error } = useSWR(
+    "https://api.rawg.io/api/games?key=c2cfee3aa5494adfacb4b77caa093322&page_size=6",
+    fetcher
+  );
+
+  if (error) {
+    console.error("Could not load game data");
+  }
+
+  const gamesList = !data ? <></> : <GamesList slideUp={true} data={data} />;
   return (
     <div className={styles.container}>
       <Head>
@@ -34,7 +48,7 @@ export default function Home({ isConnected }) {
       </header>
       <div className={styles.main}>
         <Hero />
-        <GamesList slideUp={true} />
+        {gamesList}
         <div className={styles.infoCards}>
           <InfoCard
             svgIcon={<Gamepad />}
@@ -67,7 +81,7 @@ export default function Home({ isConnected }) {
           <MainButton buttonText="JOIN NOW" animated={false} />
         </div>
         <h2 className={styles.subHeading}>Popular Games...</h2>
-        <GamesList slideUp={false} />
+        <GamesList slideUp={false} data={data} />
         <h2 className={styles.subHeading}>Popular Lists...</h2>
         <GameListsList slideUp={false} />
         <h2 className={styles.subHeading}>Popular Reviews...</h2>

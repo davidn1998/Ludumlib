@@ -6,7 +6,10 @@ const GameCard = ({ imgSrc }) => {
   return (
     <Link href="/">
       <a className={styles.gameCard}>
-        <img src={imgSrc} alt="" />
+        <div
+          className={styles.image}
+          style={{ backgroundImage: `url(${imgSrc})` }}
+        ></div>
       </a>
     </Link>
   );

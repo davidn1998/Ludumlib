@@ -2,29 +2,48 @@ import React from "react";
 import GameCard from "./GameCard";
 import styles from "./GamesList.module.scss";
 
-const GamesList = ({ slideUp }) => {
-  return (
-    <div className={styles.gameList}>
-      <div id={slideUp ? styles.gc1 : ""} className={styles.gameCard}>
-        <GameCard imgSrc="/images/Fall_Guys_cover.jpg" />
-      </div>
-      <div id={slideUp ? styles.gc2 : ""} className={styles.gameCard}>
-        <GameCard id={styles.gc2} imgSrc="/images/hades_cover.jpg" />
-      </div>
-      <div id={slideUp ? styles.gc3 : ""} className={styles.gameCard}>
-        <GameCard id={styles.gc3} imgSrc="/images/control_cover.png" />
-      </div>
-      <div id={slideUp ? styles.gc4 : ""} className={styles.gameCard}>
-        <GameCard id={styles.gc4} imgSrc="/images/dbd_cover.png" />
-      </div>
-      <div id={slideUp ? styles.gc5 : ""} className={styles.gameCard}>
-        <GameCard id={styles.gc5} imgSrc="/images/cyberpunk_cover.png" />
-      </div>
-      <div id={slideUp ? styles.gc6 : ""} className={styles.gameCard}>
-        <GameCard id={styles.gc6} imgSrc="/images/spelunky2_cover.jpg" />
-      </div>
-    </div>
+const GamesList = ({ slideUp, data }) => {
+  const gameList = data ? (
+    data.results.map((game, index) => {
+      let styleid = styles.gc1;
+      switch (index) {
+        case 0:
+          styleid = styles.gc1;
+          break;
+        case 1:
+          styleid = styles.gc2;
+          break;
+        case 2:
+          styleid = styles.gc3;
+          break;
+        case 3:
+          styleid = styles.gc4;
+          break;
+        case 4:
+          styleid = styles.gc5;
+          break;
+        case 5:
+          styleid = styles.gc6;
+          break;
+        default:
+          styleid = styles.gc1;
+          break;
+      }
+      return (
+        <div
+          key={game.id}
+          id={slideUp ? styleid : ""}
+          className={styles.gameCard}
+        >
+          <GameCard imgSrc={game.background_image} />
+        </div>
+      );
+    })
+  ) : (
+    <></>
   );
+
+  return <div className={styles.gameList}>{gameList}</div>;
 };
 
 export default GamesList;
