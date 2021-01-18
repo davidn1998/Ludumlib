@@ -1,0 +1,42 @@
+@use "./mixins";
+@use './colors';
+
+.container {
+  max-width: 1920px;
+  margin: 0 auto;
+
+  .main {
+    margin: 0 5%;
+    height: 100vh;
+
+    .background {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0.3;
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+
+    .subHeading {
+      position: relative;
+      font-weight: 500;
+      font-size: 2rem;
+      border-bottom: 1px solid #fff;
+      z-index: 100;
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .container {
+    .main {
+      .subHeading {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}

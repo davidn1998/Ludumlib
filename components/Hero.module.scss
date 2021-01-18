@@ -25,13 +25,13 @@
     #circle {
       position: absolute;
       top: -2rem;
-      z-index: 100;
+      z-index: 1100;
       animation: scaleCircle 1400ms ease;
       width: 60%;
     }
 
     #gamer {
-      z-index: 200;
+      z-index: 1200;
       animation: showGamer 1400ms ease;
       width: 60%;
     }

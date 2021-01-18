@@ -6,9 +6,8 @@ import { connectToDatabase } from "../util/mongodb";
 
 import styles from "../styles/index.module.scss";
 
-import Logo from "../components/Logo";
+import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import GamesList from "../components/GamesList";
 import GameListsList from "../components/GameListsList";
@@ -41,11 +40,7 @@ export default function Home({ isConnected }) {
         <title>Ludumlib</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <header>
-        <Logo />
-        <Navbar />
-      </header>
+      <Header />
       <div className={styles.main}>
         <Hero />
         {gamesList}

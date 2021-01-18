@@ -35,7 +35,7 @@ const GamesList = ({ slideUp, data }) => {
           id={slideUp ? styleid : ""}
           className={styles.gameCard}
         >
-          <GameCard imgSrc={game.background_image} />
+          <GameCard gameData={game} />
         </div>
       );
     })
