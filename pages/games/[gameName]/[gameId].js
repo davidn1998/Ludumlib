@@ -15,7 +15,7 @@ const Game = () => {
   const fetcher = (url) => axios.get(url).then((res) => res.data);
 
   const router = useRouter();
-  const { gameName, gameId } = router.query;
+  const { gameId } = router.query;
 
   const {
     data,
@@ -29,21 +29,6 @@ const Game = () => {
   if (error) {
     return <DefaultErrorPage statusCode={404} />;
   } else if (data) {
-    const backgroundStyle = {
-      /* Fallback */
-      backgroundImage: `url(${data.background_image})`,
-
-      /* CSS gradients */
-      backgroundImage: `url(${data.background_image}), 
-                        -moz-linear-gradient(top, #ADB2B6 0%, #ABAEB3 100%)`,
-      backgroundImage: `url(${data.background_image}), 
-                        -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ADB2B6), color-stop(100%, #ABAEB3))`,
-      backgroundImage: `linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0)),url(${data.background_image})`,
-
-      /* IE */
-      filter: `progid:DXImageTransform.Microsoft.gradient(startColorstr='#ADB2B6', endColorstr='#ABAEB3', GradientType=0)`,
-    };
-
     return (
       <div className={styles.container}>
         <Head>
@@ -55,7 +40,6 @@ const Game = () => {
           <div
             className={styles.background}
             style={{ backgroundImage: `url(${data.background_image})` }}
-            // style={backgroundStyle}
           ></div>
           <h2 className={styles.subHeading}>{data.name}</h2>
           <Footer />
@@ -63,7 +47,16 @@ const Game = () => {
       </div>
     );
   } else {
-    return <></>;
+    return (
+      <div className={styles.container}>
+        <Head>
+          <title>Game | Ludumlib</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <Header />
+        <div className={styles.main}></div>
+      </div>
+    );
   }
 };
 
