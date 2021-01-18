@@ -78,6 +78,7 @@ var burgerStyles = {
     width: "100%",
     top: 0,
     left: 0,
+    zIndex: 2000,
   },
   bmMenu: {
     background: "#0a0028",
