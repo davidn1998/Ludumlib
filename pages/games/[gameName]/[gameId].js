@@ -26,9 +26,44 @@ const Game = () => {
     { revalidateOnFocus: false }
   );
 
+  const [isFullAbout, setIsFullAbout] = useState(false);
+
+  console.log(data);
+
   if (error) {
     return <DefaultErrorPage statusCode={404} />;
   } else if (data) {
+    const fullAbout = (
+      <>
+        <div dangerouslySetInnerHTML={{ __html: data.description }}></div>
+        <button
+          className={styles.aboutToggle}
+          onClick={() => setIsFullAbout(false)}
+        >
+          ...LESS
+        </button>
+      </>
+    );
+
+    const smallAbout =
+      data.description_raw.length > 500 ? (
+        <>
+          <div>
+            <p>{data.description_raw.substring(0, 500)}...</p>
+          </div>
+          <button
+            className={styles.aboutToggle}
+            onClick={() => setIsFullAbout(true)}
+          >
+            MORE...
+          </button>
+        </>
+      ) : (
+        <>
+          <div dangerouslySetInnerHTML={{ __html: data.description }}></div>
+        </>
+      );
+
     return (
       <div className={styles.container}>
         <Head>
@@ -36,12 +71,30 @@ const Game = () => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Header />
+        <div
+          className={styles.background}
+          style={{
+            backgroundImage: `url(${data.background_image_additional})`,
+          }}
+        ></div>
         <div className={styles.main}>
-          <div
-            className={styles.background}
-            style={{ backgroundImage: `url(${data.background_image})` }}
-          ></div>
-          <h2 className={styles.subHeading}>{data.name}</h2>
+          <h2 className={styles.heading}>{data.name}</h2>
+          {/* <video src={data.trailer}></video> */}
+          <div className={styles.section1}>
+            <div
+              className={styles.image}
+              style={{ backgroundImage: `url(${data.background_image})` }}
+            ></div>
+            <div className={styles.about}>
+              <h3 className={styles.cardTitle}>ABOUT</h3>
+              {/* <div dangerouslySetInnerHTML={{ __html: data.description }}></div> */}
+              {isFullAbout ? fullAbout : smallAbout}
+            </div>
+            {/* <div className={styles.description}>
+              <h1 className={styles.subHeading}>Description</h1>
+              <div dangerouslySetInnerHTML={{ __html: data.description }}></div>
+            </div> */}
+          </div>
           <Footer />
         </div>
       </div>

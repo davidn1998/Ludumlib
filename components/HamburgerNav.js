@@ -82,6 +82,8 @@ var burgerStyles = {
   },
   bmMenu: {
     background: "#0a0028",
+    // backgroundColor: "rgba(0, 0, 0, 0.15)",
+    // backdropFilter: "blur(10px)",
     padding: "2.5em 1.5em 0",
     fontSize: "1.15em",
     boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.5)",
