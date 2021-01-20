@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import styles from "./MiniReview.module.scss";
 import FullStar from "./SVGIcons/FullStar";
@@ -10,7 +10,7 @@ const MiniReview = ({
   reviewDate,
   reviewerName,
   reviewerIcon,
-  imgSrc,
+  imgURL,
   fullStarsNum,
   halfStarsNum,
 }) => {
@@ -20,11 +20,51 @@ const MiniReview = ({
     fullStars.push(<FullStar key={i} />);
   }
 
+  const [isFullReview, setIsFullReview] = useState(false);
+
+  const fullReview = (
+    <>
+      <div>
+        <p>{reviewText}</p>
+      </div>
+      <button
+        className={styles.reviewToggle}
+        onClick={() => setIsFullReview(false)}
+      >
+        ...LESS
+      </button>
+    </>
+  );
+
+  const smallReview =
+    reviewText.length > 300 ? (
+      <>
+        <div>
+          <p>{reviewText.substring(0, 300)}...</p>
+        </div>
+        <button
+          className={styles.reviewToggle}
+          onClick={() => setIsFullReview(true)}
+        >
+          MORE...
+        </button>
+      </>
+    ) : (
+      <>
+        <div>
+          <p>{reviewText}</p>
+        </div>
+      </>
+    );
+
   return (
     <div className={styles.miniReview}>
       <div className={styles.reviewDetails}>
         <div className={styles.imgContainer}>
-          <img src={imgSrc} alt="" />
+          <div
+            className={styles.image}
+            style={{ backgroundImage: `url(${imgURL})` }}
+          ></div>
         </div>
         <div className={styles.content}>
           <div className={styles.header}>
@@ -42,12 +82,7 @@ const MiniReview = ({
           </div>
         </div>
       </div>
-      <p>
-        {reviewText}{" "}
-        <Link href="#">
-          <a className={styles.link}>... more</a>
-        </Link>
-      </p>
+      {isFullReview ? fullReview : smallReview}
     </div>
   );
 };

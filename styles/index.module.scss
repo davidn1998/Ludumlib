@@ -32,6 +32,12 @@
       justify-content: space-between;
       align-items: flex-start;
       margin-bottom: 5rem;
+
+      .reviewCol {
+        display: flex;
+        flex-direction: column;
+        width: 49%;
+      }
     }
   }
 }
@@ -48,6 +54,13 @@
 
       .miniReviews {
         flex-direction: column;
+        align-items: center;
+
+        .reviewCol {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+        }
       }
     }
   }

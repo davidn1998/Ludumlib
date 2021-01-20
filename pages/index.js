@@ -81,26 +81,50 @@ export default function Home({ isConnected }) {
         <GameListsList slideUp={false} />
         <h2 className={styles.subHeading}>Popular Reviews...</h2>
         <div className={styles.miniReviews}>
-          <MiniReview
-            imgSrc="/images/Fall_Guys_cover.jpg"
-            reviewTitle="Fall Guys"
-            reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing. Integer vulputate aenean diam nisl, at vitae id sed lorem. Mi ut eget mi aliquam sit neque, in"
-            reviewerName="John Smith"
-            reviewDate="10/10/2020"
-            reviewerIcon="/images/pfp1.png"
-            fullStarsNum={4}
-            halfStarsNum={1}
-          />
-          <MiniReview
-            imgSrc="/images/control_cover.png"
-            reviewTitle="Control"
-            reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing"
-            reviewerName="Katiieee"
-            reviewDate="26/09/2020"
-            reviewerIcon="/images/pfp2.png"
-            fullStarsNum={4}
-            halfStarsNum={0}
-          />
+          <div className={styles.reviewCol}>
+            <MiniReview
+              imgURL="/images/Fall_Guys_cover.jpg"
+              reviewTitle="Fall Guys"
+              reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing. Integer vulputate aenean diam nisl, at vitae id sed lorem. Mi ut eget mi aliquam sit neque, in"
+              reviewerName="John Smith"
+              reviewDate="10/10/2020"
+              reviewerIcon="/images/pfp1.png"
+              fullStarsNum={4}
+              halfStarsNum={1}
+            />
+            <MiniReview
+              imgURL="/images/control_cover.png"
+              reviewTitle="Control"
+              reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing"
+              reviewerName="Katiieee"
+              reviewDate="26/09/2020"
+              reviewerIcon="/images/pfp2.png"
+              fullStarsNum={4}
+              halfStarsNum={0}
+            />
+          </div>
+          <div className={styles.reviewCol}>
+            <MiniReview
+              imgURL="/images/control_cover.png"
+              reviewTitle="Control"
+              reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing"
+              reviewerName="Katiieee"
+              reviewDate="26/09/2020"
+              reviewerIcon="/images/pfp2.png"
+              fullStarsNum={4}
+              halfStarsNum={0}
+            />
+            <MiniReview
+              imgURL="/images/Fall_Guys_cover.jpg"
+              reviewTitle="Fall Guys"
+              reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing. Integer vulputate aenean diam nisl, at vitae id sed lorem. Mi ut eget mi aliquam sit neque, in"
+              reviewerName="John Smith"
+              reviewDate="10/10/2020"
+              reviewerIcon="/images/pfp1.png"
+              fullStarsNum={4}
+              halfStarsNum={1}
+            />
+          </div>
         </div>
       </div>
 
