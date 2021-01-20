@@ -1,20 +1,14 @@
 .gameList {
   display: flex;
-  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   width: 100%;
 
   .gameCard {
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    width: 100%;
-
-    &:focus,
-    &:focus-within,
-    &:visited,
-    &:active {
-      outline: none !important;
-    }
+    width: 25%;
   }
 
   #gc1 {
@@ -48,8 +42,8 @@
 
 @media only screen and (max-width: 992px) {
   .gameList {
-    .gameCard:last-child {
-      display: none;
+    .gameCard {
+      width: 50%;
     }
   }
 }

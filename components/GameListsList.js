@@ -31,6 +31,15 @@ const GameLists = ({ slideUp }) => {
           listName="Best Games of the Summer"
         />
       </div>
+      <div id={slideUp ? styles.gc2 : ""} className={styles.gameCard}>
+        <GameListCard
+          id={styles.gc2}
+          imgSrc1="/images/Fall_Guys_cover.jpg"
+          imgSrc2="/images/hades_cover.jpg"
+          imgSrc3="/images/control_cover.png"
+          listName="Best Indie Games 2020"
+        />
+      </div>
     </div>
   );
 };
