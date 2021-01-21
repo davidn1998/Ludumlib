@@ -75,11 +75,11 @@ export default function Home({ isConnected }) {
         <div className={styles.joinButton}>
           <MainButton buttonText="JOIN NOW" animated={false} />
         </div>
-        <h2 className={styles.subHeading}>Popular Games...</h2>
+        <h2 className={styles.subHeading}>Popular Games</h2>
         <GamesList slideUp={false} data={data} />
-        <h2 className={styles.subHeading}>Popular Lists...</h2>
+        <h2 className={styles.subHeading}>Popular Lists</h2>
         <GameListsList slideUp={false} />
-        <h2 className={styles.subHeading}>Popular Reviews...</h2>
+        <h2 className={styles.subHeading}>Popular Reviews</h2>
         <div className={styles.miniReviews}>
           <div className={styles.reviewCol}>
             <MiniReview
