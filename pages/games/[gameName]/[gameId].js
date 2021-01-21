@@ -12,6 +12,12 @@ import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 import MiniReview from "../../../components/MiniReview";
 
+import { Icon, InlineIcon } from "@iconify/react";
+import pencilIcon from "@iconify/icons-fa-solid/pencil-alt";
+import heartIcon from "@iconify/icons-fa-solid/heart";
+import plusIcon from "@iconify/icons-fa-solid/plus";
+import ReactTooltip from "react-tooltip";
+
 const Game = () => {
   const fetcher = (url) => axios.get(url).then((res) => res.data);
 
@@ -78,12 +84,37 @@ const Game = () => {
         ></div>
         <div className={styles.main}>
           <h2 className={styles.heading}>{data.name}</h2>
-          {/* <video src={data.trailer}></video> */}
           <div className={styles.section1}>
-            <div
-              className={styles.image}
-              style={{ backgroundImage: `url(${data.background_image})` }}
-            ></div>
+            <div className={styles.leftCol}>
+              <div
+                className={styles.image}
+                style={{ backgroundImage: `url(${data.background_image})` }}
+              ></div>
+              <div className={styles.optionButtons}>
+                <div
+                  className={styles.button}
+                  data-tip="Log"
+                  data-type="success"
+                >
+                  {<Icon icon={plusIcon} width={20} />}
+                </div>
+                <div
+                  className={styles.button}
+                  data-tip="Like"
+                  data-type="error"
+                >
+                  {<Icon icon={heartIcon} width={20} />}
+                </div>
+                <div
+                  className={styles.button}
+                  data-tip="Review"
+                  data-type="warning"
+                >
+                  {<Icon icon={pencilIcon} width={20} />}
+                </div>
+                <ReactTooltip place="bottom" type="light" effect="solid" />
+              </div>
+            </div>
             <div className={styles.rightCol}>
               <div className={styles.about}>
                 <h3 className={styles.cardTitle}>ABOUT</h3>

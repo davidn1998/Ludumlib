@@ -6,7 +6,7 @@
   position: relative;
 
   #heroText {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 2rem;
     position: absolute;
     animation: moveText 1400ms ease;
@@ -91,6 +91,7 @@
       position: relative !important;
       font-size: 1rem;
       animation: none;
+      text-align: center;
     }
 
     .heroImage {
