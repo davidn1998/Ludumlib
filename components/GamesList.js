@@ -4,7 +4,7 @@ import styles from "./GamesList.module.scss";
 
 const GamesList = ({ slideUp, data }) => {
   const gameList = data ? (
-    data.results.map((game, index) => {
+    data.map((game, index) => {
       let styleid = styles.gc1;
       switch (index) {
         case 0:
