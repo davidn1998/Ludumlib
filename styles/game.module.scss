@@ -171,6 +171,21 @@
           .image {
             height: 200px;
           }
+          .optionButtons {
+            .button {
+              &:hover {
+                transform: none;
+
+                &::before {
+                  transform: none;
+                }
+              }
+
+              &::before {
+                content: none;
+              }
+            }
+          }
         }
         .rightCol {
           width: 100%;
