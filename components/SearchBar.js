@@ -11,6 +11,7 @@ const SearchBar = () => {
 
   const submitForm = (e) => {
     e.preventDefault();
+    if (searchInput.length == 0) return;
     router.push(`/search?query=${searchInput}&page=1`);
   };
 
