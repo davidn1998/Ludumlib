@@ -12,7 +12,6 @@ import GamesList from "../components/GamesList";
 import { Icon, InlineIcon } from "@iconify/react";
 import arrowIconRight from "@iconify/icons-fa-solid/arrow-right";
 import arrowIconLeft from "@iconify/icons-fa-solid/arrow-left";
-import ReactTooltip from "react-tooltip";
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
