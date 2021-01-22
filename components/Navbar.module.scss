@@ -3,6 +3,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  animation: moveNav 1s ease;
 
   ul {
     list-style: none;
@@ -10,8 +11,9 @@
     justify-content: flex-end;
     font-weight: 600;
     font-size: 16px;
-    animation: moveNav 1s ease;
     margin: 0;
+    width: 100%;
+    padding-inline-start: 0;
 
     .active {
       &::before {
@@ -26,6 +28,7 @@
     color: #fff;
     position: relative;
     margin-right: 2rem;
+    width: 100%;
 
     &::before {
       content: "";

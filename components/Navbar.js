@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "./Navbar.module.scss";
+import SearchBar from "./SearchBar";
 
 const Navbar = () => {
   const router = useRouter();
@@ -38,6 +39,7 @@ const Navbar = () => {
           </Link>
         </li>
       </ul>
+      <SearchBar />
     </nav>
   );
 };

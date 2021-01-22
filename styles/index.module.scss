@@ -8,6 +8,10 @@
   .main {
     margin: 0 5%;
 
+    a {
+      text-decoration: none;
+    }
+
     .infoCards {
       display: flex;
       justify-content: space-around;
@@ -21,11 +25,24 @@
       justify-content: center;
     }
 
+    a {
+      .subHeading {
+        &:hover {
+          color: rgba(255, 255, 255, 1);
+        }
+      }
+    }
+
     .subHeading {
       font-weight: 600;
       font-size: 2rem;
       border-bottom: 1px solid #fff;
       color: rgba(255, 255, 255, 0.5);
+      transition: 0.5s;
+
+      .searchQuery {
+        word-wrap: break-word;
+      }
     }
 
     .miniReviews {

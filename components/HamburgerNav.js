@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "./HamburgerNav.module.scss";
 import { fallDown as Menu } from "react-burger-menu";
+import SearchBar from "./SearchBar";
 
 const HamburgerNav = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,6 +47,7 @@ const HamburgerNav = () => {
             SIGN UP
           </a>
         </Link>
+        <SearchBar />
       </Menu>
     </div>
   );
@@ -74,7 +76,7 @@ var burgerStyles = {
   },
   bmMenuWrap: {
     position: "absolute",
-    height: "50%",
+    height: "75%",
     width: "100%",
     top: 0,
     left: 0,
@@ -82,8 +84,6 @@ var burgerStyles = {
   },
   bmMenu: {
     background: "#0a0028",
-    // backgroundColor: "rgba(0, 0, 0, 0.15)",
-    // backdropFilter: "blur(10px)",
     padding: "2.5em 1.5em 0",
     fontSize: "1.15em",
     boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.5)",
