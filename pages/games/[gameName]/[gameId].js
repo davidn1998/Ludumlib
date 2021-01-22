@@ -88,30 +88,36 @@ const Game = () => {
             <div className={styles.leftCol}>
               <div
                 className={styles.image}
-                style={{ backgroundImage: `url(${data.background_image})` }}
+                style={{
+                  backgroundImage: `url(${
+                    data.background_image
+                      ? data.background_image
+                      : "/images/default_cover.png"
+                  })`,
+                }}
               ></div>
-              <div className={styles.optionButtons}>
-                <div
+              <div className={styles.glassButtons}>
+                <button
                   className={styles.button}
                   data-tip="Log"
                   data-type="success"
                 >
                   {<Icon icon={plusIcon} width={20} />}
-                </div>
-                <div
+                </button>
+                <button
                   className={styles.button}
                   data-tip="Like"
                   data-type="error"
                 >
                   {<Icon icon={heartIcon} width={20} />}
-                </div>
-                <div
+                </button>
+                <button
                   className={styles.button}
                   data-tip="Review"
                   data-type="warning"
                 >
                   {<Icon icon={pencilIcon} width={20} />}
-                </div>
+                </button>
                 <ReactTooltip place="bottom" type="light" effect="solid" />
               </div>
             </div>
@@ -126,7 +132,11 @@ const Game = () => {
           <div className={styles.miniReviews}>
             <div className={styles.reviewCol}>
               <MiniReview
-                imgURL={data.background_image}
+                imgURL={
+                  data.background_image
+                    ? data.background_image
+                    : "/images/default_cover.png"
+                }
                 reviewTitle="Best Game of the Decade"
                 reviewText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat repudiandae culpa sit expedita iste, nisi nemo vero ullam, amet minus sequi facilis nam numquam tempora accusantium. Sint, distinctio at! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat repudiandae culpa sit expedita iste, nisi nemo vero ullam, amet minus sequi facilis nam numquam tempora accusantium. Sint, distinctio at! Eveniet?"
                 reviewerName="John Smith"
@@ -138,7 +148,11 @@ const Game = () => {
             </div>
             <div className={styles.reviewCol}>
               <MiniReview
-                imgURL={data.background_image}
+                imgURL={
+                  data.background_image
+                    ? data.background_image
+                    : "/images/default_cover.png"
+                }
                 reviewTitle="Endless Fun"
                 reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing"
                 reviewerName="Katiieee"

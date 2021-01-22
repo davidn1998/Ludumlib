@@ -57,6 +57,12 @@
         width: 49%;
       }
     }
+
+    .pageButtons {
+      width: 400px;
+      margin: auto;
+      @include mixins.glassButtons;
+    }
   }
 }
 
@@ -79,6 +85,10 @@
           flex-direction: column;
           width: 100%;
         }
+      }
+      .pageButtons {
+        width: 100%;
+        @include mixins.glassButtonsMobile;
       }
     }
   }

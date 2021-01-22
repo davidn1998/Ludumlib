@@ -9,6 +9,10 @@ import styles from "../styles/index.module.scss";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import GamesList from "../components/GamesList";
+import { Icon, InlineIcon } from "@iconify/react";
+import arrowIconRight from "@iconify/icons-fa-solid/arrow-right";
+import arrowIconLeft from "@iconify/icons-fa-solid/arrow-left";
+import ReactTooltip from "react-tooltip";
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
@@ -29,21 +33,14 @@ export default function Search() {
     console.error("Could not load game data");
   }
 
-  const gamesList1 = !data ? (
-    <></>
-  ) : (
-    <GamesList slideUp={false} data={data.results.slice(0, 6)} />
-  );
-  const gamesList2 = !data ? (
-    <></>
-  ) : (
-    <GamesList slideUp={false} data={data.results.slice(6, 12)} />
-  );
-  const gamesList3 = !data ? (
-    <></>
-  ) : (
-    <GamesList slideUp={false} data={data.results.slice(12, 18)} />
-  );
+  const prevResults = () => {
+    router.push(`/search?query=${query}&page=${parseInt(page) - 1}`);
+  };
+
+  const nextResults = () => {
+    router.push(`/search?query=${query}&page=${parseInt(page) + 1}`);
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -54,11 +51,39 @@ export default function Search() {
       <div className={styles.main}>
         <h2 className={styles.subHeading}>
           {data ? `Found ${data.count} ` : "Found 0 "}
-          Results For: <span className={styles.searchQuery}>{query}</span>
+          results for <span className={styles.searchQuery}>{query}</span>
         </h2>
-        {gamesList1}
-        {gamesList2}
-        {gamesList3}
+        {data ? (
+          <>
+            <GamesList slideUp={false} data={data.results.slice(0, 6)} />
+            <GamesList slideUp={false} data={data.results.slice(6, 12)} />
+            <GamesList slideUp={false} data={data.results.slice(12, 18)} />
+            <div className={styles.pageButtons}>
+              <div className={styles.glassButtons}>
+                <button
+                  className={`${styles.button} ${
+                    page == 1 ? styles.disabled : ""
+                  }`}
+                  disabled={page == 1}
+                  onClick={prevResults}
+                >
+                  {<Icon icon={arrowIconLeft} width={25} />}
+                </button>
+                <button
+                  className={`${styles.button} ${
+                    page == Math.ceil(data.count / 18) ? styles.disabled : ""
+                  }`}
+                  disabled={page == Math.ceil(data.count / 18)}
+                  onClick={nextResults}
+                >
+                  {<Icon icon={arrowIconRight} width={25} />}
+                </button>
+              </div>
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
         <Footer />
       </div>
     </div>

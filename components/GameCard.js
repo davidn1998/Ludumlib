@@ -9,7 +9,13 @@ const GameCard = ({ gameData }) => {
       <a className={styles.gameCard}>
         <div
           className={styles.image}
-          style={{ backgroundImage: `url(${gameData.background_image})` }}
+          style={{
+            backgroundImage: `url(${
+              gameData.background_image
+                ? gameData.background_image
+                : "/images/default_cover.png"
+            })`,
+          }}
           data-tip={gameData.name}
         ></div>
         <ReactTooltip place="bottom" type="dark" effect="solid" />
