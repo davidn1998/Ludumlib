@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import useSWR from "swr";
+import useSWR, { cache } from "swr";
 import axios from "axios";
 import styles from "../styles/index.module.scss";
 import Header from "../components/Header";
@@ -14,24 +14,19 @@ import eyeOpenIcon from "@iconify/icons-fa-solid/eye";
 
 export default function login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const [backgroundImage, setBackgroundImage] = useState(null);
 
   const getBackgroundImage = () => {
     const fetcher = (url) => axios.get(url).then((res) => res.data);
     const currDate = new Date();
-    const { data: games, error } = useSWR(
-      mounted
-        ? `https://api.rawg.io/api/games?key=c2cfee3aa5494adfacb4b77caa093322&dates=${
-            currDate.getFullYear() - 1
-          }-01-01,${currDate.toISOString().substr(0, 10)}&page_size=12`
-        : null,
-      fetcher,
-      { revalidateOnFocus: false }
-    );
+    const dataKey = !backgroundImage
+      ? `https://api.rawg.io/api/games?key=c2cfee3aa5494adfacb4b77caa093322&dates=${
+          currDate.getFullYear() - 1
+        }-01-01,${currDate.toISOString().substr(0, 10)}&page_size=12`
+      : null;
+    const { data: games, error } = useSWR(dataKey, fetcher, {
+      revalidateOnFocus: false,
+    });
 
     console.error(error);
 
@@ -44,14 +39,16 @@ export default function login() {
       { revalidateOnFocus: false }
     );
 
-    console.error(error2);
-
     if (!game) return null;
 
     return game.background_image;
   };
 
-  const backgroundImage = getBackgroundImage();
+  const backgroundImageData = getBackgroundImage();
+
+  if (backgroundImageData) {
+    setBackgroundImage(backgroundImageData);
+  }
 
   console.log(backgroundImage);
 
