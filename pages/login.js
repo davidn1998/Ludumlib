@@ -28,8 +28,6 @@ export default function login() {
       revalidateOnFocus: false,
     });
 
-    console.error(error);
-
     const { data: game, error: error2 } = useSWR(
       () =>
         `https://api.rawg.io/api/games/${
@@ -49,8 +47,6 @@ export default function login() {
   if (backgroundImageData) {
     setBackgroundImage(backgroundImageData);
   }
-
-  console.log(backgroundImage);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);

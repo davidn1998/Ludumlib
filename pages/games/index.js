@@ -21,8 +21,6 @@ export default function Games() {
 
   const pageNum = page || 1;
 
-  console.log(pageNum);
-
   const currDate = new Date();
   const {
     data,
