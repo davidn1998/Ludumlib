@@ -1,13 +1,33 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useAuth } from "../util/auth";
+
 import styles from "./HamburgerNav.module.scss";
 import { fallDown as Menu } from "react-burger-menu";
 import SearchBar from "./SearchBar";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const HamburgerNav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const auth = useAuth();
+
+  const onLogout = () => {
+    auth.signout().catch((err) => {
+      toast.error("Failed to logout.", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    });
+  };
+
   return (
     <div className={styles.hamburgerMenu}>
       <Menu styles={burgerStyles} isOpen={false} noOverlay disableAutoFocus>
@@ -29,24 +49,33 @@ const HamburgerNav = () => {
             GAMES
           </a>
         </Link>
-        <Link href="/login">
-          <a
-            className={`"bm-item menu-item" ${
-              router.pathname == "/login" ? styles.active : null
-            }`}
-          >
-            LOGIN
+        {auth.user ? (
+          <a className={`"bm-item menu-item"`} onClick={onLogout}>
+            LOGOUT
           </a>
-        </Link>
-        <Link href="/signup">
-          <a
-            className={`"bm-item menu-item" ${
-              router.pathname == "/signup" ? styles.active : null
-            }`}
-          >
-            SIGN UP
-          </a>
-        </Link>
+        ) : (
+          <>
+            {" "}
+            <Link href="/login">
+              <a
+                className={`"bm-item menu-item" ${
+                  router.pathname == "/login" ? styles.active : null
+                }`}
+              >
+                LOGIN
+              </a>
+            </Link>
+            <Link href="/signup">
+              <a
+                className={`"bm-item menu-item" ${
+                  router.pathname == "/signup" ? styles.active : null
+                }`}
+              >
+                SIGN UP
+              </a>
+            </Link>
+          </>
+        )}
         <SearchBar />
       </Menu>
     </div>
