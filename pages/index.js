@@ -3,6 +3,7 @@ import Link from "next/link";
 import useSWR from "swr";
 import axios from "axios";
 import { connectToDatabase } from "../util/mongodb";
+import { useAuth } from "../util/auth";
 
 import styles from "../styles/index.module.scss";
 
@@ -24,6 +25,8 @@ import MiniReview from "../components/MiniReview";
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default function Home({ isConnected }) {
+  const auth = useAuth();
+
   const currDate = new Date();
   const {
     data,
@@ -48,7 +51,7 @@ export default function Home({ isConnected }) {
       </Head>
       <Header />
       <div className={styles.main}>
-        <Hero />
+        <Hero user={auth.user} />
         {data ? (
           <GamesList slideUp={true} data={data.results.slice(0, 6)} />
         ) : (

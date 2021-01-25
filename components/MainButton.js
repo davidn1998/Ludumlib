@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const MainButton = ({ buttonText, animated }) => {
   return (
-    <Link href="">
+    <Link href="/signup">
       <a className={`${styles.mainButton} ${animated ? styles.animated : ""}`}>
         {buttonText}
       </a>

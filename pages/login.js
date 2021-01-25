@@ -1,21 +1,59 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import useSWR, { cache } from "swr";
 import axios from "axios";
 import styles from "../styles/index.module.scss";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// Components
 import Header from "../components/Header";
-import Footer from "../components/Footer";
+
+// UI Icons
 import { Icon } from "@iconify/react";
 import lockIcon from "@iconify/icons-fa-solid/lock";
 import userIcon from "@iconify/icons-fa-solid/user";
 import eyeClosedIcon from "@iconify/icons-fa-solid/eye-slash";
 import eyeOpenIcon from "@iconify/icons-fa-solid/eye";
 
-export default function login() {
+// Authentication
+import { useAuth } from "../util/auth";
+import { useForm } from "react-hook-form";
+
+export default function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [backgroundImage, setBackgroundImage] = useState(null);
+  const { register, handleSubmit, watch, errors } = useForm();
+  const auth = useAuth();
+  const router = useRouter();
 
+  if (auth.user) {
+    router.push("/");
+  }
+
+  // Sign In User with firebase or show toast error
+  const onSubmit = ({ email, password }) => {
+    auth
+      .signin(email, password)
+      .then(() => {
+        router.push("/");
+      })
+      .catch((err) => {
+        toast.error("Failed to login. Username or password is incorrect.", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      });
+  };
+
+  // Get random background image from RAWG API (based on top 12 games from the past year)
   const getBackgroundImage = () => {
     const fetcher = (url) => axios.get(url).then((res) => res.data);
     const currDate = new Date();
@@ -59,6 +97,7 @@ export default function login() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
+      {/* Background Image */}
       <div
         className={styles.background}
         style={{
@@ -67,28 +106,45 @@ export default function login() {
       ></div>
       <div className={styles.main}>
         <div className={styles.formContainer}>
+          <ToastContainer />
           <div className={styles.box}>
+            {/* Floating squares */}
             <div className={styles.square} style={{ "--i": 0 }}></div>
             <div className={styles.square} style={{ "--i": 1 }}></div>
             <div className={styles.square} style={{ "--i": 2 }}></div>
             <div className={styles.square} style={{ "--i": 3 }}></div>
             <div className={styles.square} style={{ "--i": 4 }}></div>
-            <div className={styles.form}>
+            {/* Login Form */}
+            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
               <h2 className={styles.heading}>Login</h2>
               <div className={styles.inputBox}>
                 <div className={styles.iconLeft}>
                   <Icon icon={userIcon} />
                 </div>
-                <input type="text" placeholder="Username" />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  ref={register({
+                    required: { value: true, message: "Email is required" },
+                  })}
+                />
               </div>
+              {errors.email && (
+                <p className={styles.error}>{errors?.email?.message}</p>
+              )}
               <div className={styles.inputBox}>
                 <div className={styles.iconLeft}>
                   <Icon icon={lockIcon} />{" "}
                 </div>
                 <input
                   type={passwordVisible ? "text" : "password"}
+                  name="password"
                   placeholder="Password"
                   style={{ paddingRight: "3rem" }}
+                  ref={register({
+                    required: { value: true, message: "Password is required" },
+                  })}
                 />
                 <div
                   className={`${styles.iconRight} ${styles.clickable}`}
@@ -97,6 +153,9 @@ export default function login() {
                   <Icon icon={passwordVisible ? eyeOpenIcon : eyeClosedIcon} />{" "}
                 </div>
               </div>
+              {errors.password && (
+                <p className={styles.error}>{errors?.password?.message}</p>
+              )}
               <div className={styles.inputBox}>
                 <button type="submit">Login</button>
               </div>
@@ -104,9 +163,12 @@ export default function login() {
                 Forgot your password? <a href="">Click Here</a>
               </p>
               <p className={styles.forgot}>
-                Don't have an account? <a href="">Sign Up</a>
+                Don't have an account?{" "}
+                <Link href="/signup">
+                  <a>Sign Up</a>
+                </Link>
               </p>
-            </div>
+            </form>
           </div>
         </div>
       </div>
