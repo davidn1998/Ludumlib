@@ -22,7 +22,7 @@ const Hero = ({ user }) => {
         />
         <img id={styles.gamer} src="/images/hero_gamer.png" alt="hero_gamer" />
         {user ? (
-          <p>Welcome {user.email}</p>
+          <p className={styles.heroWelcome}>Welcome Back, {user.username}</p>
         ) : (
           <div className={styles.heroButton}>
             <MainButton buttonText="GET STARTED" animated={true} />

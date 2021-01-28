@@ -6,6 +6,7 @@ THEN CUSTOMISED TO MY NEEDS.
 import React, { useState, useEffect, useContext, createContext } from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
+import axios from "axios";
 
 // Firebase credentials and config
 const firebaseConfig = {
@@ -48,18 +49,37 @@ function useProvideAuth() {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((response) => {
-        setUser(response.user);
-        return response.user;
+        axios
+          .get(`/api/user/${response.user.uid}`)
+          .then((res) => {
+            const user = { ...response.user, ...res.data };
+            setUser(user);
+            return user;
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       });
   };
 
-  const signup = (email, password) => {
+  const signup = (email, password, username) => {
     return firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((response) => {
-        setUser(response.user);
-        return response.user;
+        axios
+          .post(`/api/user`, {
+            _id: response.user.uid,
+            username: username,
+          })
+          .then((res) => {
+            const user = { ...response.user, ...res.data };
+            setUser(user);
+            return user;
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       });
   };
 
@@ -97,7 +117,15 @@ function useProvideAuth() {
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        setUser(user);
+        axios
+          .get(`/api/user/${user.uid}`)
+          .then((res) => {
+            const userData = { ...user, ...res.data };
+            setUser(userData);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       } else {
         setUser(false);
       }

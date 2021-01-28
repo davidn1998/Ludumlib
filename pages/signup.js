@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import useSWR, { cache } from "swr";
+import useSWR from "swr";
 import axios from "axios";
 import styles from "../styles/index.module.scss";
 import { ToastContainer, toast } from "react-toastify";
@@ -23,6 +23,8 @@ import eyeOpenIcon from "@iconify/icons-fa-solid/eye";
 import { useAuth } from "../util/auth";
 import { useForm } from "react-hook-form";
 
+const fetcher = (url) => axios.get(url).then((res) => res.data);
+
 export default function Signup() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [backgroundImage, setBackgroundImage] = useState(null);
@@ -35,28 +37,26 @@ export default function Signup() {
   }
 
   // Sign In User with firebase or show toast error
-  const onSubmit = ({ email, password }) => {
-    auth
-      .signup(email, password)
+  const onSubmit = ({ username, email, password }) => {
+    axios
+      .get(`api/users/${username}`)
       .then(() => {
-        router.push("/");
+        auth
+          .signup(email, password, username)
+          .then(() => {
+            router.push("/");
+          })
+          .catch((err) => {
+            toast.error(err.message);
+          });
       })
       .catch((err) => {
-        toast.error("Failed to login. Username or password is incorrect.", {
-          position: "bottom-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error("Username already taken.");
       });
   };
 
   // Get random background image from RAWG API (based on top 12 games from the past year)
   const getBackgroundImage = () => {
-    const fetcher = (url) => axios.get(url).then((res) => res.data);
     const currDate = new Date();
     const dataKey = !backgroundImage
       ? `https://api.rawg.io/api/games?key=c2cfee3aa5494adfacb4b77caa093322&dates=${
@@ -107,7 +107,15 @@ export default function Signup() {
       ></div>
       <div className={styles.main}>
         <div className={styles.formContainer}>
-          <ToastContainer />
+          <ToastContainer
+            position="bottom-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            closeOnClick={true}
+            pauseOnHover={true}
+            draggable={true}
+            progress={undefined}
+          />
           <div className={styles.box}>
             {/* Floating squares */}
             <div className={styles.square} style={{ "--i": 0 }}></div>
