@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./MiniReview.module.scss";
 import FullStar from "./SVGIcons/FullStar";
 import HalfStar from "./SVGIcons/HalfStar";
@@ -61,10 +62,13 @@ const MiniReview = ({
     <div className={styles.miniReview}>
       <div className={styles.reviewDetails}>
         <div className={styles.imgContainer}>
-          <div
+          <Image
+            layout="fill"
+            objectFit="cover"
             className={styles.image}
-            style={{ backgroundImage: `url(${imgURL})` }}
-          ></div>
+            src={imgURL}
+            alt={""}
+          />
         </div>
         <div className={styles.content}>
           <div className={styles.header}>

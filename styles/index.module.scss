@@ -8,14 +8,8 @@
   overflow: hidden;
 
   .background {
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
+    position: fixed !important;
     opacity: 0.3;
-    background-size: cover;
-    background-position: center;
     z-index: 0;
   }
 

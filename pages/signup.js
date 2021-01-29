@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import axios from "axios";
@@ -99,12 +100,17 @@ export default function Signup() {
       </Head>
       <Header />
       {/* Background Image */}
-      <div
-        className={styles.background}
-        style={{
-          backgroundImage: `url(${backgroundImage})`,
-        }}
-      ></div>
+      {backgroundImage ? (
+        <Image
+          layout="fill"
+          objectFit="cover"
+          className={styles.background}
+          src={backgroundImage}
+          alt={""}
+        />
+      ) : (
+        <></>
+      )}
       <div className={styles.main}>
         <div className={styles.formContainer}>
           <ToastContainer

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import DefaultErrorPage from "next/error";
 import useSWR from "swr";
 import axios from "axios";
@@ -12,7 +13,7 @@ import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 import MiniReview from "../../../components/MiniReview";
 
-import { Icon, InlineIcon } from "@iconify/react";
+import { Icon } from "@iconify/react";
 import pencilIcon from "@iconify/icons-fa-solid/pencil-alt";
 import heartIcon from "@iconify/icons-fa-solid/heart";
 import plusIcon from "@iconify/icons-fa-solid/plus";
@@ -76,26 +77,30 @@ const Game = () => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Header />
-        <div
+        <Image
+          layout="fill"
+          objectFit="cover"
           className={styles.background}
-          style={{
-            backgroundImage: `url(${data.background_image_additional})`,
-          }}
-        ></div>
+          src={data.background_image_additional}
+          alt={""}
+        />
         <div className={styles.main}>
           <h2 className={styles.heading}>{data.name}</h2>
           <div className={styles.section1}>
             <div className={styles.leftCol}>
-              <div
-                className={styles.image}
-                style={{
-                  backgroundImage: `url(${
+              <div className={styles.imageContainer}>
+                <Image
+                  layout="fill"
+                  objectFit="cover"
+                  className={styles.image}
+                  src={
                     data.background_image
                       ? data.background_image
                       : "/images/default_cover.png"
-                  })`,
-                }}
-              ></div>
+                  }
+                  alt={data.name}
+                />
+              </div>
               <div className={styles.glassButtons}>
                 <button
                   className={styles.button}
