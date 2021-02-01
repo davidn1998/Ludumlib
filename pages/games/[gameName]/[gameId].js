@@ -6,6 +6,7 @@ import Image from "next/image";
 import DefaultErrorPage from "next/error";
 import useSWR from "swr";
 import axios from "axios";
+import { useAuth } from "../../../util/auth";
 
 import styles from "../../../styles/game.module.scss";
 
@@ -23,7 +24,7 @@ const Game = () => {
   const fetcher = (url) => axios.get(url).then((res) => res.data);
 
   const router = useRouter();
-  const { gameId } = router.query;
+  const { gameName, gameId } = router.query;
 
   const {
     data,
@@ -35,6 +36,8 @@ const Game = () => {
   );
 
   const [isFullAbout, setIsFullAbout] = useState(false);
+
+  const auth = useAuth();
 
   if (error) {
     return <DefaultErrorPage statusCode={404} />;
@@ -69,6 +72,32 @@ const Game = () => {
           <div dangerouslySetInnerHTML={{ __html: data.description }}></div>
         </>
       );
+
+    const onLogClick = () => {
+      if (!auth.user) {
+        router.push(`/login?nextName=${gameName}&nextId=${gameId}`);
+        return;
+      }
+
+      console.log("Log Game");
+    };
+    const onLikeClick = () => {
+      if (!auth.user) {
+        router.push(`/login?nextName=${gameName}&nextId=${gameId}`);
+        return;
+      }
+
+      console.log("Like Game");
+    };
+
+    const onReviewClick = () => {
+      if (!auth.user) {
+        router.push(`/login?nextName=${gameName}&nextId=${gameId}`);
+        return;
+      }
+
+      console.log("Review Game");
+    };
 
     return (
       <div className={styles.container}>
@@ -106,6 +135,7 @@ const Game = () => {
                   className={styles.button}
                   data-tip="Log"
                   data-type="success"
+                  onClick={onLogClick}
                 >
                   {<Icon icon={plusIcon} width={20} />}
                 </button>
@@ -113,6 +143,7 @@ const Game = () => {
                   className={styles.button}
                   data-tip="Like"
                   data-type="error"
+                  onClick={onLikeClick}
                 >
                   {<Icon icon={heartIcon} width={20} />}
                 </button>
@@ -120,6 +151,7 @@ const Game = () => {
                   className={styles.button}
                   data-tip="Review"
                   data-type="warning"
+                  onClick={onReviewClick}
                 >
                   {<Icon icon={pencilIcon} width={20} />}
                 </button>

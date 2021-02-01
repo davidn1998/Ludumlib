@@ -22,6 +22,7 @@ import eyeOpenIcon from "@iconify/icons-fa-solid/eye";
 // Authentication
 import { useAuth } from "../util/auth";
 import { useForm } from "react-hook-form";
+import next from "next";
 
 export default function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -29,6 +30,8 @@ export default function Login() {
   const { register, handleSubmit, watch, errors } = useForm();
   const auth = useAuth();
   const router = useRouter();
+
+  const { nextName, nextId } = router.query;
 
   if (auth.user) {
     router.push("/");
@@ -39,7 +42,11 @@ export default function Login() {
     auth
       .signin(email, password)
       .then(() => {
-        router.push("/");
+        if (nextName) {
+          router.push(`/games/${nextName}/${nextId}`);
+        } else {
+          router.push("/");
+        }
       })
       .catch((err) => {
         toast.error("Failed to login. Username or password is incorrect.", {
