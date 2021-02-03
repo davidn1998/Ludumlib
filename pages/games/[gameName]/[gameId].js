@@ -75,7 +75,7 @@ const Game = () => {
 
     const onLogClick = () => {
       if (!auth.user) {
-        router.push(`/login?nextName=${gameName}&nextId=${gameId}`);
+        router.push(`/login?nextRoute=/games/${gameName}/${gameId}`);
         return;
       }
 

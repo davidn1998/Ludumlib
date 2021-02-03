@@ -63,7 +63,9 @@ const Navbar = () => {
                 <Link href={`/${auth.user.username}`}>
                   <a
                     className={
-                      router.pathname == `/[username]` ? styles.active : null
+                      router.query.username == `${auth.user.username}`
+                        ? styles.active
+                        : null
                     }
                   >
                     PROFILE
@@ -71,12 +73,10 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link href={`/${auth.user.username}/settings`}>
+                <Link href={`/settings`}>
                   <a
                     className={
-                      router.pathname == `/[username]/settings`
-                        ? styles.active
-                        : null
+                      router.pathname == `/settings` ? styles.active : null
                     }
                   >
                     SETTINGS

@@ -110,6 +110,17 @@ function useProvideAuth() {
       });
   };
 
+  const updateEmail = (currentEmail, email, password) => {
+    return signin(currentEmail, password).then(() => {
+      return firebase
+        .auth()
+        .currentUser.updateEmail(email)
+        .then(() => {
+          return user;
+        });
+    });
+  };
+
   // Subscribe to user on mount
   // Because this sets state in the callback it will cause any ...
   // ... component that utilizes this hook to re-render with the ...
@@ -143,5 +154,6 @@ function useProvideAuth() {
     signout,
     sendPasswordResetEmail,
     confirmPasswordReset,
+    updateEmail,
   };
 }

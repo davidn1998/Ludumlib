@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import axios from "axios";
 import styles from "../styles/index.module.scss";
+import formStyles from "../styles/forms.module.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -130,10 +131,10 @@ export default function Signup() {
             <div className={styles.square} style={{ "--i": 3 }}></div>
             <div className={styles.square} style={{ "--i": 4 }}></div>
             {/* Sign up Form */}
-            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-              <h2 className={styles.heading}>Sign Up</h2>
-              <div className={styles.inputBox}>
-                <div className={styles.iconLeft}>
+            <form className={formStyles.form} onSubmit={handleSubmit(onSubmit)}>
+              <h2 className={formStyles.heading}>Sign Up</h2>
+              <div className={formStyles.inputBox}>
+                <div className={formStyles.iconLeft}>
                   <Icon icon={emailIcon} />
                 </div>
                 <input
@@ -150,10 +151,10 @@ export default function Signup() {
                 />
               </div>
               {errors.email && (
-                <p className={styles.error}>{errors?.email?.message}</p>
+                <p className={formStyles.error}>{errors?.email?.message}</p>
               )}
-              <div className={styles.inputBox}>
-                <div className={styles.iconLeft}>
+              <div className={formStyles.inputBox}>
+                <div className={formStyles.iconLeft}>
                   <Icon icon={userIcon} />
                 </div>
                 <input
@@ -170,10 +171,10 @@ export default function Signup() {
                 />
               </div>
               {errors.username && (
-                <p className={styles.error}>{errors?.username?.message}</p>
+                <p className={formStyles.error}>{errors?.username?.message}</p>
               )}
-              <div className={styles.inputBox}>
-                <div className={styles.iconLeft}>
+              <div className={formStyles.inputBox}>
+                <div className={formStyles.iconLeft}>
                   <Icon icon={lockIcon} />{" "}
                 </div>
                 <input
@@ -190,19 +191,19 @@ export default function Signup() {
                   })}
                 />
                 <div
-                  className={`${styles.iconRight} ${styles.clickable}`}
+                  className={`${formStyles.iconRight} ${formStyles.clickable}`}
                   onClick={togglePasswordVisibility}
                 >
                   <Icon icon={passwordVisible ? eyeOpenIcon : eyeClosedIcon} />{" "}
                 </div>
               </div>
               {errors.password && (
-                <p className={styles.error}>{errors?.password?.message}</p>
+                <p className={formStyles.error}>{errors?.password?.message}</p>
               )}
-              <div className={styles.inputBox}>
+              <div className={formStyles.inputBox}>
                 <button type="submit">Sign Up</button>
               </div>
-              <p className={styles.forgot}>
+              <p className={formStyles.forgot}>
                 By signing up, you agree to Ludumlib’s <br />
                 <Link href="/terms">
                   <a>Terms of Service</a>
@@ -213,7 +214,7 @@ export default function Signup() {
                   <a> Privacy Policy.</a>
                 </Link>
               </p>
-              <p className={styles.forgot}>
+              <p className={formStyles.forgot}>
                 Already have an account?{" "}
                 <Link href="/login">
                   <a>Login</a>

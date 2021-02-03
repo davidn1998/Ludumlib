@@ -11,7 +11,7 @@ import navStyles from "../components/Navbar.module.scss";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-export default function profile() {
+export default function Profile() {
   const router = useRouter();
   const { username } = router.query;
 
@@ -41,13 +41,13 @@ export default function profile() {
             </div>
             <div className={styles.row}>
               <li>
-                <a className={tab === 3 ? styles.active : null}>Reviews</a>
+                <a className={tab === 4 ? styles.active : null}>Reviews</a>
               </li>
               <li>
-                <a className={tab === 3 ? styles.active : null}>Lists</a>
+                <a className={tab === 5 ? styles.active : null}>Lists</a>
               </li>
               <li>
-                <a className={tab === 3 ? styles.active : null}>Likes</a>
+                <a className={tab === 6 ? styles.active : null}>Likes</a>
               </li>
             </div>
           </ul>

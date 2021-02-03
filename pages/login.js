@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import useSWR, { cache } from "swr";
 import axios from "axios";
 import styles from "../styles/index.module.scss";
+import formStyles from "../styles/forms.module.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -30,7 +31,7 @@ export default function Login() {
   const auth = useAuth();
   const router = useRouter();
 
-  const { nextName, nextId } = router.query;
+  const { nextRoute } = router.query;
 
   if (auth.user) {
     router.push("/");
@@ -41,8 +42,8 @@ export default function Login() {
     auth
       .signin(email, password)
       .then(() => {
-        if (nextName) {
-          router.push(`/games/${nextName}/${nextId}`);
+        if (nextRoute) {
+          router.push(nextRoute);
         } else {
           router.push("/");
         }
@@ -128,10 +129,13 @@ export default function Login() {
               <div className={styles.square} style={{ "--i": 3 }}></div>
               <div className={styles.square} style={{ "--i": 4 }}></div>
               {/* Login Form */}
-              <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-                <h2 className={styles.heading}>Login</h2>
-                <div className={styles.inputBox}>
-                  <div className={styles.iconLeft}>
+              <form
+                className={formStyles.form}
+                onSubmit={handleSubmit(onSubmit)}
+              >
+                <h2 className={formStyles.heading}>Login</h2>
+                <div className={formStyles.inputBox}>
+                  <div className={formStyles.iconLeft}>
                     <Icon icon={userIcon} />
                   </div>
                   <input
@@ -144,10 +148,10 @@ export default function Login() {
                   />
                 </div>
                 {errors.email && (
-                  <p className={styles.error}>{errors?.email?.message}</p>
+                  <p className={formStyles.error}>{errors?.email?.message}</p>
                 )}
-                <div className={styles.inputBox}>
-                  <div className={styles.iconLeft}>
+                <div className={formStyles.inputBox}>
+                  <div className={formStyles.iconLeft}>
                     <Icon icon={lockIcon} />{" "}
                   </div>
                   <input
@@ -163,7 +167,7 @@ export default function Login() {
                     })}
                   />
                   <div
-                    className={`${styles.iconRight} ${styles.clickable}`}
+                    className={`${formStyles.iconRight} ${formStyles.clickable}`}
                     onClick={togglePasswordVisibility}
                   >
                     <Icon
@@ -172,15 +176,17 @@ export default function Login() {
                   </div>
                 </div>
                 {errors.password && (
-                  <p className={styles.error}>{errors?.password?.message}</p>
+                  <p className={formStyles.error}>
+                    {errors?.password?.message}
+                  </p>
                 )}
-                <div className={styles.inputBox}>
+                <div className={formStyles.inputBox}>
                   <button type="submit">Login</button>
                 </div>
-                <p className={styles.forgot}>
+                <p className={formStyles.forgot}>
                   Forgot your password? <a href="">Click Here</a>
                 </p>
-                <p className={styles.forgot}>
+                <p className={formStyles.forgot}>
                   Don't have an account?{" "}
                   <Link href="/signup">
                     <a>Sign Up</a>
