@@ -22,7 +22,6 @@ import eyeOpenIcon from "@iconify/icons-fa-solid/eye";
 // Authentication
 import { useAuth } from "../util/auth";
 import { useForm } from "react-hook-form";
-import next from "next";
 
 export default function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -98,93 +97,102 @@ export default function Login() {
     setPasswordVisible(!passwordVisible);
   };
 
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Login | Ludumlib</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Header />
-      {/* Background Image */}
-      {backgroundImage ? (
-        <Image
-          layout="fill"
-          objectFit="cover"
-          className={styles.background}
-          src={backgroundImage}
-          alt={""}
-        />
-      ) : (
-        <></>
-      )}
-      <div className={styles.main}>
-        <div className={styles.formContainer}>
-          <ToastContainer />
-          <div className={styles.box}>
-            {/* Floating squares */}
-            <div className={styles.square} style={{ "--i": 0 }}></div>
-            <div className={styles.square} style={{ "--i": 1 }}></div>
-            <div className={styles.square} style={{ "--i": 2 }}></div>
-            <div className={styles.square} style={{ "--i": 3 }}></div>
-            <div className={styles.square} style={{ "--i": 4 }}></div>
-            {/* Login Form */}
-            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-              <h2 className={styles.heading}>Login</h2>
-              <div className={styles.inputBox}>
-                <div className={styles.iconLeft}>
-                  <Icon icon={userIcon} />
+  if (auth.user === false) {
+    return (
+      <div className={styles.container}>
+        <Head>
+          <title>Login | Ludumlib</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <Header />
+        {/* Background Image */}
+        {backgroundImage ? (
+          <Image
+            layout="fill"
+            objectFit="cover"
+            className={styles.background}
+            src={backgroundImage}
+            alt={""}
+          />
+        ) : (
+          <></>
+        )}
+        <div className={styles.main}>
+          <div className={styles.formContainer}>
+            <ToastContainer />
+            <div className={styles.box}>
+              {/* Floating squares */}
+              <div className={styles.square} style={{ "--i": 0 }}></div>
+              <div className={styles.square} style={{ "--i": 1 }}></div>
+              <div className={styles.square} style={{ "--i": 2 }}></div>
+              <div className={styles.square} style={{ "--i": 3 }}></div>
+              <div className={styles.square} style={{ "--i": 4 }}></div>
+              {/* Login Form */}
+              <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+                <h2 className={styles.heading}>Login</h2>
+                <div className={styles.inputBox}>
+                  <div className={styles.iconLeft}>
+                    <Icon icon={userIcon} />
+                  </div>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    ref={register({
+                      required: { value: true, message: "Email is required" },
+                    })}
+                  />
                 </div>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  ref={register({
-                    required: { value: true, message: "Email is required" },
-                  })}
-                />
-              </div>
-              {errors.email && (
-                <p className={styles.error}>{errors?.email?.message}</p>
-              )}
-              <div className={styles.inputBox}>
-                <div className={styles.iconLeft}>
-                  <Icon icon={lockIcon} />{" "}
+                {errors.email && (
+                  <p className={styles.error}>{errors?.email?.message}</p>
+                )}
+                <div className={styles.inputBox}>
+                  <div className={styles.iconLeft}>
+                    <Icon icon={lockIcon} />{" "}
+                  </div>
+                  <input
+                    type={passwordVisible ? "text" : "password"}
+                    name="password"
+                    placeholder="Password"
+                    style={{ paddingRight: "3rem" }}
+                    ref={register({
+                      required: {
+                        value: true,
+                        message: "Password is required",
+                      },
+                    })}
+                  />
+                  <div
+                    className={`${styles.iconRight} ${styles.clickable}`}
+                    onClick={togglePasswordVisibility}
+                  >
+                    <Icon
+                      icon={passwordVisible ? eyeOpenIcon : eyeClosedIcon}
+                    />{" "}
+                  </div>
                 </div>
-                <input
-                  type={passwordVisible ? "text" : "password"}
-                  name="password"
-                  placeholder="Password"
-                  style={{ paddingRight: "3rem" }}
-                  ref={register({
-                    required: { value: true, message: "Password is required" },
-                  })}
-                />
-                <div
-                  className={`${styles.iconRight} ${styles.clickable}`}
-                  onClick={togglePasswordVisibility}
-                >
-                  <Icon icon={passwordVisible ? eyeOpenIcon : eyeClosedIcon} />{" "}
+                {errors.password && (
+                  <p className={styles.error}>{errors?.password?.message}</p>
+                )}
+                <div className={styles.inputBox}>
+                  <button type="submit">Login</button>
                 </div>
-              </div>
-              {errors.password && (
-                <p className={styles.error}>{errors?.password?.message}</p>
-              )}
-              <div className={styles.inputBox}>
-                <button type="submit">Login</button>
-              </div>
-              <p className={styles.forgot}>
-                Forgot your password? <a href="">Click Here</a>
-              </p>
-              <p className={styles.forgot}>
-                Don't have an account?{" "}
-                <Link href="/signup">
-                  <a>Sign Up</a>
-                </Link>
-              </p>
-            </form>
+                <p className={styles.forgot}>
+                  Forgot your password? <a href="">Click Here</a>
+                </p>
+                <p className={styles.forgot}>
+                  Don't have an account?{" "}
+                  <Link href="/signup">
+                    <a>Sign Up</a>
+                  </Link>
+                </p>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return <></>;
+  }
 }

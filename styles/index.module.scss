@@ -6,6 +6,8 @@
   margin: 0 auto;
   min-height: 100vh;
   overflow: hidden;
+  position: relative;
+  padding-bottom: 2rem;
 
   .background {
     position: fixed !important;
@@ -274,6 +276,112 @@
         }
       }
     }
+
+    .tabSelect {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: moveNav 1s ease;
+
+      @keyframes moveNav {
+        0% {
+          transform: translateY(600px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      ul {
+        list-style: none;
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+        font-weight: 600;
+        font-size: 16px;
+        margin: 0;
+        background-color: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(5px);
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
+
+        .row {
+          display: flex;
+          width: 100%;
+          justify-content: space-around;
+        }
+
+        .active {
+          &::before {
+            visibility: visible;
+            transform: scaleX(1);
+          }
+        }
+      }
+
+      a {
+        text-decoration: none;
+        color: #fff;
+        position: relative;
+        width: 100%;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        &::before {
+          content: "";
+          position: absolute;
+          width: 100%;
+          height: 2px;
+          bottom: 0;
+          left: 0;
+          background-color: #fff;
+          visibility: hidden;
+          transform: scaleX(0);
+          transition: all 0.3s ease-in-out;
+        }
+
+        &:hover::before {
+          visibility: visible;
+          transform: scaleX(1);
+        }
+      }
+
+      .dropdown {
+        .dropdownToggle {
+          &:hover::before {
+            visibility: hiddne;
+            transform: scaleX(0);
+          }
+        }
+
+        .dropdownMenu {
+          flex-direction: column;
+          position: absolute;
+          width: auto;
+          background-color: #0a0028;
+          box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
+          border-radius: 10px;
+          padding: 1rem;
+          z-index: 2000;
+          font-size: 12px;
+
+          li {
+            margin: 0.5rem 0;
+          }
+        }
+
+        .show {
+          display: flex;
+        }
+
+        .hide {
+          display: none;
+        }
+      }
+    }
   }
 }
 
@@ -302,13 +410,21 @@
         @include mixins.glassButtonsMobile;
       }
 
-      // .formContainer {
-      //   .box {
-      //     .square {
-      //       // display: none;
-      //     }
-      //   }
-      // }
+      .tabSelect {
+        ul {
+          flex-direction: column;
+          align-items: center;
+
+          .row {
+            padding: 1rem 0;
+            justify-content: space-around;
+          }
+
+          #row1 {
+            border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+          }
+        }
+      }
     }
   }
 }

@@ -14,6 +14,6 @@ export default async (req, res) => {
     const result = await db.collection("users").insertOne(user);
     return res.status(200).json(user);
   } else {
-    return res.status(404).json({});
+    res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
   }
 };

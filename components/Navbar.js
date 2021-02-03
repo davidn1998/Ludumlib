@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useAuth } from "../util/auth";
@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Navbar = () => {
   const router = useRouter();
   const auth = useAuth();
+  const [dropMenuOpen, setDropMenuOpen] = useState(false);
 
   const onLogout = () => {
     auth.signout().catch((err) => {
@@ -45,9 +46,50 @@ const Navbar = () => {
           </Link>
         </li>
         {auth.user ? (
-          <li>
-            <a onClick={onLogout}>LOGOUT</a>
-          </li>
+          <div
+            className={styles.dropdown}
+            onMouseOver={() => setDropMenuOpen(true)}
+            onMouseLeave={() => setDropMenuOpen(false)}
+          >
+            <a className={styles.dropdownToggle}>
+              {auth.user.username.toUpperCase()}
+            </a>
+            <ul
+              className={`${styles.dropdownMenu} ${
+                dropMenuOpen ? styles.show : styles.hide
+              }`}
+            >
+              <li>
+                <Link href={`/${auth.user.username}`}>
+                  <a
+                    className={
+                      router.pathname == `/[username]` ? styles.active : null
+                    }
+                  >
+                    PROFILE
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href={`/${auth.user.username}/settings`}>
+                  <a
+                    className={
+                      router.pathname == `/[username]/settings`
+                        ? styles.active
+                        : null
+                    }
+                  >
+                    SETTINGS
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <a onClick={onLogout}>LOGOUT</a>
+              </li>
+            </ul>
+          </div>
+        ) : auth.user === null ? (
+          <></>
         ) : (
           <>
             <li>

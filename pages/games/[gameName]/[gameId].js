@@ -200,8 +200,8 @@ const Game = () => {
               />
             </div>
           </div>
-          <Footer />
         </div>
+        <Footer />
       </div>
     );
   } else {

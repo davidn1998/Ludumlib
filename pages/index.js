@@ -85,9 +85,13 @@ export default function Home({ isConnected }) {
             infoText="Analyze your gaming habits with custom stats based on your games"
           />
         </div>
-        <div className={styles.joinButton}>
-          <MainButton buttonText="JOIN NOW" animated={false} />
-        </div>
+        {auth.user === false ? (
+          <div className={styles.joinButton}>
+            <MainButton buttonText="JOIN NOW" animated={false} />
+          </div>
+        ) : (
+          <></>
+        )}
         <Link href="/games">
           <a>
             <h2 className={styles.subHeading}>Popular Games</h2>

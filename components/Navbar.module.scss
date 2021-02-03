@@ -52,6 +52,39 @@
       transform: scaleX(1);
     }
   }
+
+  .dropdown {
+    .dropdownToggle {
+      &:hover::before {
+        visibility: hiddne;
+        transform: scaleX(0);
+      }
+    }
+
+    .dropdownMenu {
+      flex-direction: column;
+      position: absolute;
+      width: auto;
+      background-color: #0a0028;
+      box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      padding: 1rem;
+      z-index: 2000;
+      font-size: 12px;
+
+      li {
+        margin: 0.5rem 0;
+      }
+    }
+
+    .show {
+      display: flex;
+    }
+
+    .hide {
+      display: none;
+    }
+  }
 }
 
 @keyframes moveNav {

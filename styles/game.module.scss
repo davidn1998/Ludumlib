@@ -5,6 +5,7 @@
   max-width: 1920px;
   margin: 0 auto;
   position: relative;
+  padding-bottom: 2rem;
 
   div {
     overflow: visible !important;
@@ -25,7 +26,6 @@
   .main {
     position: relative;
     margin: 0 5%;
-    height: 100vh;
     z-index: 100;
 
     .heading {
