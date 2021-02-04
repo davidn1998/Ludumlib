@@ -5,6 +5,10 @@ export default async function handler(req, res) {
     query: { id },
   } = await req;
 
+  console.log({
+    private_key: process.env.PRIVATE_KEY,
+  });
+
   const storage = new Storage({
     projectId: process.env.PROJECT_ID,
     credentials: {
