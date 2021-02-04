@@ -41,7 +41,7 @@ const Navbar = () => {
           >
             <a className={styles.dropdownToggle}>
               <ProfilePic
-                source={auth.user.pfp.uri}
+                source={auth.user?.pfp?.uri}
                 width={"30px"}
                 height={"30px"}
               />

@@ -183,8 +183,8 @@ const ProfileSettings = () => {
             source={
               imageURI
                 ? imageURI
-                : user.pfp.uri
-                ? user.pfp.uri
+                : user.pfp?.uri
+                ? user.pfp?.uri
                 : "/images/defaultpfp.png"
             }
           />
