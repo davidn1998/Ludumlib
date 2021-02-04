@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // Components
+import ProfilePic from "../components/ProfilePic";
 
 // UI Icons
 import { Icon } from "@iconify/react";
@@ -19,6 +20,7 @@ import userAltIcon from "@iconify/icons-fa-solid/user-tie";
 import { useForm } from "react-hook-form";
 
 const ProfileSettings = ({ auth }) => {
+  const [imageURI, setImageURI] = useState(null);
   const { register, handleSubmit, watch, errors } = useForm();
   const router = useRouter();
 
@@ -28,22 +30,96 @@ const ProfileSettings = ({ auth }) => {
     return <></>;
   }
 
+  const readURI = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      let reader = new FileReader();
+      reader.onload = (ev) => {
+        setImageURI(ev.target.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    if (e.target.files.length == 0) {
+      setImageURI(null);
+    }
+  };
+
   // Sign In User with firebase or show toast error
-  const onSubmit = ({ username, fullname }) => {
-    axios
-      .put(`api/user/${user._id}/updateSettings`, {
-        username,
-        fullname,
-      })
-      .then((res) => {
-        console.log(res);
-        router.reload();
-        toast.success("Profile Updated", { position: "bottom-center" });
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Username already taken", { position: "bottom-center" });
-      });
+  const onSubmit = ({ username, fullname, pfp }) => {
+    let pfpURI = user.pfp;
+
+    if (pfp.length > 0) {
+      console.log(pfp);
+
+      if (pfp[0].size > 5000000) {
+        toast.error("Failed to save settings. Max image size (5 MB) exceeded", {
+          position: "bottom-center",
+        });
+        return;
+      }
+
+      const formData = new FormData();
+
+      formData.append("imageFile", pfp[0]);
+
+      axios
+        .post(`api/user/${user._id}/profilepic`, formData, {
+          headers: { "content-type": "multipart/form-data" },
+          //   onUploadProgress: (event) => {
+          //     console.log(
+          //       `Current progress:`,
+          //       Math.round((event.loaded * 100) / event.total)
+          //     );
+          //   },
+        })
+        .then((res) => {
+          console.log(res);
+          pfpURI = res.data.Location ? res.data.Location : user.pfp;
+          toast.success("Profile Picture Updated", {
+            position: "bottom-center",
+          });
+          return pfpURI;
+        })
+        .then((pfpURI) => {
+          axios
+            .put(`api/user/${user._id}/updateSettings`, {
+              username,
+              fullname,
+              pfp: pfpURI,
+            })
+            .then((res) => {
+              router.reload();
+              toast.success("Profile Updated", { position: "bottom-center" });
+            })
+            .catch((err) => {
+              console.log(err);
+              toast.error("Username already taken", {
+                position: "bottom-center",
+              });
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Error uploading profile picture.", {
+            position: "bottom-center",
+          });
+        });
+    } else {
+      axios
+        .put(`api/user/${user._id}/updateSettings`, {
+          username,
+          fullname,
+          pfp: pfpURI,
+        })
+        .then((res) => {
+          router.reload();
+          toast.success("Profile Updated", { position: "bottom-center" });
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Username already taken", { position: "bottom-center" });
+        });
+    }
   };
 
   return (
@@ -97,6 +173,28 @@ const ProfileSettings = ({ auth }) => {
         </div>
         {errors.fullname && (
           <p className={formStyles.error}>{errors?.fullname?.message}</p>
+        )}
+        <h5 className={formStyles.label}>Profile Picture</h5>
+        <div className={formStyles.fileInputBox}>
+          <ProfilePic
+            source={
+              imageURI
+                ? imageURI
+                : user.pfp
+                ? user.pfp
+                : "/images/defaultpfp.png"
+            }
+          />
+          <input
+            type="file"
+            name="pfp"
+            accept="image/*"
+            onChange={(e) => readURI(e)}
+            ref={register({})}
+          />
+        </div>
+        {errors.pfp && (
+          <p className={formStyles.error}>{errors?.pfp?.message}</p>
         )}
         <div className={formStyles.inputBox}>
           <button type="submit">Save Settings</button>

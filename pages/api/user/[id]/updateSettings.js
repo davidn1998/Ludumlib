@@ -19,15 +19,22 @@ export default async (req, res) => {
         message: "Username already exists",
       });
     }
-    const result = await db
-      .collection("users")
-      .updateOne(
-        { _id: id },
-        { $set: { username: updates.username, fullname: updates.fullname } }
-      );
-    return res
-      .status(200)
-      .json({ username: updates.username, fullname: updates.fullname });
+    const result = await db.collection("users").updateOne(
+      { _id: id },
+      {
+        $set: {
+          username: updates.username,
+          fullname: updates.fullname,
+          pfp: updates.pfp,
+        },
+      }
+    );
+
+    return res.status(200).json({
+      username: updates.username,
+      fullname: updates.fullname,
+      pfp: updates.pfp,
+    });
   } else {
     res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
   }

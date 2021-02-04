@@ -7,7 +7,6 @@ import axios from "axios";
 
 // Styles
 import styles from "../styles/index.module.scss";
-import navStyles from "../components/Navbar.module.scss";
 
 // Components
 import Header from "../components/Header";

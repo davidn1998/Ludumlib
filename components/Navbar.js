@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useAuth } from "../util/auth";
 
 import styles from "./Navbar.module.scss";
 import SearchBar from "./SearchBar";
+import ProfilePic from "./ProfilePic";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -31,20 +33,6 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       <ToastContainer />
       <ul>
-        <li>
-          <Link href="/">
-            <a className={router.pathname == "/" ? styles.active : null}>
-              HOME
-            </a>
-          </Link>
-        </li>
-        <li>
-          <Link href="/games">
-            <a className={router.pathname == "/games" ? styles.active : null}>
-              GAMES
-            </a>
-          </Link>
-        </li>
         {auth.user ? (
           <div
             className={styles.dropdown}
@@ -52,6 +40,11 @@ const Navbar = () => {
             onMouseLeave={() => setDropMenuOpen(false)}
           >
             <a className={styles.dropdownToggle}>
+              <ProfilePic
+                source={auth.user.pfp}
+                width={"30px"}
+                height={"30px"}
+              />
               {auth.user.username.toUpperCase()}
             </a>
             <ul
@@ -60,7 +53,14 @@ const Navbar = () => {
               }`}
             >
               <li>
-                <Link href={`/${auth.user.username}`}>
+                <Link href="/">
+                  <a className={router.pathname == "/" ? styles.active : null}>
+                    HOME
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href={`/user/${auth.user.username}`}>
                   <a
                     className={
                       router.query.username == `${auth.user.username}`
@@ -114,6 +114,27 @@ const Navbar = () => {
             </li>
           </>
         )}
+        <li>
+          <Link href="/games">
+            <a className={router.pathname == "/games" ? styles.active : null}>
+              GAMES
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/reviews">
+            <a className={router.pathname == "/reviews" ? styles.active : null}>
+              REVIEWS
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/lists">
+            <a className={router.pathname == "/lists" ? styles.active : null}>
+              LISTS
+            </a>
+          </Link>
+        </li>
       </ul>
       <SearchBar />
     </nav>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "./MiniReview.module.scss";
 import FullStar from "./SVGIcons/FullStar";
 import HalfStar from "./SVGIcons/HalfStar";
+import ProfilePic from "./ProfilePic";
 
 const MiniReview = ({
   reviewTitle,
@@ -79,7 +80,7 @@ const MiniReview = ({
             {halfStarsNum > 0 ? <HalfStar /> : ""}
           </div>
           <div className={styles.reviewerInfo}>
-            <img src={reviewerIcon} alt="" />
+            <ProfilePic source={reviewerIcon} width="60px" height="60px" />
             <p>
               <span>{reviewerName}</span> - {reviewDate}
             </p>
