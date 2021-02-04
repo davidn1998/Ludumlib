@@ -37,6 +37,11 @@ uploadPFP.post(async (req, res) => {
     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
   });
 
+  console.log({
+    accessKeyId: process.env.S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+  });
+
   const config = {
     Key: `profile-pics/${id}-pfp.jpg`,
     Bucket: "ludumlib",
