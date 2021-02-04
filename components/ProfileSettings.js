@@ -68,8 +68,6 @@ const ProfileSettings = () => {
             }
           );
 
-          console.log(formData);
-
           axios
             .post(res.data.url, formData)
             .then((res) => {
@@ -88,7 +86,7 @@ const ProfileSettings = () => {
                   pfp: pfpURI,
                 })
                 .then((res) => {
-                  router.reload();
+                  // router.reload();
                   toast.success("Profile Updated", {
                     position: "bottom-center",
                   });
@@ -98,6 +96,12 @@ const ProfileSettings = () => {
                     position: "bottom-center",
                   });
                 });
+            })
+            .catch((err) => {
+              console.error(err);
+              toast.error("Error uploading profile picture.", {
+                position: "bottom-center",
+              });
             });
         })
         .catch((err) => {
