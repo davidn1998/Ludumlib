@@ -7,7 +7,16 @@ export default async function handler(req, res) {
 
   console.log("test log");
 
-  console.log(process.env.PRIVATE_KEY.replace(new RegExp("\\\\n", "g"), "\n"));
+  console.log({ private_key: process.env.PRIVATE_KEY });
+
+  console.log("\n\n--------------------\n\n");
+
+  console.log({
+    private_key: process.env.PRIVATE_KEY.replace(
+      new RegExp("\\\\n", "g"),
+      "\n"
+    ),
+  });
 
   const storage = new Storage({
     projectId: process.env.PROJECT_ID,
