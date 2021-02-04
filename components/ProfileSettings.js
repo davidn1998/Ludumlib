@@ -12,7 +12,6 @@ import ProfilePic from "../components/ProfilePic";
 
 // UI Icons
 import { Icon } from "@iconify/react";
-import emailIcon from "@iconify/icons-fa-solid/envelope";
 import userIcon from "@iconify/icons-fa-solid/user";
 import userAltIcon from "@iconify/icons-fa-solid/user-tie";
 
@@ -78,6 +77,7 @@ const ProfileSettings = () => {
               toast.success("Profile Picture Updated", {
                 position: "bottom-center",
               });
+              console.log(pfpURI);
               return pfpURI;
             })
             .then((pfpURI) => {
