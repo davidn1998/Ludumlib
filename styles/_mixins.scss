@@ -9,7 +9,7 @@
   .glassButtons {
     display: flex;
     justify-content: space-evenly;
-    margin: 1rem;
+    margin: 1rem 0;
 
     .button {
       display: flex;
@@ -22,7 +22,7 @@
       border: none;
       border-radius: 10px;
       width: 100%;
-      margin: 0.5rem;
+      margin: 0 0.5rem;
       transition: 0.25s;
       position: relative;
       overflow: hidden;

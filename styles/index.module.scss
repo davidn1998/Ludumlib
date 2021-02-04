@@ -18,6 +18,8 @@
   .main {
     margin: 0 5%;
 
+    @include mixins.glassButtons;
+
     a {
       text-decoration: none;
     }
@@ -46,8 +48,9 @@
     .subHeading {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       font-weight: 600;
-      font-size: 2rem;
+      font-size: 3rem;
       border-bottom: 1px solid #fff;
       color: rgba(255, 255, 255, 0.5);
       transition: 0.5s;
@@ -55,6 +58,11 @@
 
       .searchQuery {
         word-wrap: break-word;
+      }
+
+      .profileTitle {
+        display: flex;
+        align-items: center;
       }
     }
 
@@ -72,9 +80,8 @@
     }
 
     .pageButtons {
-      width: 400px;
+      width: 350px;
       margin: auto;
-      @include mixins.glassButtons;
     }
 
     .formContainer {
@@ -254,6 +261,7 @@
       }
       .subHeading {
         font-size: 1.5rem;
+        flex-direction: column;
       }
 
       .miniReviews {

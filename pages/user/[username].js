@@ -74,15 +74,28 @@ export default function Profile() {
       <div className={styles.main}>
         <div className={styles.mainHeader}>
           <h2 className={styles.subHeading}>
-            {" "}
-            <ProfilePic
-              source={
-                data?.pfp?.uri ? data?.pfp?.uri : "/images/defaultpfp.png"
-              }
-              width="100px"
-              height="100px"
-            />
-            {username?.toUpperCase()}
+            <div className={styles.profileTitle}>
+              <ProfilePic
+                source={
+                  data?.pfp?.uri ? data?.pfp?.uri : "/images/defaultpfp.png"
+                }
+                width="100px"
+                height="100px"
+              />
+              <span>{username?.toUpperCase()}</span>
+            </div>
+            {auth.user ? (
+              <div className={styles.glassButtons}>
+                <button
+                  className={styles.button}
+                  onClick={() => router.push("/settings")}
+                >
+                  Edit Profile
+                </button>
+              </div>
+            ) : (
+              <></>
+            )}
           </h2>
         </div>
         <div className={styles.tabSelect}>
