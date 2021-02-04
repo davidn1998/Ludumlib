@@ -12,7 +12,7 @@ const ProfilePic = ({ source, width, height }) => {
         layout="fill"
         objectFit="cover"
         className={styles.img}
-        src={source}
+        src={source ? source : "/images/defaultpfp.png"}
         alt="avatar"
       />
     </div>

@@ -25,7 +25,10 @@ export default async (req, res) => {
         $set: {
           username: updates.username,
           fullname: updates.fullname,
-          pfp: updates.pfp,
+          pfp: {
+            name: updates.pfp.name,
+            uri: updates.pfp.uri,
+          },
         },
       }
     );
@@ -33,7 +36,10 @@ export default async (req, res) => {
     return res.status(200).json({
       username: updates.username,
       fullname: updates.fullname,
-      pfp: updates.pfp,
+      pfp: {
+        name: updates.pfp.name,
+        uri: updates.pfp.uri,
+      },
     });
   } else {
     res.status(405).json({ error: `Method '${req.method}' Not Allowed` });

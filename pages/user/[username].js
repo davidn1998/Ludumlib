@@ -76,7 +76,7 @@ export default function Profile() {
           <h2 className={styles.subHeading}>
             {" "}
             <ProfilePic
-              source={data?.pfp ? data?.pfp : "/images/defaultpfp.png"}
+              source={data?.pfp.uri ? data?.pfp.uri : "/images/defaultpfp.png"}
               width="100px"
               height="100px"
             />

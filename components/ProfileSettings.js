@@ -6,6 +6,7 @@ import styles from "../styles/index.module.scss";
 import formStyles from "../styles/forms.module.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { v4 as uuidv4 } from "uuid";
 
 // Components
 import ProfilePic from "../components/ProfilePic";
@@ -46,8 +47,6 @@ const ProfileSettings = () => {
 
   // Sign In User with firebase or show toast error
   const onSubmit = ({ username, fullname, pfp }) => {
-    let pfpURI = user.pfp;
-
     if (pfp.length > 0) {
       if (pfp[0].size > 5000000) {
         toast.error("Failed to save settings. Max image size (5 MB) exceeded", {
@@ -59,8 +58,15 @@ const ProfileSettings = () => {
       const file = pfp[0];
       const formData = new FormData();
 
+      const pfpName = uuidv4();
+
       axios
-        .get(`api/user/${user._id}/profilepic`)
+        .get(`api/user/${user._id}/profilepic`, {
+          params: {
+            newImage: pfpName,
+            oldImage: user.pfp?.name ? user.pfp?.name : null,
+          },
+        })
         .then((res) => {
           Object.entries({ ...res.data.fields, file }).forEach(
             ([key, value]) => {
@@ -71,22 +77,23 @@ const ProfileSettings = () => {
           axios
             .post(res.data.url, formData)
             .then((res) => {
-              pfpURI = res.data.Location ? res.data.Location : user.pfp;
               toast.success("Profile Picture Updated", {
                 position: "bottom-center",
               });
-              console.log(pfpURI);
-              return pfpURI;
             })
-            .then((pfpURI) => {
+            .then(() => {
+              const pfpURI = `https://storage.googleapis.com/ludumlib_bucket/profile-pics/${pfpName}.jpg`;
               axios
                 .put(`api/user/${user._id}/updateSettings`, {
                   username,
                   fullname,
-                  pfp: pfpURI,
+                  pfp: {
+                    name: pfpName,
+                    uri: pfpURI,
+                  },
                 })
                 .then((res) => {
-                  // router.reload();
+                  router.reload();
                   toast.success("Profile Updated", {
                     position: "bottom-center",
                   });
@@ -114,7 +121,7 @@ const ProfileSettings = () => {
         .put(`api/user/${user._id}/updateSettings`, {
           username,
           fullname,
-          pfp: pfpURI,
+          pfp: user.pfp,
         })
         .then((res) => {
           router.reload();
@@ -176,8 +183,8 @@ const ProfileSettings = () => {
             source={
               imageURI
                 ? imageURI
-                : user.pfp
-                ? user.pfp
+                : user.pfp.uri
+                ? user.pfp.uri
                 : "/images/defaultpfp.png"
             }
           />

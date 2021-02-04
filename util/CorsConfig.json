@@ -1,0 +1,8 @@
+[
+    {
+      "origin": ["*"],
+      "method": ["POST", "PUT"],
+      "responseHeader": ["content-type"],
+      "maxAgeSeconds": 3600
+    }
+]
