@@ -6,10 +6,7 @@ import multer from "multer";
 // Returns a Multer instance that provides several methods for generating
 // middleware that process files uploaded in multipart/form-data format.
 const upload = multer({
-  storage: multer.diskStorage({
-    destination: "./public/uploads",
-    filename: (req, file, cb) => cb(null, file.originalname),
-  }),
+  storage: multer.memoryStorage(),
 });
 
 const uploadPFP = nextConnect({
@@ -30,12 +27,7 @@ uploadPFP.post(async (req, res) => {
     query: { id },
   } = await req;
 
-  console.log(id);
-
   const file = await req.file;
-
-  console.log(file);
-  console.log(process.env.S3_ACCESS_KEY_ID);
 
   const s3 = new S3({
     accessKeyId: process.env.S3_ACCESS_KEY_ID,
@@ -45,7 +37,7 @@ uploadPFP.post(async (req, res) => {
   const config = {
     Key: `profile-pics/${id}-pfp.jpg`,
     Bucket: "ludumlib",
-    Body: fs.createReadStream(file.path),
+    Body: file.buffer,
   };
 
   s3.upload(config, (err, data) => {
