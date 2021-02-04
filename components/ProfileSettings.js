@@ -17,13 +17,14 @@ import userIcon from "@iconify/icons-fa-solid/user";
 import userAltIcon from "@iconify/icons-fa-solid/user-tie";
 
 // Authentication
+import { useAuth } from "../util/auth";
 import { useForm } from "react-hook-form";
 
-const ProfileSettings = ({ auth }) => {
+const ProfileSettings = () => {
   const [imageURI, setImageURI] = useState(null);
   const { register, handleSubmit, watch, errors } = useForm();
   const router = useRouter();
-
+  const auth = useAuth();
   const user = auth.user;
 
   if (!user || user == null) {
@@ -56,48 +57,50 @@ const ProfileSettings = ({ auth }) => {
         return;
       }
 
+      const file = pfp[0];
       const formData = new FormData();
 
-      formData.append("imageFile", pfp[0]);
-
       axios
-        .post(`api/user/${user._id}/profilepic`, formData, {
-          headers: { "content-type": "multipart/form-data" },
-          //   onUploadProgress: (event) => {
-          //     console.log(
-          //       `Current progress:`,
-          //       Math.round((event.loaded * 100) / event.total)
-          //     );
-          //   },
-        })
+        .get(`api/user/${user._id}/profilepic`)
         .then((res) => {
-          console.log(res);
-          pfpURI = res.data.Location ? res.data.Location : user.pfp;
-          toast.success("Profile Picture Updated", {
-            position: "bottom-center",
-          });
-          return pfpURI;
-        })
-        .then((pfpURI) => {
+          Object.entries({ ...res.data.fields, file }).forEach(
+            ([key, value]) => {
+              formData.append(key, value);
+            }
+          );
+
+          console.log(formData);
+
           axios
-            .put(`api/user/${user._id}/updateSettings`, {
-              username,
-              fullname,
-              pfp: pfpURI,
-            })
+            .post(res.data.url, formData)
             .then((res) => {
-              router.reload();
-              toast.success("Profile Updated", { position: "bottom-center" });
-            })
-            .catch((err) => {
-              console.log(err);
-              toast.error("Username already taken", {
+              pfpURI = res.data.Location ? res.data.Location : user.pfp;
+              toast.success("Profile Picture Updated", {
                 position: "bottom-center",
               });
+              return pfpURI;
+            })
+            .then((pfpURI) => {
+              axios
+                .put(`api/user/${user._id}/updateSettings`, {
+                  username,
+                  fullname,
+                  pfp: pfpURI,
+                })
+                .then((res) => {
+                  router.reload();
+                  toast.success("Profile Updated", {
+                    position: "bottom-center",
+                  });
+                })
+                .catch((err) => {
+                  toast.error("Username already taken", {
+                    position: "bottom-center",
+                  });
+                });
             });
         })
         .catch((err) => {
-          console.log(err);
           toast.error("Error uploading profile picture.", {
             position: "bottom-center",
           });
@@ -123,15 +126,6 @@ const ProfileSettings = ({ auth }) => {
   return (
     <div className={styles.formContainer}>
       {/* Settings Form */}
-      {/* <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        closeOnClick={true}
-        pauseOnHover={true}
-        draggable={true}
-        progress={undefined}
-      /> */}
       <form className={formStyles.form} onSubmit={handleSubmit(onSubmit)}>
         <h2 className={formStyles.heading}>Profile Settings</h2>
         <h5 className={formStyles.label}>Username</h5>
