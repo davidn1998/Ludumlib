@@ -5,6 +5,8 @@ export default async function handler(req, res) {
     query: { id },
   } = await req;
 
+  console.log("test log");
+
   console.log({
     private_key: process.env.PRIVATE_KEY,
   });
@@ -13,7 +15,11 @@ export default async function handler(req, res) {
     projectId: process.env.PROJECT_ID,
     credentials: {
       client_email: process.env.CLIENT_EMAIL,
-      private_key: process.env.PRIVATE_KEY,
+      private_key: _.replace(
+        process.env.PRIVATE_KEY,
+        new RegExp("\\\\n", "g"),
+        "\n"
+      ),
     },
   });
 
