@@ -30,14 +30,14 @@ uploadPFP.post(async (req, res) => {
     query: { id },
   } = await req;
 
+  console.log(id);
+
   const file = await req.file;
 
-  const s3 = new S3({
-    accessKeyId: process.env.S3_ACCESS_KEY_ID,
-    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
-  });
+  console.log(file);
+  console.log(process.env.S3_ACCESS_KEY_ID);
 
-  console.log({
+  const s3 = new S3({
     accessKeyId: process.env.S3_ACCESS_KEY_ID,
     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
   });

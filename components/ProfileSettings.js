@@ -49,8 +49,6 @@ const ProfileSettings = ({ auth }) => {
     let pfpURI = user.pfp;
 
     if (pfp.length > 0) {
-      console.log(pfp);
-
       if (pfp[0].size > 5000000) {
         toast.error("Failed to save settings. Max image size (5 MB) exceeded", {
           position: "bottom-center",
