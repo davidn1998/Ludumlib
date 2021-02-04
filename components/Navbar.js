@@ -88,9 +88,7 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-        ) : auth.user === null ? (
-          <></>
-        ) : (
+        ) : auth.user === false ? (
           <>
             <li>
               <Link href="/login">
@@ -113,6 +111,8 @@ const Navbar = () => {
               </Link>
             </li>
           </>
+        ) : (
+          <></>
         )}
         <li>
           <Link href="/games">

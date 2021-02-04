@@ -6,6 +6,7 @@ import { useAuth } from "../util/auth";
 import styles from "./HamburgerNav.module.scss";
 import { fallDown as Menu } from "react-burger-menu";
 import SearchBar from "./SearchBar";
+import ProfilePic from "./ProfilePic";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -31,29 +32,60 @@ const HamburgerNav = () => {
   return (
     <div className={styles.hamburgerMenu}>
       <Menu styles={burgerStyles} isOpen={false} noOverlay disableAutoFocus>
-        <Link href="/">
-          <a
-            className={`"bm-item menu-item" ${
-              router.pathname == "/" ? styles.active : null
-            }`}
-          >
-            HOME
+        {auth.user ? (
+          <a className={styles.profileHeader}>
+            <ProfilePic
+              source={auth.user?.pfp?.uri}
+              width={"40px"}
+              height={"40px"}
+            />
+            {auth.user.username.toUpperCase()}
           </a>
-        </Link>
+        ) : (
+          <></>
+        )}
         <Link href="/games">
-          <a
-            className={`"bm-item menu-item" ${
-              router.pathname == "/games" ? styles.active : null
-            }`}
-          >
+          <a className={router.pathname == "/games" ? styles.active : null}>
             GAMES
           </a>
         </Link>
-        {auth.user ? (
-          <a className={`"bm-item menu-item"`} onClick={onLogout}>
-            LOGOUT
+        <Link href="/reviews">
+          <a className={router.pathname == "/reviews" ? styles.active : null}>
+            REVIEWS
           </a>
-        ) : (
+        </Link>
+        <Link href="/lists">
+          <a className={router.pathname == "/lists" ? styles.active : null}>
+            LISTS
+          </a>
+        </Link>
+        {auth.user ? (
+          <>
+            <Link href={`/user/${auth.user.username}`}>
+              <a
+                className={
+                  router.query.username == `${auth.user.username}`
+                    ? styles.active
+                    : null
+                }
+              >
+                PROFILE
+              </a>
+            </Link>
+            <Link href={`/settings`}>
+              <a
+                className={
+                  router.pathname == `/settings` ? styles.active : null
+                }
+              >
+                SETTINGS
+              </a>
+            </Link>
+            <a className={`"bm-item menu-item"`} onClick={onLogout}>
+              LOGOUT
+            </a>
+          </>
+        ) : auth.user === false ? (
           <>
             {" "}
             <Link href="/login">
@@ -75,6 +107,8 @@ const HamburgerNav = () => {
               </a>
             </Link>
           </>
+        ) : (
+          <></>
         )}
         <SearchBar />
       </Menu>
@@ -105,7 +139,7 @@ var burgerStyles = {
   },
   bmMenuWrap: {
     position: "absolute",
-    height: "75%",
+    height: "75vh",
     width: "100%",
     top: 0,
     left: 0,
