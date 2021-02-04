@@ -26,6 +26,12 @@
       transition: 0.25s;
       position: relative;
       overflow: hidden;
+      color: #fff;
+      font-weight: 600;
+
+      &:disabled {
+        color: rgba(255, 255, 255, 0.1);
+      }
 
       &:hover {
         cursor: pointer;
