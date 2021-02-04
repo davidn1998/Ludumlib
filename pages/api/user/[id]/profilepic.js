@@ -8,15 +8,17 @@ export default async function handler(req, res) {
   console.log("test log");
 
   console.log({
-    private_key: process.env.PRIVATE_KEY,
+    private_key: process.env.PRIVATE_KEY.replace(
+      new RegExp("\\\\n", "g"),
+      "\n"
+    ),
   });
 
   const storage = new Storage({
     projectId: process.env.PROJECT_ID,
     credentials: {
       client_email: process.env.CLIENT_EMAIL,
-      private_key: _.replace(
-        process.env.PRIVATE_KEY,
+      private_key: process.env.PRIVATE_KEY.replace(
         new RegExp("\\\\n", "g"),
         "\n"
       ),
