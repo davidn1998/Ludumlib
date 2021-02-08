@@ -44,6 +44,9 @@ const HamburgerNav = () => {
         ) : (
           <></>
         )}
+        <Link href="/">
+          <a className={router.pathname == "/" ? styles.active : null}>HOME</a>
+        </Link>
         <Link href="/games">
           <a className={router.pathname == "/games" ? styles.active : null}>
             GAMES
