@@ -28,7 +28,7 @@ export default function Profile() {
   });
 
   if (error) {
-    console.error("Could not load game data");
+    console.error("Could not load profile data");
   }
 
   const changeTab = (tabNum) => {
