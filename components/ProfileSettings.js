@@ -138,7 +138,7 @@ const ProfileSettings = () => {
     <div className={styles.formContainer}>
       {/* Settings Form */}
       <form className={formStyles.form} onSubmit={handleSubmit(onSubmit)}>
-        <h2 className={formStyles.heading}>Profile Settings</h2>
+        <h2 className={formStyles.heading}>Update Profile</h2>
         <h5 className={formStyles.label}>Username</h5>
         <div className={formStyles.inputBox}>
           <div className={formStyles.iconLeft}>

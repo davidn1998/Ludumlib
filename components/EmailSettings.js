@@ -40,7 +40,7 @@ const EmailSettings = ({ auth }) => {
       auth
         .updateEmail(user.email, email, password)
         .then(() => {
-          toast.success("Email Updated");
+          toast.success("Email Updated", { position: "bottom-center" });
         })
         .catch((err) => {
           toast.error(err.message, { position: "bottom-center" });
@@ -51,15 +51,6 @@ const EmailSettings = ({ auth }) => {
   return (
     <div className={styles.formContainer}>
       {/* Settings Form */}
-      {/* <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        closeOnClick={true}
-        pauseOnHover={true}
-        draggable={true}
-        progress={undefined}
-      /> */}
       <form className={formStyles.form} onSubmit={handleSubmit(onSubmit)}>
         <h2 className={formStyles.heading}>Update Email</h2>
         <h5 className={formStyles.label}>Email</h5>

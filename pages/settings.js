@@ -13,6 +13,8 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ProfileSettings from "../components/ProfileSettings";
 import EmailSettings from "../components/EmailSettings";
+import PasswordSettings from "../components/PasswordSettings";
+import ConnectionSettings from "../components/ConnectionSettings";
 
 import { useAuth } from "../util/auth";
 
@@ -40,7 +42,7 @@ export default function Settings() {
         break;
       case 2:
         setTab(2);
-        setTabView(null);
+        setTabView(<ConnectionSettings auth={auth} />);
         break;
       case 3:
         setTab(3);
@@ -48,11 +50,11 @@ export default function Settings() {
         break;
       case 4:
         setTab(4);
-        setTabView(null);
+        setTabView(<PasswordSettings auth={auth} />);
         break;
 
       default:
-        setTabView(null);
+        setTabView();
         break;
     }
   };
