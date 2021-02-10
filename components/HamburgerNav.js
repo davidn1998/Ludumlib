@@ -39,7 +39,7 @@ const HamburgerNav = () => {
               width={"40px"}
               height={"40px"}
             />
-            {auth.user.username.toUpperCase()}
+            {auth.user.username?.toUpperCase()}
           </a>
         ) : (
           <></>

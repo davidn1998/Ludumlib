@@ -136,6 +136,31 @@ function useProvideAuth() {
     });
   };
 
+  const deleteAccount = (password) => {
+    const user = firebase.auth().currentUser;
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      user.email,
+      password
+    );
+    return user.reauthenticateWithCredential(credential).then(() => {
+      return axios.get(`/api/user/${user.uid}`).then((res) => {
+        return axios
+          .delete(`api/user/${user.uid}/profilepic`, {
+            data: {
+              image: res.data.pfp?.name ? res.data.pfp?.name : null,
+            },
+          })
+          .then(() => {
+            axios.delete(`/api/user/${user.uid}`).then(() => {
+              user.delete().then(() => {
+                setUser(false);
+              });
+            });
+          });
+      });
+    });
+  };
+
   // Subscribe to user on mount
   // Because this sets state in the callback it will cause any ...
   // ... component that utilizes this hook to re-render with the ...
@@ -171,5 +196,6 @@ function useProvideAuth() {
     confirmPasswordReset,
     updateEmail,
     updatePassword,
+    deleteAccount,
   };
 }

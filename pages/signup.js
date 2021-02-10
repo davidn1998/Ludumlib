@@ -203,7 +203,7 @@ export default function Signup() {
               <div className={formStyles.inputBox}>
                 <button type="submit">Sign Up</button>
               </div>
-              <p className={formStyles.forgot}>
+              <p className={formStyles.extra}>
                 By signing up, you agree to Ludumlib’s <br />
                 <Link href="/terms">
                   <a>Terms of Service</a>
@@ -214,7 +214,7 @@ export default function Signup() {
                   <a> Privacy Policy.</a>
                 </Link>
               </p>
-              <p className={formStyles.forgot}>
+              <p className={formStyles.extra}>
                 Already have an account?{" "}
                 <Link href="/login">
                   <a>Login</a>

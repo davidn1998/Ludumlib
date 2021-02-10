@@ -183,10 +183,10 @@ export default function Login() {
                 <div className={formStyles.inputBox}>
                   <button type="submit">Login</button>
                 </div>
-                <p className={formStyles.forgot}>
+                <p className={formStyles.extra}>
                   Forgot your password? <a href="">Click Here</a>
                 </p>
-                <p className={formStyles.forgot}>
+                <p className={formStyles.extra}>
                   Don't have an account?{" "}
                   <Link href="/signup">
                     <a>Sign Up</a>

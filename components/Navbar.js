@@ -45,7 +45,7 @@ const Navbar = () => {
                 width={"30px"}
                 height={"30px"}
               />
-              {auth.user.username.toUpperCase()}
+              {auth.user.username?.toUpperCase()}
             </a>
             <ul
               className={`${styles.dropdownMenu} ${

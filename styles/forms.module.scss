@@ -121,6 +121,13 @@
         box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
       }
     }
+
+    .dangerButton {
+      background-color: rgba(255, 102, 102, 0.5);
+      &:hover {
+        background-color: rgba(255, 102, 102, 1);
+      }
+    }
   }
 
   .fileInputBox {
@@ -164,6 +171,7 @@
     transition: 0.5s;
 
     &:hover {
+      cursor: pointer;
       color: rgba(255, 255, 255, 1);
     }
   }

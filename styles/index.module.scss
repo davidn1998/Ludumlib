@@ -86,11 +86,13 @@
 
     .formContainer {
       display: flex;
-      // flex-direction: column;
+      flex-direction: column;
       justify-content: center;
-      // align-items: center;
+      align-items: center;
       padding: 4rem 0;
       position: relative;
+      max-width: 800px;
+      margin: 0 auto;
 
       .box {
         position: relative;
@@ -249,6 +251,39 @@
         .hide {
           display: none;
         }
+      }
+    }
+  }
+
+  .modal {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    transition: 0.5s;
+  }
+
+  .modalHidden {
+    visibility: hidden;
+    opacity: 0;
+  }
+  .modalVisible {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .modalCloseButton {
+    text-align: right;
+
+    .button {
+      width: 20px;
+      margin-left: auto;
+
+      &:hover {
+        cursor: pointer;
       }
     }
   }

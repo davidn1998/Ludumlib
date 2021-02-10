@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 
 // Components
 import ProfilePic from "../components/ProfilePic";
+import DeleteAccount from "../components/DeleteAccount";
 
 // UI Icons
 import { Icon } from "@iconify/react";
@@ -22,6 +23,7 @@ import { useForm } from "react-hook-form";
 
 const ProfileSettings = () => {
   const [imageURI, setImageURI] = useState(null);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const { register, handleSubmit, watch, errors } = useForm();
   const router = useRouter();
   const auth = useAuth();
@@ -84,7 +86,7 @@ const ProfileSettings = () => {
             .then(() => {
               const pfpURI = `https://storage.googleapis.com/ludumlib_bucket/profile-pics/${pfpName}.jpg`;
               axios
-                .put(`api/user/${user._id}/updateSettings`, {
+                .put(`api/user/${user._id}`, {
                   username,
                   fullname,
                   pfp: {
@@ -118,7 +120,7 @@ const ProfileSettings = () => {
         });
     } else {
       axios
-        .put(`api/user/${user._id}/updateSettings`, {
+        .put(`api/user/${user._id}`, {
           username,
           fullname,
           pfp: user.pfp,
@@ -132,6 +134,13 @@ const ProfileSettings = () => {
           toast.error("Username already taken", { position: "bottom-center" });
         });
     }
+  };
+
+  const showDeleteModal = () => {
+    setDeleteModalVisible(true);
+  };
+  const hideDeleteModal = () => {
+    setDeleteModalVisible(false);
   };
 
   return (
@@ -202,7 +211,17 @@ const ProfileSettings = () => {
         <div className={formStyles.inputBox}>
           <button type="submit">Save Settings</button>
         </div>
+        <p>
+          <a onClick={showDeleteModal}>Delete Account</a>
+        </p>
       </form>
+      <div
+        className={`${styles.modal} ${
+          deleteModalVisible ? styles.modalVisible : styles.modalHidden
+        }`}
+      >
+        <DeleteAccount auth={auth} hideModal={hideDeleteModal} />
+      </div>
     </div>
   );
 };
