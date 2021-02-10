@@ -15,48 +15,34 @@ import Header from "../components/Header";
 
 // UI Icons
 import { Icon } from "@iconify/react";
-import lockIcon from "@iconify/icons-fa-solid/lock";
-import userIcon from "@iconify/icons-fa-solid/user";
-import eyeClosedIcon from "@iconify/icons-fa-solid/eye-slash";
-import eyeOpenIcon from "@iconify/icons-fa-solid/eye";
+import userIcon from "@iconify/icons-fa-solid/envelope";
 
 // Authentication
 import { useAuth } from "../util/auth";
 import { useForm } from "react-hook-form";
 
-export default function Login() {
-  const [passwordVisible, setPasswordVisible] = useState(false);
+export default function ResetPassword() {
   const [backgroundImage, setBackgroundImage] = useState(null);
   const { register, handleSubmit, watch, errors } = useForm();
   const auth = useAuth();
   const router = useRouter();
 
-  const { nextRoute } = router.query;
-
   if (auth.user) {
     router.push("/");
   }
 
-  // Sign In User with firebase or show toast error
-  const onSubmit = ({ email, password }) => {
+  // Reset Password with firebase or show toast error
+  const onSubmit = ({ email }) => {
     auth
-      .signin(email, password)
+      .sendPasswordResetEmail(email)
       .then(() => {
-        if (nextRoute) {
-          router.push(nextRoute);
-        } else {
-          router.push("/");
-        }
+        toast.success("Reset Email Sent", {
+          position: "bottom-center",
+        });
       })
       .catch((err) => {
-        toast.error("Failed to login. Username or password is incorrect.", {
+        toast.error(err.message, {
           position: "bottom-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
         });
       });
   };
@@ -94,15 +80,11 @@ export default function Login() {
     setBackgroundImage(backgroundImageData);
   }
 
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
-
   if (auth.user === false) {
     return (
       <div className={styles.container}>
         <Head>
-          <title>Login | Ludumlib</title>
+          <title>Reset Password | Ludumlib</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Header />
@@ -120,7 +102,6 @@ export default function Login() {
         )}
         <div className={styles.main}>
           <div className={styles.formContainer}>
-            <ToastContainer />
             <div className={styles.box}>
               {/* Floating squares */}
               <div className={styles.square} style={{ "--i": 0 }}></div>
@@ -133,7 +114,7 @@ export default function Login() {
                 className={formStyles.form}
                 onSubmit={handleSubmit(onSubmit)}
               >
-                <h2 className={formStyles.heading}>Login</h2>
+                <h2 className={formStyles.heading}>Reset Password</h2>
                 <div className={formStyles.inputBox}>
                   <div className={formStyles.iconLeft}>
                     <Icon icon={userIcon} />
@@ -151,42 +132,11 @@ export default function Login() {
                   <p className={formStyles.error}>{errors?.email?.message}</p>
                 )}
                 <div className={formStyles.inputBox}>
-                  <div className={formStyles.iconLeft}>
-                    <Icon icon={lockIcon} />{" "}
-                  </div>
-                  <input
-                    type={passwordVisible ? "text" : "password"}
-                    name="password"
-                    placeholder="Password"
-                    style={{ paddingRight: "3rem" }}
-                    ref={register({
-                      required: {
-                        value: true,
-                        message: "Password is required",
-                      },
-                    })}
-                  />
-                  <div
-                    className={`${formStyles.iconRight} ${formStyles.clickable}`}
-                    onClick={togglePasswordVisibility}
-                  >
-                    <Icon
-                      icon={passwordVisible ? eyeOpenIcon : eyeClosedIcon}
-                    />{" "}
-                  </div>
-                </div>
-                {errors.password && (
-                  <p className={formStyles.error}>
-                    {errors?.password?.message}
-                  </p>
-                )}
-                <div className={formStyles.inputBox}>
-                  <button type="submit">Login</button>
+                  <button type="submit">Send Reset Email</button>
                 </div>
                 <p className={formStyles.extra}>
-                  Forgot your password?{" "}
-                  <Link href="/reset-password">
-                    <a>Click Here</a>
+                  <Link href="/login">
+                    <a>Return to Login</a>
                   </Link>
                 </p>
                 <p className={formStyles.extra}>
