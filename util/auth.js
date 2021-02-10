@@ -110,14 +110,29 @@ function useProvideAuth() {
       });
   };
 
-  const updateEmail = (currentEmail, email, password) => {
-    return signin(currentEmail, password).then(() => {
-      return firebase
-        .auth()
-        .currentUser.updateEmail(email)
-        .then(() => {
-          return user;
-        });
+  const updatePassword = (currPass, newPass) => {
+    const user = firebase.auth().currentUser;
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      user.email,
+      currPass
+    );
+    return user.reauthenticateWithCredential(credential).then(() => {
+      return user.updatePassword(newPass).then(() => {
+        return user;
+      });
+    });
+  };
+
+  const updateEmail = (email, password) => {
+    const user = firebase.auth().currentUser;
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      user.email,
+      password
+    );
+    return user.reauthenticateWithCredential(credential).then(() => {
+      return user.updateEmail(email).then(() => {
+        return user;
+      });
     });
   };
 
@@ -155,5 +170,6 @@ function useProvideAuth() {
     sendPasswordResetEmail,
     confirmPasswordReset,
     updateEmail,
+    updatePassword,
   };
 }

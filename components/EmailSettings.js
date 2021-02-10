@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import axios from "axios";
 import styles from "../styles/index.module.scss";
 import formStyles from "../styles/forms.module.scss";
 import { ToastContainer, toast } from "react-toastify";
@@ -38,9 +36,10 @@ const EmailSettings = ({ auth }) => {
   const onSubmit = ({ email, password }) => {
     if (email !== user.email) {
       auth
-        .updateEmail(user.email, email, password)
+        .updateEmail(email, password)
         .then(() => {
           toast.success("Email Updated", { position: "bottom-center" });
+          router.reload();
         })
         .catch((err) => {
           toast.error(err.message, { position: "bottom-center" });
