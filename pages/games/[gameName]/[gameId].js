@@ -8,11 +8,13 @@ import useSWR from "swr";
 import axios from "axios";
 import { useAuth } from "../../../util/auth";
 
-import styles from "../../../styles/game.module.scss";
+import gameStyles from "../../../styles/game.module.scss";
+import styles from "../../../styles/index.module.scss";
 
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 import MiniReview from "../../../components/MiniReview";
+import ReviewGame from "../../../components/ReviewGame";
 
 import { Icon } from "@iconify/react";
 import pencilIcon from "@iconify/icons-fa-solid/pencil-alt";
@@ -36,6 +38,7 @@ const Game = () => {
   );
 
   const [isFullAbout, setIsFullAbout] = useState(false);
+  const [reviewModalVisible, setReviewModalVisible] = useState(false);
 
   const auth = useAuth();
 
@@ -46,7 +49,7 @@ const Game = () => {
       <>
         <div dangerouslySetInnerHTML={{ __html: data.description }}></div>
         <button
-          className={styles.aboutToggle}
+          className={gameStyles.aboutToggle}
           onClick={() => setIsFullAbout(false)}
         >
           ...LESS
@@ -61,7 +64,7 @@ const Game = () => {
             <p>{data.description_raw.substring(0, 500)}...</p>
           </div>
           <button
-            className={styles.aboutToggle}
+            className={gameStyles.aboutToggle}
             onClick={() => setIsFullAbout(true)}
           >
             MORE...
@@ -96,32 +99,54 @@ const Game = () => {
         return;
       }
 
-      console.log("Review Game");
+      showReviewModal();
+    };
+
+    const showReviewModal = () => {
+      setReviewModalVisible(true);
+    };
+    const hideReviewModal = () => {
+      setReviewModalVisible(false);
     };
 
     return (
-      <div className={styles.container}>
+      <div className={gameStyles.container}>
         <Head>
           <title>{data.name} | Ludumlib</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Header />
-        <Image
-          layout="fill"
-          objectFit="cover"
-          className={styles.background}
-          src={data.background_image_additional}
-          alt={""}
-        />
-        <div className={styles.main}>
-          <h2 className={styles.heading}>{data.name}</h2>
-          <div className={styles.section1}>
-            <div className={styles.leftCol}>
-              <div className={styles.imageContainer}>
+        {data.background_image_additional ? (
+          <Image
+            layout="fill"
+            objectFit="cover"
+            className={gameStyles.background}
+            src={data.background_image_additional}
+            alt={""}
+          />
+        ) : (
+          <></>
+        )}
+        <div className={gameStyles.main}>
+          <div
+            className={`${gameStyles.modal} ${
+              reviewModalVisible
+                ? gameStyles.modalVisible
+                : gameStyles.modalHidden
+            }`}
+          >
+            <div className={gameStyles.modalForm}>
+              <ReviewGame auth={auth} hideModal={hideReviewModal} />
+            </div>
+          </div>
+          <h2 className={gameStyles.heading}>{data.name}</h2>
+          <div className={gameStyles.section1}>
+            <div className={gameStyles.leftCol}>
+              <div className={gameStyles.imageContainer}>
                 <Image
                   layout="fill"
                   objectFit="cover"
-                  className={styles.image}
+                  className={gameStyles.image}
                   src={
                     data.background_image
                       ? data.background_image
@@ -130,9 +155,9 @@ const Game = () => {
                   alt={data.name}
                 />
               </div>
-              <div className={styles.glassButtons}>
+              <div className={gameStyles.glassButtons}>
                 <button
-                  className={styles.button}
+                  className={gameStyles.button}
                   data-tip="Log"
                   data-type="success"
                   onClick={onLogClick}
@@ -140,7 +165,7 @@ const Game = () => {
                   {<Icon icon={plusIcon} width={20} />}
                 </button>
                 <button
-                  className={styles.button}
+                  className={gameStyles.button}
                   data-tip="Like"
                   data-type="error"
                   onClick={onLikeClick}
@@ -148,7 +173,7 @@ const Game = () => {
                   {<Icon icon={heartIcon} width={20} />}
                 </button>
                 <button
-                  className={styles.button}
+                  className={gameStyles.button}
                   data-tip="Review"
                   data-type="warning"
                   onClick={onReviewClick}
@@ -158,16 +183,16 @@ const Game = () => {
                 <ReactTooltip place="bottom" type="light" effect="solid" />
               </div>
             </div>
-            <div className={styles.rightCol}>
-              <div className={styles.about}>
-                <h3 className={styles.cardTitle}>ABOUT</h3>
+            <div className={gameStyles.rightCol}>
+              <div className={gameStyles.about}>
+                <h3 className={gameStyles.cardTitle}>ABOUT</h3>
                 {isFullAbout ? fullAbout : smallAbout}
               </div>
             </div>
           </div>
-          <h3 className={styles.heading}>REVIEWS</h3>
-          <div className={styles.miniReviews}>
-            <div className={styles.reviewCol}>
+          <h3 className={gameStyles.heading}>REVIEWS</h3>
+          <div className={gameStyles.miniReviews}>
+            <div className={gameStyles.reviewCol}>
               <MiniReview
                 imgURL={
                   data.background_image
@@ -183,7 +208,7 @@ const Game = () => {
                 halfStarsNum={1}
               />
             </div>
-            <div className={styles.reviewCol}>
+            <div className={gameStyles.reviewCol}>
               <MiniReview
                 imgURL={
                   data.background_image
@@ -206,13 +231,13 @@ const Game = () => {
     );
   } else {
     return (
-      <div className={styles.container}>
+      <div className={gameStyles.container}>
         <Head>
           <title>Game | Ludumlib</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Header />
-        <div className={styles.main}></div>
+        <div className={gameStyles.main}></div>
       </div>
     );
   }

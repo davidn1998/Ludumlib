@@ -20,12 +20,6 @@ const DeleteAccount = ({ auth, hideModal }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { register, handleSubmit, watch, errors } = useForm();
 
-  const user = auth.user;
-
-  if (!user || user == null) {
-    return <></>;
-  }
-
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };

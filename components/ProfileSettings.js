@@ -220,7 +220,9 @@ const ProfileSettings = () => {
           deleteModalVisible ? styles.modalVisible : styles.modalHidden
         }`}
       >
-        <DeleteAccount auth={auth} hideModal={hideDeleteModal} />
+        <div className={styles.modalForm}>
+          <DeleteAccount auth={auth} hideModal={hideDeleteModal} />
+        </div>
       </div>
     </div>
   );

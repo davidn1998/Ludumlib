@@ -264,6 +264,13 @@
     bottom: 0;
     z-index: 10;
     transition: 0.5s;
+
+    display: flex;
+    justify-content: center;
+
+    .modalForm {
+      margin: 10% 10%;
+    }
   }
 
   .modalHidden {

@@ -49,11 +49,15 @@ export default function Signup() {
             router.push("/");
           })
           .catch((err) => {
-            toast.error(err.message);
+            toast.error(err.message, {
+              position: "bottom-center",
+            });
           });
       })
       .catch((err) => {
-        toast.error("Username already taken.");
+        toast.error("Username already taken.", {
+          position: "bottom-center",
+        });
       });
   };
 
@@ -114,15 +118,6 @@ export default function Signup() {
       )}
       <div className={styles.main}>
         <div className={styles.formContainer}>
-          <ToastContainer
-            position="bottom-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            closeOnClick={true}
-            pauseOnHover={true}
-            draggable={true}
-            progress={undefined}
-          />
           <div className={styles.box}>
             {/* Floating squares */}
             <div className={styles.square} style={{ "--i": 0 }}></div>

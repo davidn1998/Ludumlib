@@ -51,12 +51,6 @@ export default function Login() {
       .catch((err) => {
         toast.error("Failed to login. Username or password is incorrect.", {
           position: "bottom-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
         });
       });
   };
