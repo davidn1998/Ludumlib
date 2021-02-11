@@ -50,7 +50,7 @@ function useProvideAuth() {
       .signInWithEmailAndPassword(email, password)
       .then((response) => {
         axios
-          .get(`/api/user/${response.user.uid}`)
+          .get(`/api/users/${response.user.uid}`)
           .then((res) => {
             const user = { ...response.user, ...res.data };
             setUser(user);
@@ -68,7 +68,7 @@ function useProvideAuth() {
       .createUserWithEmailAndPassword(email, password)
       .then((response) => {
         axios
-          .post(`/api/user`, {
+          .post(`/api/users`, {
             _id: response.user.uid,
             username: username,
           })
@@ -143,15 +143,15 @@ function useProvideAuth() {
       password
     );
     return user.reauthenticateWithCredential(credential).then(() => {
-      return axios.get(`/api/user/${user.uid}`).then((res) => {
+      return axios.get(`/api/users/${user.uid}`).then((res) => {
         return axios
-          .delete(`api/user/${user.uid}/profilepic`, {
+          .delete(`api/users/${user.uid}/profilepic`, {
             data: {
               image: res.data.pfp?.name ? res.data.pfp?.name : null,
             },
           })
           .then(() => {
-            axios.delete(`/api/user/${user.uid}`).then(() => {
+            axios.delete(`/api/users/${user.uid}`).then(() => {
               user.delete().then(() => {
                 setUser(false);
               });
@@ -169,7 +169,7 @@ function useProvideAuth() {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         axios
-          .get(`/api/user/${user.uid}`)
+          .get(`/api/users/${user.uid}`)
           .then((res) => {
             const userData = { ...user, ...res.data };
             setUser(userData);

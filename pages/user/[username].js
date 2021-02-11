@@ -23,7 +23,7 @@ export default function Profile() {
   const [tab, setTab] = useState(1);
   const [tabView, setTabView] = useState(null);
 
-  const { data, error } = useSWR(`/api/user/profile/${username}`, fetcher, {
+  const { data, error } = useSWR(`/api/users?username=${username}`, fetcher, {
     revalidateOnFocus: false,
   });
 

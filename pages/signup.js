@@ -41,7 +41,7 @@ export default function Signup() {
   // Sign In User with firebase or show toast error
   const onSubmit = ({ username, email, password }) => {
     axios
-      .get(`api/users/${username}`)
+      .get(`api/users?username=${username}&validate=true`)
       .then(() => {
         auth
           .signup(email, password, username)
@@ -55,6 +55,7 @@ export default function Signup() {
           });
       })
       .catch((err) => {
+        console.log(err);
         toast.error("Username already taken.", {
           position: "bottom-center",
         });

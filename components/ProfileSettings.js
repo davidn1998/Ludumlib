@@ -63,7 +63,7 @@ const ProfileSettings = () => {
       const pfpName = uuidv4();
 
       axios
-        .get(`api/user/${user._id}/profilepic`, {
+        .get(`api/users/${user._id}/profilepic`, {
           params: {
             newImage: pfpName,
             oldImage: user.pfp?.name ? user.pfp?.name : null,
@@ -86,7 +86,7 @@ const ProfileSettings = () => {
             .then(() => {
               const pfpURI = `https://storage.googleapis.com/ludumlib_bucket/profile-pics/${pfpName}.jpg`;
               axios
-                .put(`api/user/${user._id}`, {
+                .put(`api/users/${user._id}`, {
                   username,
                   fullname,
                   pfp: {
@@ -120,7 +120,7 @@ const ProfileSettings = () => {
         });
     } else {
       axios
-        .put(`api/user/${user._id}`, {
+        .put(`api/users/${user._id}`, {
           username,
           fullname,
           pfp: user.pfp,
