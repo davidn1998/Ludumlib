@@ -9,19 +9,9 @@ import "firebase/auth";
 import axios from "axios";
 
 // Firebase credentials and config
-const firebaseConfig = {
-  apiKey: "AIzaSyBNn79ajHf-XZ9hLbdP3paIM_s0BWg6v04",
-  authDomain: "ludumlib.firebaseapp.com",
-  projectId: "ludumlib",
-  storageBucket: "ludumlib.appspot.com",
-  messagingSenderId: "1095146337648",
-  appId: "1:1095146337648:web:ec3461733ae68b65534bb5",
-  measurementId: "G-3590SJRJMZ",
-};
+import initFirebase from "./firebase";
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
+initFirebase();
 
 const authContext = createContext();
 
@@ -44,6 +34,12 @@ function useProvideAuth() {
 
   // Wrap any Firebase methods we want to use making sure ...
   // ... to save the user to state.
+
+  const getIdToken = () => {
+    const user = firebase.auth().currentUser;
+    return user?.getIdToken();
+  };
+
   const signin = (email, password) => {
     return firebase
       .auth()
@@ -144,19 +140,30 @@ function useProvideAuth() {
     );
     return user.reauthenticateWithCredential(credential).then(() => {
       return axios.get(`/api/users/${user.uid}`).then((res) => {
-        return axios
-          .delete(`api/users/${user.uid}/profilepic`, {
-            data: {
-              image: res.data.pfp?.name ? res.data.pfp?.name : null,
-            },
-          })
-          .then(() => {
-            axios.delete(`/api/users/${user.uid}`).then(() => {
-              user.delete().then(() => {
-                setUser(false);
-              });
+        return user.getIdToken().then((idToken) => {
+          return axios
+            .delete(`api/users/${user.uid}/profilepic`, {
+              headers: {
+                authorization: `Bearer ${idToken}`,
+              },
+              data: {
+                image: res.data.pfp?.name ? res.data.pfp?.name : null,
+              },
+            })
+            .then(() => {
+              axios
+                .delete(`/api/users/${user.uid}`, {
+                  headers: {
+                    authorization: `Bearer ${idToken}`,
+                  },
+                })
+                .then(() => {
+                  user.delete().then(() => {
+                    setUser(false);
+                  });
+                });
             });
-          });
+        });
       });
     });
   };
@@ -189,6 +196,7 @@ function useProvideAuth() {
   // Return the user object and auth methods
   return {
     user,
+    getIdToken,
     signin,
     signup,
     signout,

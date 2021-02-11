@@ -47,8 +47,20 @@ const ProfileSettings = () => {
     }
   };
 
-  // Sign In User with firebase or show toast error
   const onSubmit = ({ username, fullname, pfp }) => {
+    auth
+      .getIdToken()
+      .then((idToken) => {
+        updateProfile(username, fullname, pfp, idToken);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message, { position: "bottom-center" });
+      });
+  };
+
+  // Update user profile
+  const updateProfile = (username, fullname, pfp, idToken) => {
     if (pfp.length > 0) {
       if (pfp[0].size > 5000000) {
         toast.error("Failed to save settings. Max image size (5 MB) exceeded", {
@@ -64,6 +76,9 @@ const ProfileSettings = () => {
 
       axios
         .get(`api/users/${user._id}/profilepic`, {
+          headers: {
+            authorization: `Bearer ${idToken}`,
+          },
           params: {
             newImage: pfpName,
             oldImage: user.pfp?.name ? user.pfp?.name : null,
@@ -86,14 +101,22 @@ const ProfileSettings = () => {
             .then(() => {
               const pfpURI = `https://storage.googleapis.com/ludumlib_bucket/profile-pics/${pfpName}.jpg`;
               axios
-                .put(`api/users/${user._id}`, {
-                  username,
-                  fullname,
-                  pfp: {
-                    name: pfpName,
-                    uri: pfpURI,
+                .put(
+                  `api/users/${user._id}`,
+                  {
+                    username,
+                    fullname,
+                    pfp: {
+                      name: pfpName,
+                      uri: pfpURI,
+                    },
                   },
-                })
+                  {
+                    headers: {
+                      authorization: `Bearer ${idToken}`,
+                    },
+                  }
+                )
                 .then((res) => {
                   router.reload();
                   toast.success("Profile Updated", {
@@ -120,11 +143,19 @@ const ProfileSettings = () => {
         });
     } else {
       axios
-        .put(`api/users/${user._id}`, {
-          username,
-          fullname,
-          pfp: user.pfp,
-        })
+        .put(
+          `api/users/${user._id}`,
+          {
+            username,
+            fullname,
+            pfp: user.pfp,
+          },
+          {
+            headers: {
+              authorization: `Bearer ${idToken}`,
+            },
+          }
+        )
         .then((res) => {
           router.reload();
           toast.success("Profile Updated", { position: "bottom-center" });
