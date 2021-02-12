@@ -86,7 +86,7 @@ const Game = () => {
     };
     const onLikeClick = () => {
       if (!auth.user) {
-        router.push(`/login?nextName=${gameName}&nextId=${gameId}`);
+        router.push(`/login?nextRoute=/games/${gameName}/${gameId}`);
         return;
       }
 
@@ -95,7 +95,7 @@ const Game = () => {
 
     const onReviewClick = () => {
       if (!auth.user) {
-        router.push(`/login?nextName=${gameName}&nextId=${gameId}`);
+        router.push(`/login?nextRoute=/games/${gameName}/${gameId}`);
         return;
       }
 

@@ -33,9 +33,11 @@ export default function Login() {
 
   const { nextRoute } = router.query;
 
-  if (auth.user) {
-    router.push("/");
-  }
+  useEffect(() => {
+    if (auth.user !== false) {
+      router.push("/");
+    }
+  }, []);
 
   // Sign In User with firebase or show toast error
   const onSubmit = ({ email, password }) => {
