@@ -56,7 +56,7 @@ export default function Signup() {
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Username already taken.", {
+        toast.error(err.response.data.message, {
           position: "bottom-center",
         });
       });

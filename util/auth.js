@@ -40,131 +40,100 @@ function useProvideAuth() {
     return user?.getIdToken();
   };
 
-  const signin = (email, password) => {
-    return firebase
+  const signin = async (email, password) => {
+    const response = await firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((response) => {
-        axios
-          .get(`/api/users/${response.user.uid}`)
-          .then((res) => {
-            const user = { ...response.user, ...res.data };
-            setUser(user);
-            return user;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      });
+      .signInWithEmailAndPassword(email, password);
+    const res = await axios.get(`/api/users/${response.user.uid}`);
+    const user = { ...response.user, ...res.data };
+    setUser(user);
+    return user;
   };
 
-  const signup = (email, password, username) => {
-    return firebase
+  const signup = async (email, password, username) => {
+    const response = await firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((response) => {
-        axios
-          .post(`/api/users`, {
-            _id: response.user.uid,
-            username: username,
-          })
-          .then((res) => {
-            const user = { ...response.user, ...res.data };
-            setUser(user);
-            return user;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      });
+      .createUserWithEmailAndPassword(email, password);
+    const res = await axios.post(`/api/users`, {
+      _id: response.user.uid,
+      username: username,
+      fullname: null,
+      pfp: {
+        name: null,
+        uri: null,
+      },
+    });
+    const user = { ...response.user, ...res.data };
+    setUser(user);
+    return user;
   };
 
-  const signout = () => {
-    return firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        setUser(false);
-      });
+  const signout = async () => {
+    await firebase.auth().signOut();
+    setUser(false);
   };
 
-  const sendPasswordResetEmail = (email) => {
-    return firebase
-      .auth()
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        return true;
-      });
+  const sendPasswordResetEmail = async (email) => {
+    await firebase.auth().sendPasswordResetEmail(email);
+    return true;
   };
 
-  const confirmPasswordReset = (code, password) => {
-    return firebase
-      .auth()
-      .confirmPasswordReset(code, password)
-      .then(() => {
-        return true;
-      });
+  const confirmPasswordReset = async (code, password) => {
+    await firebase.auth().confirmPasswordReset(code, password);
+    return true;
   };
 
-  const updatePassword = (currPass, newPass) => {
+  const updatePassword = async (currPass, newPass) => {
     const user = firebase.auth().currentUser;
     const credential = firebase.auth.EmailAuthProvider.credential(
       user.email,
       currPass
     );
-    return user.reauthenticateWithCredential(credential).then(() => {
-      return user.updatePassword(newPass).then(() => {
-        return user;
-      });
-    });
+    await user.reauthenticateWithCredential(credential);
+    await user.updatePassword(newPass);
+    return user;
   };
 
-  const updateEmail = (email, password) => {
+  const updateEmail = async (email, password) => {
     const user = firebase.auth().currentUser;
     const credential = firebase.auth.EmailAuthProvider.credential(
       user.email,
       password
     );
-    return user.reauthenticateWithCredential(credential).then(() => {
-      return user.updateEmail(email).then(() => {
-        return user;
-      });
-    });
+    await user.reauthenticateWithCredential(credential);
+    await user.updateEmail(email);
+    return user;
   };
 
-  const deleteAccount = (password) => {
+  const deleteAccount = async (password) => {
     const user = firebase.auth().currentUser;
     const credential = firebase.auth.EmailAuthProvider.credential(
       user.email,
       password
     );
-    return user.reauthenticateWithCredential(credential).then(() => {
-      return axios.get(`/api/users/${user.uid}`).then((res) => {
-        return user.getIdToken().then((idToken) => {
-          return axios
-            .delete(`api/users/${user.uid}/profilepic`, {
-              headers: {
-                authorization: `Bearer ${idToken}`,
-              },
-              data: {
-                image: res.data.pfp?.name ? res.data.pfp?.name : null,
-              },
-            })
-            .then(() => {
-              axios
-                .delete(`/api/users/${user.uid}`, {
-                  headers: {
-                    authorization: `Bearer ${idToken}`,
-                  },
-                })
-                .then(() => {
-                  user.delete().then(() => {
-                    setUser(false);
-                  });
-                });
-            });
-        });
+    return user.reauthenticateWithCredential(credential).then(async () => {
+      const res = await axios.get(`/api/users/${user.uid}`);
+      const idToken = await user.getIdToken();
+      await axios.delete(`api/users/${user.uid}/profilepic`, {
+        headers: {
+          authorization: `Bearer ${idToken}`,
+        },
+        data: {
+          image: res.data.pfp?.name ? res.data.pfp?.name : null,
+        },
       });
+      await axios.delete(`/api/reviews`, {
+        headers: {
+          authorization: `Bearer ${idToken}`,
+        },
+      });
+      await axios.delete(`/api/users/${user.uid}`, {
+        headers: {
+          authorization: `Bearer ${idToken}`,
+        },
+      });
+      await user.delete();
+      setUser(false);
     });
   };
 

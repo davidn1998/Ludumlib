@@ -4,6 +4,7 @@ import gameStyles from "../styles/game.module.scss";
 import formStyles from "../styles/forms.module.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 // Components
 
@@ -18,26 +19,48 @@ import ratingIcon from "@iconify/icons-fa-solid/medal";
 // Authentication
 import { useForm } from "react-hook-form";
 
-const ReviewGame = ({ auth, hideModal }) => {
+const ReviewGame = ({ auth, hideModal, gameId }) => {
   const { register, handleSubmit, watch, errors } = useForm();
 
   const user = auth.user;
 
-  // Submit review or show toast error
   const onSubmitReview = ({ title, body, rating }) => {
-    console.log(title);
-    console.log(body);
-    console.log(rating);
-    // auth
-    //   .deleteAccount(password)
-    //   .then(() => {
-    //     toast.success("Account Deleted", {
-    //       position: "bottom-center",
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     toast.error(err.message, { position: "bottom-center" });
-    //   });
+    auth
+      .getIdToken()
+      .then((idToken) => {
+        createReview(title, body, rating, gameId, idToken);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message, { position: "bottom-center" });
+      });
+  };
+
+  // Submit review or show toast error
+  const createReview = (title, body, rating, game, idToken) => {
+    axios
+      .post(
+        `/api/reviews`,
+        {
+          title,
+          body,
+          rating,
+          game,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${idToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        toast.success("Review Posted", {
+          position: "bottom-center",
+        });
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message, { position: "bottom-center" });
+      });
   };
 
   const escFunction = useCallback((event) => {

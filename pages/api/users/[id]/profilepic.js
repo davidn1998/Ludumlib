@@ -19,10 +19,16 @@ handler.get(async (req, res) => {
 
   if (req.query.oldImage) {
     // Deletes old pfp file from the bucket
-    await storage
-      .bucket(process.env.BUCKET_NAME)
-      .file(`profile-pics/${req.query.oldImage}.jpg`)
-      .delete();
+    try {
+      await storage
+        .bucket(process.env.BUCKET_NAME)
+        .file(`profile-pics/${req.query.oldImage}.jpg`)
+        .delete();
+    } catch (err) {
+      return res
+        .status(400)
+        .json({ message: "Could not update profile picture" });
+    }
   }
 
   const bucket = storage.bucket(process.env.BUCKET_NAME);
@@ -50,13 +56,19 @@ handler.delete(async (req, res) => {
 
   if (req.body.image) {
     // Deletes pfp file from the bucket
-    await storage
-      .bucket(process.env.BUCKET_NAME)
-      .file(`profile-pics/${req.body.image}.jpg`)
-      .delete();
+    try {
+      await storage
+        .bucket(process.env.BUCKET_NAME)
+        .file(`profile-pics/${req.body.image}.jpg`)
+        .delete();
+    } catch (err) {
+      return res
+        .status(400)
+        .json({ message: "Could not update profile picture" });
+    }
   }
 
-  return res.status(200).json({ Success: "Info Deleted" });
+  return res.status(200).json({ message: "Profile Pic Deleted" });
 });
 
 export default handler;

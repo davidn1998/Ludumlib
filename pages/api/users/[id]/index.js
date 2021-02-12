@@ -6,14 +6,13 @@ const handler = nextConnect();
 
 handler.get(async (req, res) => {
   const { db } = await connectToDatabase();
-  const {
-    query: { id },
-  } = await req;
 
-  const user = await db.collection("users").findOne({ _id: id });
+  const user = await db.collection("users").findOne({ _id: req.query.id });
 
   if (!user) {
-    return res.status(404).json({ error: `User with id: ${id} not found` });
+    return res
+      .status(404)
+      .json({ error: `User with id: ${req.query.id} not found` });
   }
 
   return res.status(200).json(user);
@@ -23,23 +22,18 @@ handler.use(validateFirebaseIdToken);
 
 handler.put(async (req, res) => {
   const { db } = await connectToDatabase();
-  const {
-    query: { id },
-  } = await req;
 
   const updates = await req.body;
   const userExists = await db
     .collection("users")
     .findOne({ username: updates.username });
-  if (userExists && userExists._id !== id) {
+  if (userExists && userExists._id !== req.user.uid) {
     return res.status(400).json({
-      success: false,
-      data: { message: "Username already exists" },
       message: "Username already exists",
     });
   }
   const result = await db.collection("users").updateOne(
-    { _id: id },
+    { _id: req.user.uid },
     {
       $set: {
         username: updates.username,
@@ -64,11 +58,8 @@ handler.put(async (req, res) => {
 
 handler.delete(async (req, res) => {
   const { db } = await connectToDatabase();
-  const {
-    query: { id },
-  } = await req;
 
-  const user = await db.collection("users").deleteOne({ _id: id });
+  const user = await db.collection("users").deleteOne({ _id: req.user.uid });
 
   return res.status(200).json({ Success: "Account Deleted" });
 });

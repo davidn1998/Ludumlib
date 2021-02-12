@@ -54,7 +54,6 @@ const ProfileSettings = () => {
         updateProfile(username, fullname, pfp, idToken);
       })
       .catch((err) => {
-        console.log(err);
         toast.error(err.message, { position: "bottom-center" });
       });
   };
@@ -124,20 +123,20 @@ const ProfileSettings = () => {
                   });
                 })
                 .catch((err) => {
-                  toast.error("Username already taken", {
+                  toast.error(err.response.data.message, {
                     position: "bottom-center",
                   });
                 });
             })
             .catch((err) => {
-              console.error(err);
               toast.error("Error uploading profile picture.", {
                 position: "bottom-center",
               });
             });
         })
         .catch((err) => {
-          toast.error("Error uploading profile picture.", {
+          console.log(err.response);
+          toast.error(err.response.data.message, {
             position: "bottom-center",
           });
         });
@@ -161,8 +160,7 @@ const ProfileSettings = () => {
           toast.success("Profile Updated", { position: "bottom-center" });
         })
         .catch((err) => {
-          console.log(err);
-          toast.error("Username already taken", { position: "bottom-center" });
+          toast.error(err.response.data.message, { position: "bottom-center" });
         });
     }
   };

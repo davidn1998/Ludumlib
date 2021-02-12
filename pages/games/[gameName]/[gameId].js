@@ -136,7 +136,11 @@ const Game = () => {
             }`}
           >
             <div className={gameStyles.modalForm}>
-              <ReviewGame auth={auth} hideModal={hideReviewModal} />
+              <ReviewGame
+                auth={auth}
+                hideModal={hideReviewModal}
+                gameId={gameId}
+              />
             </div>
           </div>
           <h2 className={gameStyles.heading}>{data.name}</h2>

@@ -42,9 +42,6 @@ const validateFirebaseIdToken = async (req, res, next) => {
 
   try {
     const decodedIdToken = await admin.auth().verifyIdToken(idToken);
-    if (req.query.id !== decodedIdToken.uid) {
-      throw "Firebase ID does not match requested user";
-    }
     req.user = decodedIdToken;
     next();
     return;
