@@ -30,6 +30,9 @@ const ReviewGame = ({ auth, hideModal, gameId }) => {
       .then((idToken) => {
         createReview(title, body, rating, gameId, idToken);
       })
+      .then(() => {
+        hideModal();
+      })
       .catch((err) => {
         console.log(err);
         toast.error(err.message, { position: "bottom-center" });
