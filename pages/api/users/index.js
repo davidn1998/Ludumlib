@@ -7,9 +7,7 @@ const handler = nextConnect();
 handler.get(async (req, res) => {
   const { db } = await connectToDatabase();
 
-  const {
-    query: { username, validate },
-  } = await req;
+  const { username, validate } = await req.query;
 
   let user = null;
 

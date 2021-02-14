@@ -8,11 +8,21 @@ const handler = nextConnect();
 handler.get(async (req, res) => {
   const { db } = await connectToDatabase();
 
-  const reviews = await db.collection("reviews").find({});
+  const { rating, game, user, limit } = await req.query;
 
-  const reviewsArray = await reviews.toArray();
+  const queryParams = {};
 
-  return res.status(200).json(reviewsArray);
+  if (user) queryParams.user = user;
+  if (game) queryParams.game = game;
+  if (rating) queryParams.rating = rating;
+
+  const reviews = await db
+    .collection("reviews")
+    .find(queryParams)
+    .limit(parseInt(limit))
+    .toArray();
+
+  return res.status(200).json(reviews);
 });
 
 handler.use(validateFirebaseIdToken);
