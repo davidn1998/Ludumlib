@@ -5,7 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import DefaultErrorPage from "next/error";
 import { useAuth } from "../../../util/auth";
-import { useGetGameData, useGetReviewsData } from "../../../util/useRequest";
+import {
+  useGetGameData,
+  useGetReviewsData,
+  useGetUserReviewData,
+} from "../../../util/useRequest";
 
 import gameStyles from "../../../styles/game.module.scss";
 
@@ -30,6 +34,7 @@ const Game = () => {
 
   const { gameData, gameError } = useGetGameData(gameId);
   const { reviewsData, reviewsError } = useGetReviewsData("", gameId);
+  const userReviewData = useGetUserReviewData(auth.user?.uid, gameId);
 
   if (gameError) {
     return <DefaultErrorPage statusCode={404} />;
@@ -153,11 +158,13 @@ const Game = () => {
               : gameStyles.modalHidden
           }`}
         >
+          <div className={gameStyles.modalBackground}></div>
           <div className={gameStyles.modalForm}>
             <ReviewGame
               auth={auth}
               hideModal={hideReviewModal}
               gameId={gameId}
+              userReviewData={userReviewData}
             />
           </div>
         </div>
@@ -196,7 +203,7 @@ const Game = () => {
               </button>
               <button
                 className={gameStyles.button}
-                data-tip="Review"
+                data-tip={userReviewData ? "Edit Review" : "Review"}
                 data-type="warning"
                 onClick={onReviewClick}
               >

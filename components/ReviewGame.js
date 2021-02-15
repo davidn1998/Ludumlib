@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/router";
 import styles from "../styles/index.module.scss";
 import gameStyles from "../styles/game.module.scss";
 import formStyles from "../styles/forms.module.scss";
@@ -16,17 +17,25 @@ import bodyIcon from "@iconify/icons-fa-solid/pencil-ruler";
 import star from "@iconify/icons-fa-solid/star";
 import ratingIcon from "@iconify/icons-fa-solid/medal";
 
-// Authentication
+// Form
 import { useForm } from "react-hook-form";
 
-const ReviewGame = ({ auth, hideModal, gameId }) => {
-  const { register, handleSubmit, watch, errors } = useForm();
+const ReviewGame = ({ auth, hideModal, gameId, userReviewData }) => {
+  const defaultValues = { rating: userReviewData?.rating?.toString() };
+
+  const { register, handleSubmit, errors } = useForm({
+    defaultValues,
+  });
+
+  const router = useRouter();
 
   const onSubmitReview = ({ title, body, rating }) => {
     auth
       .getIdToken()
       .then((idToken) => {
-        createReview(title, body, rating, gameId, idToken);
+        userReviewData
+          ? updateReview(title, body, rating, userReviewData._id, idToken)
+          : createReview(title, body, rating, gameId, idToken);
       })
       .catch((err) => {
         console.log(err);
@@ -56,9 +65,67 @@ const ReviewGame = ({ auth, hideModal, gameId }) => {
           position: "bottom-center",
         });
         hideModal();
+        router.reload();
       })
       .catch((err) => {
         toast.error(err.response.data.message, { position: "bottom-center" });
+      });
+  };
+  // Update review or show toast error
+  const updateReview = (title, body, rating, reviewId, idToken) => {
+    axios
+      .put(
+        `/api/reviews/${reviewId}`,
+        {
+          title,
+          body,
+          rating,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${idToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        toast.success("Review Updated", {
+          position: "bottom-center",
+        });
+        hideModal();
+        router.reload();
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message, { position: "bottom-center" });
+      });
+  };
+  // Delete review or show toast error
+  const deleteReview = () => {
+    auth
+      .getIdToken()
+      .then((idToken) => {
+        axios
+          .delete(`/api/reviews/${userReviewData._id}`, {
+            headers: {
+              authorization: `Bearer ${idToken}`,
+            },
+          })
+          .then((res) => {
+            toast.success("Review Deleted", {
+              position: "bottom-center",
+            });
+            hideModal();
+            router.reload();
+          })
+          .catch((err) => {
+            console.log(err.response);
+            toast.error(err.response.data.message, {
+              position: "bottom-center",
+            });
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message, { position: "bottom-center" });
       });
   };
 
@@ -86,7 +153,9 @@ const ReviewGame = ({ auth, hideModal, gameId }) => {
             <Icon icon={closeIcon} width={20} height={20} />
           </div>
         </div>
-        <h2 className={formStyles.heading}>Create Review</h2>
+        <h2 className={formStyles.heading}>
+          {userReviewData ? "Edit Review" : "Create Review"}
+        </h2>
         <h5 className={formStyles.label}>Title</h5>
         <div className={formStyles.inputBox}>
           <div className={formStyles.iconLeft}>
@@ -96,6 +165,7 @@ const ReviewGame = ({ auth, hideModal, gameId }) => {
             type="text"
             name="title"
             placeholder="Title"
+            defaultValue={userReviewData?.title || ""}
             style={{ paddingRight: "3rem" }}
             ref={register({
               required: {
@@ -117,6 +187,7 @@ const ReviewGame = ({ auth, hideModal, gameId }) => {
             type="text"
             name="body"
             placeholder="Body"
+            defaultValue={userReviewData?.body || ""}
             rows="5"
             style={{ paddingRight: "3rem" }}
             ref={register({
@@ -217,8 +288,23 @@ const ReviewGame = ({ auth, hideModal, gameId }) => {
           <p className={formStyles.error}>{errors?.rating?.message}</p>
         )}
         <div className={formStyles.inputBox}>
-          <button type="submit">Create Review</button>
+          <button type="submit">
+            {userReviewData ? "Save Changes" : "Create Review"}
+          </button>
         </div>
+        {userReviewData ? (
+          <div className={formStyles.inputBox}>
+            <button
+              onClick={deleteReview}
+              type="reset"
+              className={formStyles.dangerButton}
+            >
+              Delete Review
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
       </form>
     </div>
   );

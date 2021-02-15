@@ -11,9 +11,9 @@ handler.get(async (req, res) => {
 
   const queryParams = {};
 
-  if (user.length > 0) queryParams.user = user;
-  if (game.length > 0) queryParams.game = game;
-  if (rating.length > 0) queryParams.rating = rating;
+  if (user?.length > 0) queryParams.user = user;
+  if (game?.length > 0) queryParams.game = game;
+  if (rating?.length > 0) queryParams.rating = rating;
 
   const count = await db.collection("reviews").countDocuments();
 

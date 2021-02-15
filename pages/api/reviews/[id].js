@@ -32,7 +32,7 @@ handler.put(async (req, res) => {
 
   const updates = await req.body;
   await db.collection("reviews").updateOne(
-    { _id: id },
+    { _id: ObjectID(id) },
     {
       $set: {
         title: updates.title,
@@ -52,6 +52,8 @@ handler.put(async (req, res) => {
 handler.delete(async (req, res) => {
   const { db } = await connectToDatabase();
   const { id } = await req.query;
+
+  console.log(id);
 
   const review = await db.collection("reviews").findOne({ _id: ObjectID(id) });
 

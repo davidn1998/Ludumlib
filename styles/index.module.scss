@@ -258,17 +258,24 @@
   }
 
   .modal {
-    position: fixed;
-    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
     z-index: 10;
     transition: 0.5s;
 
     display: flex;
     justify-content: center;
+
+    .modalBackground {
+      background-color: rgba(0, 0, 0, 0.5);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
 
     .modalForm {
       margin: 10% 10%;
