@@ -4,10 +4,13 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import DefaultErrorPage from "next/error";
+import useSWR from "swr";
+import axios from "axios";
 import { useAuth } from "../../../util/auth";
-import { useGetGameData, useGetReviewsData } from "../../../util/useRequest";
+import { useGetGameData } from "../../../util/useRequest";
 
 import gameStyles from "../../../styles/game.module.scss";
+import styles from "../../../styles/index.module.scss";
 
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
@@ -29,12 +32,10 @@ const Game = () => {
   const { gameName, gameId } = router.query;
 
   const { gameData, gameError } = useGetGameData(gameId);
-  const { reviewsData, reviewsError } = useGetReviewsData("", gameId);
 
   if (gameError) {
     return <DefaultErrorPage statusCode={404} />;
   }
-
   if (!gameData) {
     return (
       <div className={gameStyles.container}>
@@ -47,21 +48,6 @@ const Game = () => {
       </div>
     );
   }
-
-  let reviewComponentsCol1 = [];
-  let reviewComponentsCol2 = [];
-
-  [...Array(reviewsData?.reviews?.length).keys()].forEach((i) => {
-    if (i % 2 == 0) {
-      reviewComponentsCol1.push(
-        <MiniReview key={i} reviewData={reviewsData?.reviews[i]} />
-      );
-    } else {
-      reviewComponentsCol2.push(
-        <MiniReview key={i} reviewData={reviewsData?.reviews[i]} />
-      );
-    }
-  });
 
   const fullAbout = (
     <>
@@ -214,8 +200,38 @@ const Game = () => {
         </div>
         <h3 className={gameStyles.heading}>REVIEWS</h3>
         <div className={gameStyles.miniReviews}>
-          <div className={gameStyles.reviewCol}>{reviewComponentsCol1}</div>
-          <div className={gameStyles.reviewCol}>{reviewComponentsCol2}</div>
+          <div className={gameStyles.reviewCol}>
+            <MiniReview
+              imgURL={
+                gameData.background_image
+                  ? gameData.background_image
+                  : "/images/default_cover.png"
+              }
+              reviewTitle="Best Game of the Decade"
+              reviewText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat repudiandae culpa sit expedita iste, nisi nemo vero ullam, amet minus sequi facilis nam numquam tempora accusantium. Sint, distinctio at! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat repudiandae culpa sit expedita iste, nisi nemo vero ullam, amet minus sequi facilis nam numquam tempora accusantium. Sint, distinctio at! Eveniet?"
+              reviewerName="John Smith"
+              reviewDate="10/10/2020"
+              reviewerIcon="/images/pfp1.png"
+              fullStarsNum={4}
+              halfStarsNum={1}
+            />
+          </div>
+          <div className={gameStyles.reviewCol}>
+            <MiniReview
+              imgURL={
+                gameData.background_image
+                  ? gameData.background_image
+                  : "/images/default_cover.png"
+              }
+              reviewTitle="Endless Fun"
+              reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing"
+              reviewerName="Katiieee"
+              reviewDate="26/09/2020"
+              reviewerIcon="/images/pfp2.png"
+              fullStarsNum={4}
+              halfStarsNum={0}
+            />
+          </div>
         </div>
       </div>
       <Footer />

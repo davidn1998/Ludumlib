@@ -46,9 +46,6 @@
     }
 
     .subHeading {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       font-weight: 600;
       font-size: 3rem;
       border-bottom: 1px solid #fff;
@@ -60,9 +57,14 @@
         word-wrap: break-word;
       }
 
-      .profileTitle {
+      .profileHeading {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        .profileTitle {
+          display: flex;
+          align-items: center;
+        }
       }
     }
 

@@ -4,6 +4,7 @@ import useSWR from "swr";
 import axios from "axios";
 import { connectToDatabase } from "../util/mongodb";
 import { useAuth } from "../util/auth";
+import { useGetGamesData, useGetReviewsData } from "../util/useRequest";
 
 import styles from "../styles/index.module.scss";
 
@@ -22,26 +23,35 @@ import Graph from "../components/SVGIcons/Graph";
 import MainButton from "../components/MainButton";
 import MiniReview from "../components/MiniReview";
 
-const fetcher = (url) => axios.get(url).then((res) => res.data);
-
 export default function Home({ isConnected }) {
   const auth = useAuth();
 
   const currDate = new Date();
-  const {
-    data,
-    error,
-  } = useSWR(
-    `https://api.rawg.io/api/games?key=c2cfee3aa5494adfacb4b77caa093322&dates=${
-      currDate.getFullYear() - 1
-    }-01-01,${currDate.toISOString().substr(0, 10)}&page_size=12`,
-    fetcher,
-    { revalidateOnFocus: false }
+
+  const { gamesData, gamesError } = useGetGamesData(
+    `${currDate.getFullYear() - 1}-01-01,${currDate
+      .toISOString()
+      .substr(0, 10)}`,
+    12,
+    1
   );
 
-  if (error) {
-    console.error("Could not load game data");
-  }
+  const { reviewsData, reviewsError } = useGetReviewsData("", "", "", 6, 1);
+
+  let reviewComponentsCol1 = [];
+  let reviewComponentsCol2 = [];
+
+  [...Array(reviewsData?.reviews?.length).keys()].forEach((i) => {
+    if (i % 2 == 0) {
+      reviewComponentsCol1.push(
+        <MiniReview key={i} reviewData={reviewsData?.reviews[i]} />
+      );
+    } else {
+      reviewComponentsCol2.push(
+        <MiniReview key={i} reviewData={reviewsData?.reviews[i]} />
+      );
+    }
+  });
 
   return (
     <div className={styles.container}>
@@ -52,8 +62,8 @@ export default function Home({ isConnected }) {
       <Header />
       <div className={styles.main}>
         <Hero user={auth.user} />
-        {data ? (
-          <GamesList slideUp={true} data={data.results.slice(0, 6)} />
+        {gamesData ? (
+          <GamesList slideUp={true} data={gamesData.results.slice(0, 6)} />
         ) : (
           <></>
         )}
@@ -97,8 +107,8 @@ export default function Home({ isConnected }) {
             <h2 className={styles.subHeading}>Popular Games</h2>
           </a>
         </Link>
-        {data ? (
-          <GamesList slideUp={false} data={data.results.slice(6, 12)} />
+        {gamesData ? (
+          <GamesList slideUp={false} data={gamesData.results.slice(6, 12)} />
         ) : (
           <></>
         )}
@@ -108,56 +118,14 @@ export default function Home({ isConnected }) {
           </a>
         </Link>
         <GameListsList slideUp={false} />
-        <Link href="/games">
+        <Link href="/reviews">
           <a>
-            <h2 className={styles.subHeading}>Popular Reviews</h2>
+            <h2 className={styles.subHeading}>Recent Reviews</h2>
           </a>
         </Link>
         <div className={styles.miniReviews}>
-          <div className={styles.reviewCol}>
-            <MiniReview
-              imgURL="/images/Fall_Guys_cover.jpg"
-              reviewTitle="Fall Guys"
-              reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing. Integer vulputate aenean diam nisl, at vitae id sed lorem. Mi ut eget mi aliquam sit neque, in"
-              reviewerName="John Smith"
-              reviewDate="10/10/2020"
-              reviewerIcon="/images/pfp1.png"
-              fullStarsNum={4}
-              halfStarsNum={1}
-            />
-            <MiniReview
-              imgURL="/images/control_cover.png"
-              reviewTitle="Control"
-              reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing"
-              reviewerName="Katiieee"
-              reviewDate="26/09/2020"
-              reviewerIcon="/images/pfp2.png"
-              fullStarsNum={4}
-              halfStarsNum={0}
-            />
-          </div>
-          <div className={styles.reviewCol}>
-            <MiniReview
-              imgURL="/images/control_cover.png"
-              reviewTitle="Control"
-              reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing"
-              reviewerName="Katiieee"
-              reviewDate="26/09/2020"
-              reviewerIcon="/images/pfp2.png"
-              fullStarsNum={4}
-              halfStarsNum={0}
-            />
-            <MiniReview
-              imgURL="/images/Fall_Guys_cover.jpg"
-              reviewTitle="Fall Guys"
-              reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum elit justo, mi dignissim id maecenas urna id adipiscing. Integer vulputate aenean diam nisl, at vitae id sed lorem. Mi ut eget mi aliquam sit neque, in"
-              reviewerName="John Smith"
-              reviewDate="10/10/2020"
-              reviewerIcon="/images/pfp1.png"
-              fullStarsNum={4}
-              halfStarsNum={1}
-            />
-          </div>
+          <div className={styles.reviewCol}>{reviewComponentsCol1}</div>
+          <div className={styles.reviewCol}>{reviewComponentsCol2}</div>
         </div>
       </div>
 

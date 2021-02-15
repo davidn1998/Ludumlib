@@ -22,8 +22,6 @@ import { useForm } from "react-hook-form";
 const ReviewGame = ({ auth, hideModal, gameId }) => {
   const { register, handleSubmit, watch, errors } = useForm();
 
-  const user = auth.user;
-
   const onSubmitReview = ({ title, body, rating }) => {
     auth
       .getIdToken()

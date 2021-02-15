@@ -1,33 +1,27 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useGetGameData, useGetUserData } from "../util/useRequest";
 import styles from "./MiniReview.module.scss";
 import FullStar from "./SVGIcons/FullStar";
-import HalfStar from "./SVGIcons/HalfStar";
 import ProfilePic from "./ProfilePic";
 
-const MiniReview = ({
-  reviewTitle,
-  reviewText,
-  reviewDate,
-  reviewerName,
-  reviewerIcon,
-  imgURL,
-  fullStarsNum,
-  halfStarsNum,
-}) => {
-  const fullStars = [];
+const MiniReview = ({ reviewData }) => {
+  const [isFullReview, setIsFullReview] = useState(false);
 
-  for (let i = 0; i < fullStarsNum; i++) {
-    fullStars.push(<FullStar key={i} />);
+  const { gameData, gameError } = useGetGameData(reviewData?.game);
+  const { userData, userError } = useGetUserData(reviewData?.user);
+
+  if (gameError || !gameData || userError || !userData) {
+    return <></>;
   }
 
-  const [isFullReview, setIsFullReview] = useState(false);
+  const date = new Date(reviewData.date);
 
   const fullReview = (
     <>
       <div>
-        <p>{reviewText}</p>
+        <p>{reviewData.body}</p>
       </div>
       <button
         className={styles.reviewToggle}
@@ -39,10 +33,10 @@ const MiniReview = ({
   );
 
   const smallReview =
-    reviewText.length > 300 ? (
+    reviewData.body.length > 300 ? (
       <>
         <div>
-          <p>{reviewText.substring(0, 300)}...</p>
+          <p>{reviewData.body.substring(0, 300)}...</p>
         </div>
         <button
           className={styles.reviewToggle}
@@ -54,35 +48,59 @@ const MiniReview = ({
     ) : (
       <>
         <div>
-          <p>{reviewText}</p>
+          <p>{reviewData.body}</p>
         </div>
       </>
     );
+
+  const fullStars = [];
+
+  for (let i = 0; i < reviewData.rating; i++) {
+    fullStars.push(<FullStar key={i} />);
+  }
 
   return (
     <div className={styles.miniReview}>
       <div className={styles.reviewDetails}>
         <div className={styles.imgContainer}>
-          <Image
-            layout="fill"
-            objectFit="cover"
-            className={styles.image}
-            src={imgURL}
-            alt={""}
-          />
+          <Link href={`/games/${gameData.slug}/${gameData.id}`}>
+            <a>
+              <Image
+                layout="fill"
+                objectFit="cover"
+                className={styles.image}
+                src={
+                  gameData.background_image
+                    ? gameData.background_image
+                    : "/images/default_cover.png"
+                }
+                alt={""}
+              />
+            </a>
+          </Link>
         </div>
         <div className={styles.content}>
           <div className={styles.header}>
-            <h2>{reviewTitle}</h2>
+            <h2>{reviewData.title}</h2>
           </div>
-          <div className={styles.stars}>
-            {fullStars}
-            {halfStarsNum > 0 ? <HalfStar /> : ""}
-          </div>
+          <div className={styles.stars}>{fullStars}</div>
           <div className={styles.reviewerInfo}>
-            <ProfilePic source={reviewerIcon} width="60px" height="60px" />
+            <Link href={`/user/${userData.username}`}>
+              <a>
+                <ProfilePic
+                  source={
+                    userData ? userData.pfp.uri : "/images/default_cover.png"
+                  }
+                  width="60px"
+                  height="60px"
+                />
+              </a>
+            </Link>
             <p>
-              <span>{reviewerName}</span> - {reviewDate}
+              <Link href={`/user/${userData.username}`}>
+                <a className={styles.username}>{userData.username}</a>
+              </Link>
+              - {date.toLocaleDateString()}
             </p>
           </div>
         </div>

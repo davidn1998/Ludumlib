@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import DefaultErrorPage from "next/error";
 import { useRouter } from "next/router";
-import useSWR from "swr";
-import axios from "axios";
+import { useGetUserData } from "../../util/useRequest";
 import { useAuth } from "../../util/auth";
 
 import styles from "../../styles/index.module.scss";
@@ -11,8 +11,6 @@ import styles from "../../styles/index.module.scss";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import ProfilePic from "../../components/ProfilePic";
-
-const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default function Profile() {
   const router = useRouter();
@@ -23,12 +21,23 @@ export default function Profile() {
   const [tab, setTab] = useState(1);
   const [tabView, setTabView] = useState(null);
 
-  const { data, error } = useSWR(`/api/users?username=${username}`, fetcher, {
-    revalidateOnFocus: false,
-  });
+  const { userData, userError } = useGetUserData("", username);
 
-  if (error) {
-    console.error("Could not load profile data");
+  if (userError) {
+    return <DefaultErrorPage statusCode={404} />;
+  }
+
+  if (!userData) {
+    return (
+      <div className={styles.container}>
+        <Head>
+          <title>Profile | Ludumlib</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <Header />
+        <div className={styles.main}></div>
+      </div>
+    );
   }
 
   const changeTab = (tabNum) => {
@@ -74,28 +83,32 @@ export default function Profile() {
       <div className={styles.main}>
         <div className={styles.mainHeader}>
           <h2 className={styles.subHeading}>
-            <div className={styles.profileTitle}>
-              <ProfilePic
-                source={
-                  data?.pfp?.uri ? data?.pfp?.uri : "/images/defaultpfp.png"
-                }
-                width="100px"
-                height="100px"
-              />
-              <span>{username?.toUpperCase()}</span>
-            </div>
-            {auth.user ? (
-              <div className={styles.glassButtons}>
-                <button
-                  className={styles.button}
-                  onClick={() => router.push("/settings")}
-                >
-                  Edit Profile
-                </button>
+            <div className={styles.profileHeading}>
+              <div className={styles.profileTitle}>
+                <ProfilePic
+                  source={
+                    userData?.pfp?.uri
+                      ? userData?.pfp?.uri
+                      : "/images/defaultpfp.png"
+                  }
+                  width="100px"
+                  height="100px"
+                />
+                <span>{username?.toUpperCase()}</span>
               </div>
-            ) : (
-              <></>
-            )}
+              {auth.user && auth.user.username === username ? (
+                <div className={styles.glassButtons}>
+                  <button
+                    className={styles.button}
+                    onClick={() => router.push("/settings")}
+                  >
+                    Edit Profile
+                  </button>
+                </div>
+              ) : (
+                <></>
+              )}
+            </div>
           </h2>
         </div>
         <div className={styles.tabSelect}>
