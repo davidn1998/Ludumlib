@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import useSWR from "swr";
-import axios from "axios";
 
 // Styles
 import styles from "../styles/index.module.scss";
@@ -11,10 +8,10 @@ import styles from "../styles/index.module.scss";
 // Components
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import ProfileSettings from "../components/ProfileSettings";
-import EmailSettings from "../components/EmailSettings";
-import PasswordSettings from "../components/PasswordSettings";
-import ConnectionSettings from "../components/ConnectionSettings";
+import ProfileSettings from "../components/user/ProfileSettings";
+import EmailSettings from "../components/user/EmailSettings";
+import PasswordSettings from "../components/user/PasswordSettings";
+import ConnectionSettings from "../components/user/ConnectionSettings";
 
 import { useAuth } from "../util/auth";
 

@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import styles from "../styles/index.module.scss";
-import formStyles from "../styles/forms.module.scss";
-import { ToastContainer, toast } from "react-toastify";
+import styles from "../../styles/index.module.scss";
+import formStyles from "../../styles/forms.module.scss";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { v4 as uuidv4 } from "uuid";
 
 // Components
-import ProfilePic from "../components/ProfilePic";
-import DeleteAccount from "../components/DeleteAccount";
+import ProfilePic from "../ProfilePic";
+import DeleteAccount from "./DeleteAccount";
 
 // UI Icons
 import { Icon } from "@iconify/react";
@@ -18,7 +17,7 @@ import userIcon from "@iconify/icons-fa-solid/user";
 import userAltIcon from "@iconify/icons-fa-solid/user-tie";
 
 // Authentication
-import { useAuth } from "../util/auth";
+import { useAuth } from "../../util/auth";
 import { useForm } from "react-hook-form";
 
 const ProfileSettings = () => {

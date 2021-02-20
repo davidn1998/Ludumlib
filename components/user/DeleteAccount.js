@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
-import styles from "../styles/index.module.scss";
-import formStyles from "../styles/forms.module.scss";
-import { ToastContainer, toast } from "react-toastify";
+import styles from "../../styles/index.module.scss";
+import formStyles from "../../styles/forms.module.scss";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // Components

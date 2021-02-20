@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
-import styles from "../styles/index.module.scss";
-import formStyles from "../styles/forms.module.scss";
-import { ToastContainer, toast } from "react-toastify";
+import styles from "../../styles/index.module.scss";
+import formStyles from "../../styles/forms.module.scss";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // Components

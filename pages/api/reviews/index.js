@@ -20,6 +20,7 @@ handler.get(async (req, res) => {
   const reviews = await db
     .collection("reviews")
     .find(queryParams)
+    .sort({ date: -1 })
     .skip(parseInt((page - 1) * pageSize))
     .limit(parseInt(pageSize))
     .toArray();
@@ -42,7 +43,7 @@ handler.post(async (req, res) => {
     return res.status(400).json({ message: "Review already exists" });
   }
 
-  const currDate = new Date().toISOString();
+  const currDate = new Date();
 
   await db.collection("reviews").insertOne({
     ...review,

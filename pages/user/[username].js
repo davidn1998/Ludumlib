@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Head from "next/head";
-import Link from "next/link";
 import DefaultErrorPage from "next/error";
 import { useRouter } from "next/router";
 import { useGetUserData } from "../../util/useRequest";
@@ -11,6 +10,10 @@ import styles from "../../styles/index.module.scss";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import ProfilePic from "../../components/ProfilePic";
+
+// Tabs
+import Reviews from "../../components/user/Reviews";
+import Diary from "../../components/user/Diary";
 
 export default function Profile() {
   const router = useRouter();
@@ -52,11 +55,11 @@ export default function Profile() {
         break;
       case 3:
         setTab(3);
-        setTabView(null);
+        setTabView(<Diary user={userData} />);
         break;
       case 4:
         setTab(4);
-        setTabView(null);
+        setTabView(<Reviews user={userData} />);
         break;
       case 5:
         setTab(5);

@@ -314,6 +314,10 @@
       .subHeading {
         font-size: 1.5rem;
         flex-direction: column;
+
+        .profileHeading {
+          flex-direction: column;
+        }
       }
 
       .miniReviews {
