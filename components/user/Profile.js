@@ -5,18 +5,16 @@ import "react-toastify/dist/ReactToastify.css";
 
 // UI Icons
 import { Icon } from "@iconify/react";
-import calendarIcon from "@iconify/icons-fa-solid/calendar-alt";
+import profileIcon from "@iconify/icons-fa-solid/user";
 
-// TODO: create diary entry component and import here
-
-const Diary = ({ user }) => {
+const Profile = ({ user }) => {
   return (
     <div>
       <h1 className={styles.tabHeader}>
-        <Icon icon={calendarIcon} /> <span>Diary</span>
+        <Icon icon={profileIcon} /> <span>Profile</span>
       </h1>
     </div>
   );
 };
 
-export default Diary;
+export default Profile;

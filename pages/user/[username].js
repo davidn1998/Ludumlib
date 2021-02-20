@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import DefaultErrorPage from "next/error";
 import { useRouter } from "next/router";
@@ -12,10 +12,14 @@ import Footer from "../../components/Footer";
 import ProfilePic from "../../components/ProfilePic";
 
 // Tabs
-import Reviews from "../../components/user/Reviews";
+import Profile from "../../components/user/Profile";
+import Games from "../../components/user/Games";
 import Diary from "../../components/user/Diary";
+import Reviews from "../../components/user/Reviews";
+import Lists from "../../components/user/Lists";
+import Likes from "../../components/user/Likes";
 
-export default function Profile() {
+export default function Dashboard() {
   const router = useRouter();
   const { username } = router.query;
 
@@ -30,6 +34,43 @@ export default function Profile() {
     return <DefaultErrorPage statusCode={404} />;
   }
 
+  useEffect(() => {
+    changeTab(tab);
+  }, []);
+
+  const changeTab = (tabNum) => {
+    switch (tabNum) {
+      case 1:
+        setTab(1);
+        setTabView(<Profile user={userData} />);
+        break;
+      case 2:
+        setTab(2);
+        setTabView(<Games user={userData} />);
+        break;
+      case 3:
+        setTab(3);
+        setTabView(<Diary user={userData} />);
+        break;
+      case 4:
+        setTab(4);
+        setTabView(<Reviews user={userData} />);
+        break;
+      case 5:
+        setTab(5);
+        setTabView(<Lists user={userData} />);
+        break;
+      case 6:
+        setTab(6);
+        setTabView(<Likes user={userData} />);
+        break;
+
+      default:
+        setTabView(null);
+        break;
+    }
+  };
+
   if (!userData) {
     return (
       <div className={styles.container}>
@@ -42,39 +83,6 @@ export default function Profile() {
       </div>
     );
   }
-
-  const changeTab = (tabNum) => {
-    switch (tabNum) {
-      case 1:
-        setTab(1);
-        setTabView(null);
-        break;
-      case 2:
-        setTab(2);
-        setTabView(null);
-        break;
-      case 3:
-        setTab(3);
-        setTabView(<Diary user={userData} />);
-        break;
-      case 4:
-        setTab(4);
-        setTabView(<Reviews user={userData} />);
-        break;
-      case 5:
-        setTab(5);
-        setTabView(null);
-        break;
-      case 6:
-        setTab(6);
-        setTabView(null);
-        break;
-
-      default:
-        setTabView(null);
-        break;
-    }
-  };
 
   return (
     <div className={styles.container}>

@@ -30,8 +30,8 @@ const Reviews = ({ user }) => {
 
   return (
     <div>
-      <h1>
-        <Icon icon={bookIcon} /> Reviews
+      <h1 className={styles.tabHeader}>
+        <Icon icon={bookIcon} /> <span>Reviews</span>
       </h1>
       {reviewsData?.reviews?.length == 0 ? <p>No reviews...</p> : <></>}
       <div className={styles.miniReviews}>
