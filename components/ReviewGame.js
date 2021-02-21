@@ -19,8 +19,8 @@ import ratingIcon from "@iconify/icons-fa-solid/medal";
 // Form
 import { useForm } from "react-hook-form";
 
-const ReviewGame = ({ auth, hideModal, gameId, userReviewData }) => {
-  const defaultValues = { rating: userReviewData?.rating?.toString() };
+const ReviewGame = ({ auth, hideModal, gameId, reviewData }) => {
+  const defaultValues = { rating: reviewData?.rating?.toString() };
 
   const { register, handleSubmit, errors } = useForm({
     defaultValues,
@@ -32,8 +32,8 @@ const ReviewGame = ({ auth, hideModal, gameId, userReviewData }) => {
     auth
       .getIdToken()
       .then((idToken) => {
-        userReviewData
-          ? updateReview(title, body, rating, userReviewData._id, idToken)
+        reviewData
+          ? updateReview(title, body, rating, reviewData._id, idToken)
           : createReview(title, body, rating, gameId, idToken);
       })
       .catch((err) => {
@@ -103,7 +103,7 @@ const ReviewGame = ({ auth, hideModal, gameId, userReviewData }) => {
       .getIdToken()
       .then((idToken) => {
         axios
-          .delete(`/api/reviews/${userReviewData._id}`, {
+          .delete(`/api/reviews/${reviewData._id}`, {
             headers: {
               authorization: `Bearer ${idToken}`,
             },
@@ -153,7 +153,7 @@ const ReviewGame = ({ auth, hideModal, gameId, userReviewData }) => {
           </div>
         </div>
         <h2 className={formStyles.heading}>
-          {userReviewData ? "Edit Review" : "Create Review"}
+          {reviewData ? "Edit Review" : "Create Review"}
         </h2>
         <h5 className={formStyles.label}>Title</h5>
         <div className={formStyles.inputBox}>
@@ -164,7 +164,7 @@ const ReviewGame = ({ auth, hideModal, gameId, userReviewData }) => {
             type="text"
             name="title"
             placeholder="Title"
-            defaultValue={userReviewData?.title || ""}
+            defaultValue={reviewData?.title || ""}
             style={{ paddingRight: "3rem" }}
             ref={register({
               required: {
@@ -186,7 +186,7 @@ const ReviewGame = ({ auth, hideModal, gameId, userReviewData }) => {
             type="text"
             name="body"
             placeholder="Body"
-            defaultValue={userReviewData?.body || ""}
+            defaultValue={reviewData?.body || ""}
             rows="5"
             style={{ paddingRight: "3rem" }}
             ref={register({
@@ -288,10 +288,10 @@ const ReviewGame = ({ auth, hideModal, gameId, userReviewData }) => {
         )}
         <div className={formStyles.inputBox}>
           <button type="submit">
-            {userReviewData ? "Save Changes" : "Create Review"}
+            {reviewData ? "Save Changes" : "Create Review"}
           </button>
         </div>
-        {userReviewData ? (
+        {reviewData ? (
           <div className={formStyles.inputBox}>
             <button
               onClick={deleteReview}

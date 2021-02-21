@@ -81,7 +81,16 @@ const MiniReview = ({ reviewData }) => {
         </div>
         <div className={styles.content}>
           <div className={styles.header}>
-            <h2>{reviewData.title}</h2>
+            <h2>
+              {" "}
+              <Link
+                href={`/reviews/${reviewData.title.replace(" ", "-")}/${
+                  reviewData._id
+                }`}
+              >
+                <a className={styles.username}>{reviewData.title}</a>
+              </Link>
+            </h2>
           </div>
           <div className={styles.stars}>{fullStars}</div>
           <div className={styles.reviewerInfo}>

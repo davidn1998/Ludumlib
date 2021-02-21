@@ -51,6 +51,16 @@ export const useGetReviewsData = (
   return { reviewsData, reviewsError };
 };
 
+export const useGetReviewData = (id) => {
+  const url = id ? `/api/reviews/${id}` : null;
+
+  const { data: reviewData, error: reviewError } = useSWR(url, fetcher, {
+    revalidateOnFocus: false,
+  });
+
+  return { reviewData, reviewError };
+};
+
 export const useGetUserReviewData = (user = "", game = "") => {
   const url =
     user.length > 0 && game.length > 0
