@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/index.module.scss";
-import gameStyles from "../styles/game.module.scss";
 import formStyles from "../styles/forms.module.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -148,8 +147,8 @@ const ReviewGame = ({ auth, hideModal, gameId, userReviewData }) => {
       {/* Password change Form */}
 
       <form className={formStyles.form} onSubmit={handleSubmit(onSubmitReview)}>
-        <div className={gameStyles.modalCloseButton}>
-          <div className={gameStyles.button} onClick={hideModal}>
+        <div className={styles.modalCloseButton}>
+          <div className={styles.button} onClick={hideModal}>
             <Icon icon={closeIcon} width={20} height={20} />
           </div>
         </div>
