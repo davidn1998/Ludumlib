@@ -5,8 +5,6 @@ import Image from "next/image";
 import ReactTooltip from "react-tooltip";
 
 const GameCard = ({ gameData, id }) => {
-  console.log(id);
-
   return (
     <Link href={`/games/${gameData.slug}/${gameData.id}`}>
       <a className={styles.gameCard} data-tip={gameData.name}>
