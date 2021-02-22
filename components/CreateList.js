@@ -232,6 +232,7 @@ const CreateList = ({ auth, hideModal, listData }) => {
             type="text"
             name="title"
             placeholder="Title"
+            key={listData?._id}
             defaultValue={listData?.title || ""}
             style={{ paddingRight: "3rem" }}
             ref={register({
@@ -254,6 +255,7 @@ const CreateList = ({ auth, hideModal, listData }) => {
             type="text"
             name="description"
             placeholder="Description"
+            key={listData?._id}
             defaultValue={listData?.description || ""}
             rows="5"
             style={{ paddingRight: "3rem" }}
@@ -272,6 +274,7 @@ const CreateList = ({ auth, hideModal, listData }) => {
             <Controller
               name="games"
               control={control}
+              key={listData?._id}
               defaultValue={listData?.games || null}
               as={<Select />}
               rules={{

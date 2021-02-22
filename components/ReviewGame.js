@@ -20,10 +20,10 @@ import ratingIcon from "@iconify/icons-fa-solid/medal";
 import { useForm } from "react-hook-form";
 
 const ReviewGame = ({ auth, hideModal, gameId, reviewData }) => {
-  const defaultValues = { rating: reviewData?.rating?.toString() };
+  // const defaultValues = { rating: reviewData?.rating?.toString() };
 
   const { register, handleSubmit, errors } = useForm({
-    defaultValues,
+    // defaultValues,
   });
 
   const router = useRouter();
@@ -161,6 +161,7 @@ const ReviewGame = ({ auth, hideModal, gameId, reviewData }) => {
           <input
             type="text"
             name="title"
+            key={reviewData?._id}
             placeholder="Title"
             defaultValue={reviewData?.title || ""}
             style={{ paddingRight: "3rem" }}
@@ -183,6 +184,7 @@ const ReviewGame = ({ auth, hideModal, gameId, reviewData }) => {
           <textarea
             type="text"
             name="body"
+            key={reviewData?._id}
             placeholder="Body"
             defaultValue={reviewData?.body || ""}
             rows="5"
