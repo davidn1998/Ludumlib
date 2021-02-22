@@ -95,11 +95,15 @@ export default function Reviews() {
             </button>
             <button
               className={`${styles.button} ${
-                pageNum == Math.ceil(reviewsData.count / pageSize)
+                pageNum == Math.ceil(reviewsData.count / pageSize) ||
+                reviewsData.count == 0
                   ? styles.disabled
                   : ""
               }`}
-              disabled={pageNum == Math.ceil(reviewsData.count / pageSize)}
+              disabled={
+                pageNum == Math.ceil(reviewsData.count / pageSize) ||
+                reviewsData.count == 0
+              }
               onClick={nextResults}
             >
               {<Icon icon={arrowIconRight} width={25} />}

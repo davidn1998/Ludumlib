@@ -1,7 +1,8 @@
+import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useGetReviewsData } from "../../util/useRequest";
+import { useGetListsData } from "../../util/useRequest";
 
 import styles from "../../styles/index.module.scss";
 
@@ -9,19 +10,26 @@ import styles from "../../styles/index.module.scss";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import MiniReview from "../../components/MiniReview";
+import GameListsList from "../../components/GameListsList";
+import CreateList from "../../components/CreateList";
 
 import { Icon, InlineIcon } from "@iconify/react";
 import arrowIconRight from "@iconify/icons-fa-solid/arrow-right";
 import arrowIconLeft from "@iconify/icons-fa-solid/arrow-left";
 
-export default function Reviews() {
+// Authentication
+import { useAuth } from "../../util/auth";
+
+export default function Lists() {
   const router = useRouter();
+  const auth = useAuth();
+  const [createListModalVisible, setCreateListModalVisible] = useState(false);
   const { page } = router.query;
 
   const pageNum = page || 1;
-  const pageSize = 6;
+  const pageSize = 8;
 
-  const { reviewsData, reviewsError } = useGetReviewsData(
+  const { listsData, listsError } = useGetListsData(
     "",
     "",
     "",
@@ -29,15 +37,15 @@ export default function Reviews() {
     pageNum
   );
 
-  if (reviewsError) {
+  if (listsError) {
     console.error("Could not load reviews data");
   }
 
-  if (!reviewsData) {
+  if (!listsData) {
     return (
       <div className={styles.container}>
         <Head>
-          <title>Reviews | Ludumlib</title>
+          <title>Lists | Ludumlib</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Header />
@@ -46,42 +54,62 @@ export default function Reviews() {
     );
   }
 
-  let reviewComponentsCol1 = [];
-  let reviewComponentsCol2 = [];
-
-  [...Array(reviewsData?.reviews?.length).keys()].forEach((i) => {
-    if (i % 2 == 0) {
-      reviewComponentsCol1.push(
-        <MiniReview key={i} reviewData={reviewsData?.reviews[i]} />
-      );
-    } else {
-      reviewComponentsCol2.push(
-        <MiniReview key={i} reviewData={reviewsData?.reviews[i]} />
-      );
-    }
-  });
-
   const prevResults = () => {
-    router.push(`/reviews?page=${parseInt(pageNum) - 1}`);
+    router.push(`/lists?page=${parseInt(pageNum) - 1}`);
   };
 
   const nextResults = () => {
-    router.push(`/reviews?page=${parseInt(pageNum) + 1}`);
+    router.push(`/lists?page=${parseInt(pageNum) + 1}`);
+  };
+
+  const onCreateListClick = () => {
+    if (!auth.user) {
+      router.push(`/login?nextRoute=/lists`);
+      return;
+    }
+
+    showCreateListModal();
+  };
+
+  const showCreateListModal = () => {
+    setCreateListModalVisible(true);
+  };
+  const hideCreateListModal = () => {
+    setCreateListModalVisible(false);
   };
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>Reviews | Ludumlib</title>
+        <title>Lists | Ludumlib</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
       <div className={styles.main}>
-        <h2 className={styles.subHeading}>Recent Reviews</h2>
-        <div className={styles.miniReviews}>
-          <div className={styles.reviewCol}>{reviewComponentsCol1}</div>
-          <div className={styles.reviewCol}>{reviewComponentsCol2}</div>
+        <div
+          className={`${styles.modal} ${
+            createListModalVisible ? styles.modalVisible : styles.modalHidden
+          }`}
+        >
+          <div className={styles.modalBackground}></div>
+          <CreateList auth={auth} hideModal={hideCreateListModal} />
         </div>
+        <h2 className={styles.subHeading}>
+          <div className={styles.profileHeading}>
+            <div>Recent Lists</div>
+            <div className={styles.glassButtons}>
+              <button className={styles.button} onClick={onCreateListClick}>
+                Create List
+              </button>
+            </div>
+          </div>
+        </h2>
+        {[...Array(pageSize / 4).keys()].map((i) => (
+          <GameListsList
+            data={listsData.lists.slice(i * 4, i * 4 + 4)}
+            key={i}
+          />
+        ))}
         <div className={styles.pageButtons}>
           <div className={styles.glassButtons}>
             <button
@@ -95,11 +123,15 @@ export default function Reviews() {
             </button>
             <button
               className={`${styles.button} ${
-                pageNum == Math.ceil(reviewsData.count / pageSize)
+                pageNum == Math.ceil(listsData.count / pageSize) ||
+                listsData.count == 0
                   ? styles.disabled
                   : ""
               }`}
-              disabled={pageNum == Math.ceil(reviewsData.count / pageSize)}
+              disabled={
+                pageNum == Math.ceil(listsData.count / pageSize) ||
+                listsData.count == 0
+              }
               onClick={nextResults}
             >
               {<Icon icon={arrowIconRight} width={25} />}

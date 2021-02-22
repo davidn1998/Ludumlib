@@ -4,7 +4,11 @@ import useSWR from "swr";
 import axios from "axios";
 import { connectToDatabase } from "../util/mongodb";
 import { useAuth } from "../util/auth";
-import { useGetGamesData, useGetReviewsData } from "../util/useRequest";
+import {
+  useGetGamesData,
+  useGetReviewsData,
+  useGetListsData,
+} from "../util/useRequest";
 
 import styles from "../styles/index.module.scss";
 
@@ -52,6 +56,8 @@ export default function Home({ isConnected }) {
       );
     }
   });
+
+  const { listsData, listsError } = useGetListsData("", "", "", 4, 1);
 
   return (
     <div className={styles.container}>
@@ -112,12 +118,12 @@ export default function Home({ isConnected }) {
         ) : (
           <></>
         )}
-        <Link href="/games">
+        <Link href="/lists">
           <a>
-            <h2 className={styles.subHeading}>Popular Lists</h2>
+            <h2 className={styles.subHeading}>Recent Lists</h2>
           </a>
         </Link>
-        <GameListsList slideUp={false} />
+        <GameListsList slideUp={false} data={listsData?.lists} />
         <Link href="/reviews">
           <a>
             <h2 className={styles.subHeading}>Recent Reviews</h2>

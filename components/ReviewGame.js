@@ -144,8 +144,6 @@ const ReviewGame = ({ auth, hideModal, gameId, reviewData }) => {
 
   return (
     <div className={styles.formContainer}>
-      {/* Password change Form */}
-
       <form className={formStyles.form} onSubmit={handleSubmit(onSubmitReview)}>
         <div className={styles.modalCloseButton}>
           <div className={styles.button} onClick={hideModal}>

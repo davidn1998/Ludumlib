@@ -188,17 +188,21 @@ const Review = () => {
         <div className={styles.gameDetails}>
           <div className={styles.leftCol}>
             <div className={styles.imageContainer}>
-              <Image
-                layout="fill"
-                objectFit="cover"
-                className={styles.image}
-                src={
-                  gameData?.background_image
-                    ? gameData.background_image
-                    : "/images/default_cover.png"
-                }
-                alt={gameData?.name}
-              />
+              <Link href={`/games/${gameData.slug}/${gameData.id}`}>
+                <a>
+                  <Image
+                    layout="fill"
+                    objectFit="cover"
+                    className={styles.image}
+                    src={
+                      gameData?.background_image
+                        ? gameData.background_image
+                        : "/images/default_cover.png"
+                    }
+                    alt={gameData?.name}
+                  />
+                </a>
+              </Link>
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
               {reviewData.user === auth.user?.uid ? (

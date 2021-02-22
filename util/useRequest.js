@@ -26,7 +26,9 @@ export const useGetGamesData = (dateRange, pageSize, pageNum) => {
 };
 
 export const useGetGamesSearch = (searchQuery, pageSize, pageNum) => {
-  const url = `https://api.rawg.io/api/games?key=c2cfee3aa5494adfacb4b77caa093322&search=${searchQuery}&page_size=${pageSize}&page=${pageNum}`;
+  const url = searchQuery
+    ? `https://api.rawg.io/api/games?key=c2cfee3aa5494adfacb4b77caa093322&search=${searchQuery}&page_size=${pageSize}&page=${pageNum}`
+    : null;
 
   const { data: searchData, error: searchError } = useSWR(url, fetcher, {
     revalidateOnFocus: false,
@@ -85,4 +87,29 @@ export const useGetUserData = (userId = "", username = "") => {
   });
 
   return { userData, userError };
+};
+
+export const useGetListsData = (
+  user = "",
+  game = "",
+  pageSize = 8,
+  page = 1
+) => {
+  const url = `/api/lists?page=${page}&pageSize=${pageSize}&user=${user}&game=${game}`;
+
+  const { data: listsData, error: listsError } = useSWR(url, fetcher, {
+    revalidateOnFocus: false,
+  });
+
+  return { listsData, listsError };
+};
+
+export const useGetListData = (id) => {
+  const url = id ? `/api/lists/${id}` : null;
+
+  const { data: listData, error: listError } = useSWR(url, fetcher, {
+    revalidateOnFocus: false,
+  });
+
+  return { listData, listError };
 };

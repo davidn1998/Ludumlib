@@ -2,44 +2,14 @@ import React from "react";
 import GameListCard from "./GameListCard";
 import styles from "./GameListsList.module.scss";
 
-const GameLists = ({ slideUp }) => {
+const GameLists = ({ data }) => {
   return (
     <div className={styles.gameList}>
-      <div id={slideUp ? styles.gc1 : ""} className={styles.gameCard}>
-        <GameListCard
-          imgSrc1="/images/hades_cover.jpg"
-          imgSrc2="/images/Fall_Guys_cover.jpg"
-          imgSrc3="/images/control_cover.png"
-          listName="Best Games of the Summer"
-        />
-      </div>
-      <div id={slideUp ? styles.gc2 : ""} className={styles.gameCard}>
-        <GameListCard
-          id={styles.gc2}
-          imgSrc1="/images/Fall_Guys_cover.jpg"
-          imgSrc2="/images/hades_cover.jpg"
-          imgSrc3="/images/control_cover.png"
-          listName="Best Indie Games 2020"
-        />
-      </div>
-      <div id={slideUp ? styles.gc3 : ""} className={styles.gameCard}>
-        <GameListCard
-          id={styles.gc3}
-          imgSrc1="/images/Fall_Guys_cover.jpg"
-          imgSrc2="/images/control_cover.png"
-          imgSrc3="/images/hades_cover.jpg"
-          listName="Best Games of the Summer"
-        />
-      </div>
-      <div id={slideUp ? styles.gc2 : ""} className={styles.gameCard}>
-        <GameListCard
-          id={styles.gc2}
-          imgSrc1="/images/Fall_Guys_cover.jpg"
-          imgSrc2="/images/hades_cover.jpg"
-          imgSrc3="/images/control_cover.png"
-          listName="Best Indie Games 2020"
-        />
-      </div>
+      {data?.map((list) => (
+        <div className={styles.gameCard} key={list._id}>
+          <GameListCard list={list} />
+        </div>
+      ))}
     </div>
   );
 };

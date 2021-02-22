@@ -84,11 +84,11 @@ const MiniReview = ({ reviewData }) => {
             <h2>
               {" "}
               <Link
-                href={`/reviews/${reviewData.title.replace(" ", "-")}/${
+                href={`/reviews/${reviewData.title.replaceAll(" ", "-")}/${
                   reviewData._id
                 }`}
               >
-                <a className={styles.username}>{reviewData.title}</a>
+                <a>{reviewData.title}</a>
               </Link>
             </h2>
           </div>
