@@ -72,31 +72,36 @@ const Review = () => {
   let userReviewComponentsCol1 = [];
   let userReviewComponentsCol2 = [];
 
-  [...Array(userReviews?.length).keys()].forEach((i) => {
-    if (i % 2 == 0) {
-      userReviewComponentsCol1.push(
-        <MiniReview key={i} reviewData={userReviews?.reviews[i]} />
-      );
-    } else {
-      userReviewComponentsCol2.push(
-        <MiniReview key={i} reviewData={userReviews?.reviews[i]} />
-      );
-    }
-  });
+  if (userReviews) {
+    [...Array(userReviews?.length).keys()].forEach((i) => {
+      if (i % 2 == 0) {
+        userReviewComponentsCol1.push(
+          <MiniReview key={i} reviewData={userReviews[i]} />
+        );
+      } else {
+        userReviewComponentsCol2.push(
+          <MiniReview key={i} reviewData={userReviews[i]} />
+        );
+      }
+    });
+  }
+
   let gameReviewComponentsCol1 = [];
   let gameReviewComponentsCol2 = [];
 
-  [...Array(gameReviews?.length).keys()].forEach((i) => {
-    if (i % 2 == 0) {
-      gameReviewComponentsCol1.push(
-        <MiniReview key={i} reviewData={gameReviews?.reviews[i]} />
-      );
-    } else {
-      gameReviewComponentsCol2.push(
-        <MiniReview key={i} reviewData={gameReviews?.reviews[i]} />
-      );
-    }
-  });
+  if (gameReviews) {
+    [...Array(gameReviews?.length).keys()].forEach((i) => {
+      if (i % 2 == 0) {
+        gameReviewComponentsCol1.push(
+          <MiniReview key={i} reviewData={gameReviews[i]} />
+        );
+      } else {
+        gameReviewComponentsCol2.push(
+          <MiniReview key={i} reviewData={gameReviews[i]} />
+        );
+      }
+    });
+  }
 
   const fullReview = (
     <>
@@ -104,7 +109,7 @@ const Review = () => {
         <p>{reviewData.body}</p>
       </div>
       <button
-        className={styles.reviewToggle}
+        className={styles.aboutToggle}
         onClick={() => setIsFullReview(false)}
       >
         ...LESS
@@ -119,7 +124,7 @@ const Review = () => {
           <p>{reviewData.body.substring(0, 300)}...</p>
         </div>
         <button
-          className={styles.reviewToggle}
+          className={styles.aboutToggle}
           onClick={() => setIsFullReview(true)}
         >
           MORE...
@@ -191,7 +196,7 @@ const Review = () => {
         <div className={styles.gameDetails}>
           <div className={styles.leftCol}>
             <div className={styles.imageContainer}>
-              <Link href={`/games/${gameData.slug}/${gameData.id}`}>
+              <Link href={`/games/${gameData?.slug}/${gameData?.id}`}>
                 <a>
                   <Image
                     layout="fill"
@@ -245,7 +250,7 @@ const Review = () => {
         </div>
         <h3 className={styles.subHeading}>
           More Reviews For{" "}
-          <Link href={`/games/${gameData?.slug}/${gameData.id}`}>
+          <Link href={`/games/${gameData?.slug}/${gameData?.id}`}>
             <a>{gameData?.name}</a>
           </Link>
         </h3>
