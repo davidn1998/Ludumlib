@@ -6,6 +6,7 @@
   height: 150px;
   margin: 0.5rem;
   position: relative;
+  z-index: 100;
 
   div {
     overflow: visible !important;
@@ -25,6 +26,11 @@
       transform: translateY(-20px);
       cursor: pointer;
     }
+  }
+
+  .tooltip {
+    z-index: 1000;
+    overflow: visible;
   }
 }
 

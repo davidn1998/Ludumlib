@@ -10,7 +10,7 @@ const GameCard2 = ({ id }) => {
 
   return (
     <Link href={`/games/${gameData?.slug}/${gameData?.id}`}>
-      <a className={styles.gameCard} data-tip={gameData?.name}>
+      <a className={styles.gameCard} data-tip={gameData ? gameData.name : ""}>
         <Image
           layout="fill"
           objectFit="cover"
