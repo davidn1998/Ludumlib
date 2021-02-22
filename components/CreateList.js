@@ -27,7 +27,7 @@ const CreateList = ({ auth, hideModal, listData }) => {
   const [gameSearch, setGameSearch] = useState("");
   const [loadingSearch, setLoadingSearch] = useState(false);
 
-  const { register, handleSubmit, control, errors, getValues } = useForm({
+  const { register, handleSubmit, control, errors } = useForm({
     // defaultValues,
   });
 
@@ -254,7 +254,7 @@ const CreateList = ({ auth, hideModal, listData }) => {
             type="text"
             name="description"
             placeholder="Description"
-            defaultValue={listData?.desciption || ""}
+            defaultValue={listData?.description || ""}
             rows="5"
             style={{ paddingRight: "3rem" }}
             ref={register()}
@@ -272,7 +272,7 @@ const CreateList = ({ auth, hideModal, listData }) => {
             <Controller
               name="games"
               control={control}
-              defaultValue={null}
+              defaultValue={listData?.games || null}
               as={<Select />}
               rules={{
                 validate: (value) =>

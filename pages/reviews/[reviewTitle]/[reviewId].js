@@ -182,8 +182,11 @@ const Review = () => {
             reviewData={reviewData}
           />
         </div>
-        <h2 className={styles.heading}>
-          {gameData?.name} Review by {userData?.username}
+        <h2 className={styles.subHeading}>
+          {gameData?.name} Review by{" "}
+          <Link href={`/user/${userData?.username}`}>
+            <a>{userData?.username}</a>
+          </Link>
         </h2>
         <div className={styles.gameDetails}>
           <div className={styles.leftCol}>
@@ -230,14 +233,22 @@ const Review = () => {
             </div>
           </div>
         </div>
-        <h3 className={styles.heading}>
-          More Reviews From {userData?.username}
+        <h3 className={styles.subHeading}>
+          More Reviews From{" "}
+          <Link href={`/user/${userData?.username}`}>
+            <a>{userData?.username}</a>
+          </Link>
         </h3>
         <div className={styles.miniReviews}>
           <div className={styles.reviewCol}>{userReviewComponentsCol1}</div>
           <div className={styles.reviewCol}>{userReviewComponentsCol2}</div>
         </div>
-        <h3 className={styles.heading}>More Reviews For {gameData?.name}</h3>
+        <h3 className={styles.subHeading}>
+          More Reviews For{" "}
+          <Link href={`/games/${gameData?.slug}/${gameData.id}`}>
+            <a>{gameData?.name}</a>
+          </Link>
+        </h3>
         <div className={styles.miniReviews}>
           <div className={styles.reviewCol}>{gameReviewComponentsCol1}</div>
           <div className={styles.reviewCol}>{gameReviewComponentsCol2}</div>

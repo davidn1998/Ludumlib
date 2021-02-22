@@ -164,7 +164,7 @@ const Game = () => {
             userReviewData={userReviewData}
           />
         </div>
-        <h2 className={styles.heading}>{gameData.name}</h2>
+        <h2 className={styles.subHeading}>{gameData.name}</h2>
         <div className={styles.gameDetails}>
           <div className={styles.leftCol}>
             <div className={styles.imageContainer}>
@@ -215,7 +215,7 @@ const Game = () => {
             </div>
           </div>
         </div>
-        <h3 className={styles.heading}>REVIEWS</h3>
+        <h3 className={styles.subHeading}>REVIEWS</h3>
         <div className={styles.miniReviews}>
           <div className={styles.reviewCol}>{reviewComponentsCol1}</div>
           <div className={styles.reviewCol}>{reviewComponentsCol2}</div>

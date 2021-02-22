@@ -38,7 +38,7 @@ export default function Lists() {
   );
 
   if (listsError) {
-    console.error("Could not load reviews data");
+    console.error("Could not load lists data");
   }
 
   if (!listsData) {

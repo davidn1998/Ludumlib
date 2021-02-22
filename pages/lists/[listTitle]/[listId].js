@@ -18,6 +18,7 @@ import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 import CreateList from "../../../components/CreateList";
 import GamesList2 from "../../../components/GameList2";
+import GameListsList from "../../../components/GameListsList";
 
 import { Icon } from "@iconify/react";
 import pencilIcon from "@iconify/icons-fa-solid/pencil-alt";
@@ -34,17 +35,11 @@ const List = () => {
 
   const { listData, listError } = useGetListData(listId);
   const { gameData, gameError } = useGetGameData(listData?.games[0].value);
-
-  // const {
-  //   reviewsData: gameReviewsData,
-  //   reviewsError: gameReviewsError,
-  // } = useGetReviewsData("", reviewData?.game);
-
-  // const {
-  //   reviewsData: userReviewsData,
-  //   reviewsError: userReviewsError,
-  // } = useGetReviewsData(reviewData?.user);
   const { userData, userError } = useGetUserData(listData?.user);
+  const {
+    listsData: userListsData,
+    listsError: userListsError,
+  } = useGetListsData(listData?.user);
 
   if (listError) return <DefaultErrorPage statusCode={404} />;
 
@@ -61,9 +56,7 @@ const List = () => {
     );
   }
 
-  // const userLists = userListsData?.lists.filter(
-  //   (i) => i._id !== listId
-  // );
+  const userLists = userListsData?.lists.filter((i) => i._id !== listId);
 
   const onEditListClick = () => {
     if (!auth.user) {
@@ -106,11 +99,20 @@ const List = () => {
           }`}
         >
           <div className={styles.modalBackground}></div>
-          <CreateList auth={auth} hideModal={hideEditListModal} />
+          <CreateList
+            auth={auth}
+            hideModal={hideEditListModal}
+            listData={listData}
+          />
         </div>
         <h2 className={styles.subHeading}>
           <div className={styles.profileHeading}>
-            <div>List by {userData?.username}</div>
+            <div>
+              List by{" "}
+              <Link href={`/user/${userData?.username}`}>
+                <a>{userData?.username}</a>
+              </Link>
+            </div>
             {listData.user === auth.user?.uid ? (
               <div className={styles.glassButtons}>
                 <button className={styles.button} onClick={onEditListClick}>
@@ -134,7 +136,19 @@ const List = () => {
             />
           ))}
         </div>
-        <h3 className={styles.heading}>More Lists From {userData?.username}</h3>
+        <h3 className={styles.subHeading}>
+          More Lists From{" "}
+          <Link href={`/user/${userData?.username}`}>
+            <a>{userData?.username}</a>
+          </Link>
+        </h3>
+        {userLists ? (
+          [...Array(Math.ceil(userLists?.length / 4)).keys()].map((i) => (
+            <GameListsList data={userLists.slice(i * 4, i * 4 + 4)} key={i} />
+          ))
+        ) : (
+          <></>
+        )}
       </div>
       <Footer />
     </div>

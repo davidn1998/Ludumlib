@@ -18,6 +18,8 @@ const Lists = ({ user }) => {
         <Icon icon={listIcon} /> <span>Lists</span>
       </h1>
       <div>
+        {listsData?.lists.length < 1 ? <p>No Lists...</p> : <></>}
+
         {listsData?.lists.length > 0 ? (
           [
             ...Array(Math.ceil(listsData?.lists.length > 0 / 4)).keys(),
@@ -28,7 +30,7 @@ const Lists = ({ user }) => {
             />
           ))
         ) : (
-          <p>No Lists...</p>
+          <></>
         )}
       </div>
     </div>
