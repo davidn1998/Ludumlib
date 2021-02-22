@@ -5,12 +5,25 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  margin: 1rem 0;
+  padding: 1rem 0;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   font-size: 0.7rem;
+  font-weight: 600;
   text-align: center;
+  background-color: #0a0028;
+  color: #aaa;
+
+  .links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .link {
+      margin: 0 1rem;
+    }
+  }
 
   p {
     margin: 0;
@@ -18,11 +31,11 @@
   }
 
   a {
-    color: colors.$bluelink;
     text-decoration: none;
+    color: #aaa;
 
     &:hover {
-      text-decoration: underline;
+      color: #fff;
     }
   }
 }
