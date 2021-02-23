@@ -161,7 +161,7 @@ const Game = () => {
             auth={auth}
             hideModal={hideReviewModal}
             gameId={gameId}
-            userReviewData={userReviewData}
+            reviewData={userReviewData}
           />
         </div>
         <h2 className={styles.subHeading}>{gameData.name}</h2>
