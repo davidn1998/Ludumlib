@@ -17,7 +17,7 @@ handler.get(async (req, res) => {
 
   if (!user.likes) return res.status(200).json([]);
 
-  return res.status(200).json(user.likes);
+  return res.status(200).json(user.played);
 });
 
 handler.use(validateFirebaseIdToken);
@@ -31,12 +31,12 @@ handler.put(async (req, res) => {
     { _id: req.user.uid },
     {
       $push: {
-        likes: updates.game,
+        played: updates.game,
       },
     }
   );
 
-  return res.status(200).json({ message: "Like Added" });
+  return res.status(200).json({ message: "Added to Played Games" });
 });
 
 handler.delete(async (req, res) => {
@@ -48,12 +48,12 @@ handler.delete(async (req, res) => {
     { _id: req.user.uid },
     {
       $pull: {
-        likes: updates.game,
+        played: updates.game,
       },
     }
   );
 
-  return res.status(200).json({ Success: "Like Removed" });
+  return res.status(200).json({ Success: "Removed from Played Games" });
 });
 
 export default handler;

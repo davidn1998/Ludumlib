@@ -21,6 +21,7 @@ import ReviewGame from "../../../components/ReviewGame";
 
 import { Icon } from "@iconify/react";
 import pencilIcon from "@iconify/icons-fa-solid/pencil-alt";
+import gameIcon from "@iconify/icons-fa-solid/gamepad";
 import heartIcon from "@iconify/icons-fa-solid/heart";
 import plusIcon from "@iconify/icons-fa-solid/plus";
 import ReactTooltip from "react-tooltip";
@@ -31,6 +32,7 @@ const Game = () => {
   const [isFullAbout, setIsFullAbout] = useState(false);
   const [reviewModalVisible, setReviewModalVisible] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const [isPlayed, setIsPlayed] = useState(false);
 
   const auth = useAuth();
   const router = useRouter();
@@ -42,7 +44,7 @@ const Game = () => {
 
   useEffect(() => {
     setIsLiked(auth.user?.likes && auth.user?.likes.includes(gameId));
-    console.log(auth.user?.likes);
+    setIsPlayed(auth.user?.played && auth.user?.played.includes(gameId));
   }, [auth.user]);
 
   if (gameError) {
@@ -115,6 +117,71 @@ const Game = () => {
     }
 
     console.log("Log Game");
+  };
+
+  const onPlayedClick = () => {
+    if (!auth.user) {
+      router.push(`/login?nextRoute=/games/${gameName}/${gameId}`);
+      return;
+    }
+
+    auth
+      .getIdToken()
+      .then((idToken) => {
+        if (isPlayed) {
+          removePlayed(idToken);
+        } else {
+          addPlayed(idToken);
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message, { position: "bottom-center" });
+      });
+  };
+
+  const addPlayed = (idToken) => {
+    axios
+      .put(
+        `/api/users/${auth.user._id}/played`,
+        {
+          game: gameId,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${idToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        toast.success("Added to Played Games", { position: "bottom-center" });
+        setIsPlayed(true);
+        router.reload();
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message, { position: "bottom-center" });
+      });
+  };
+
+  const removePlayed = (idToken) => {
+    axios
+      .delete(`/api/users/${auth.user._id}/played`, {
+        headers: {
+          authorization: `Bearer ${idToken}`,
+        },
+        data: {
+          game: gameId,
+        },
+      })
+      .then((res) => {
+        toast.success("Removed from Played Games", {
+          position: "bottom-center",
+        });
+        setIsPlayed(false);
+        router.reload();
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message, { position: "bottom-center" });
+      });
   };
 
   const onLikeClick = () => {
@@ -252,6 +319,20 @@ const Game = () => {
                 onClick={onLogClick}
               >
                 {<Icon icon={plusIcon} width={20} />}
+              </button>
+              <button
+                className={styles.button}
+                data-tip={isPlayed ? "Remove Played" : "Add to Played"}
+                data-type="info"
+                onClick={onPlayedClick}
+              >
+                {
+                  <Icon
+                    icon={gameIcon}
+                    width={25}
+                    color={isPlayed ? "#96DDE1" : "#fff"}
+                  />
+                }
               </button>
               <button
                 className={styles.button}
