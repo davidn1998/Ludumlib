@@ -44,11 +44,13 @@ handler.delete(async (req, res) => {
 
   const updates = await req.body;
 
+  console.log(updates.game);
+
   await db.collection("users").updateOne(
     { _id: req.user.uid },
     {
       $pull: {
-        likes: { game: updates.game },
+        likes: updates.game,
       },
     }
   );

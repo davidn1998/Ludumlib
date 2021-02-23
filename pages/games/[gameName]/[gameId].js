@@ -42,6 +42,7 @@ const Game = () => {
 
   useEffect(() => {
     setIsLiked(auth.user?.likes && auth.user?.likes.includes(gameId));
+    console.log(auth.user?.likes);
   }, [auth.user]);
 
   if (gameError) {
@@ -152,6 +153,7 @@ const Game = () => {
       .then((res) => {
         toast.success("Added to Likes", { position: "bottom-center" });
         setIsLiked(true);
+        router.reload();
       })
       .catch((err) => {
         toast.error(err.response.data.message, { position: "bottom-center" });
@@ -160,20 +162,18 @@ const Game = () => {
 
   const removeLike = (idToken) => {
     axios
-      .delete(
-        `/api/users/${auth.user._id}/likes`,
-        {
+      .delete(`/api/users/${auth.user._id}/likes`, {
+        headers: {
+          authorization: `Bearer ${idToken}`,
+        },
+        data: {
           game: gameId,
         },
-        {
-          headers: {
-            authorization: `Bearer ${idToken}`,
-          },
-        }
-      )
+      })
       .then((res) => {
         toast.success("Removed from Likes", { position: "bottom-center" });
         setIsLiked(false);
+        router.reload();
       })
       .catch((err) => {
         toast.error(err.response.data.message, { position: "bottom-center" });

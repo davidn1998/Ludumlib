@@ -41,7 +41,7 @@ export const useGetReviewsData = (
   user = "",
   game = "",
   rating = "",
-  pageSize = 18,
+  pageSize = "",
   page = 1
 ) => {
   const url = `/api/reviews?page=${page}&pageSize=${pageSize}&user=${user}&game=${game}&rating=${rating}`;
@@ -92,7 +92,7 @@ export const useGetUserData = (userId = "", username = "") => {
 export const useGetListsData = (
   user = "",
   game = "",
-  pageSize = 8,
+  pageSize = "",
   page = 1
 ) => {
   const url = `/api/lists?page=${page}&pageSize=${pageSize}&user=${user}&game=${game}`;
