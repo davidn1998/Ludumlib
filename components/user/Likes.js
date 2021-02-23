@@ -15,9 +15,18 @@ const Likes = ({ user }) => {
         <Icon icon={likeIcon} /> <span>Likes</span>
       </h1>
       <div>
-        {[...Array(Math.ceil(user.likes.length / 6)).keys()].map((i) => (
-          <GamesList2 games={user.likes.slice(i * 6, i * 6 + 6)} key={i} />
-        ))}
+        {!user.likes || user.likes?.length < 1 ? <p>No Likes...</p> : <></>}
+        {user.likes ? (
+          user.likes.length > 0 ? (
+            [...Array(Math.ceil(user.likes.length / 6)).keys()].map((i) => (
+              <GamesList2 games={user.likes.slice(i * 6, i * 6 + 6)} key={i} />
+            ))
+          ) : (
+            <></>
+          )
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
