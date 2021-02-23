@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import DefaultErrorPage from "next/error";
 import { useAuth } from "../../../util/auth";
+import axios from "axios";
 import {
   useGetGameData,
   useGetReviewsData,
@@ -23,10 +24,13 @@ import pencilIcon from "@iconify/icons-fa-solid/pencil-alt";
 import heartIcon from "@iconify/icons-fa-solid/heart";
 import plusIcon from "@iconify/icons-fa-solid/plus";
 import ReactTooltip from "react-tooltip";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Game = () => {
   const [isFullAbout, setIsFullAbout] = useState(false);
   const [reviewModalVisible, setReviewModalVisible] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
   const auth = useAuth();
   const router = useRouter();
@@ -35,6 +39,10 @@ const Game = () => {
   const { gameData, gameError } = useGetGameData(gameId);
   const { reviewsData, reviewsError } = useGetReviewsData("", gameId);
   const userReviewData = useGetUserReviewData(auth.user?.uid, gameId);
+
+  useEffect(() => {
+    setIsLiked(auth.user?.likes && auth.user?.likes.includes(gameId));
+  }, [auth.user]);
 
   if (gameError) {
     return <DefaultErrorPage statusCode={404} />;
@@ -107,13 +115,69 @@ const Game = () => {
 
     console.log("Log Game");
   };
+
   const onLikeClick = () => {
     if (!auth.user) {
       router.push(`/login?nextRoute=/games/${gameName}/${gameId}`);
       return;
     }
 
-    console.log("Like Game");
+    auth
+      .getIdToken()
+      .then((idToken) => {
+        if (isLiked) {
+          removeLike(idToken);
+        } else {
+          addLike(idToken);
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message, { position: "bottom-center" });
+      });
+  };
+
+  const addLike = (idToken) => {
+    axios
+      .put(
+        `/api/users/${auth.user._id}/likes`,
+        {
+          game: gameId,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${idToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        toast.success("Added to Likes", { position: "bottom-center" });
+        setIsLiked(true);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message, { position: "bottom-center" });
+      });
+  };
+
+  const removeLike = (idToken) => {
+    axios
+      .delete(
+        `/api/users/${auth.user._id}/likes`,
+        {
+          game: gameId,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${idToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        toast.success("Removed from Likes", { position: "bottom-center" });
+        setIsLiked(false);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message, { position: "bottom-center" });
+      });
   };
 
   const onReviewClick = () => {
@@ -191,11 +255,17 @@ const Game = () => {
               </button>
               <button
                 className={styles.button}
-                data-tip="Like"
+                data-tip={isLiked ? "Remove Like" : "Like"}
                 data-type="error"
                 onClick={onLikeClick}
               >
-                {<Icon icon={heartIcon} width={20} />}
+                {
+                  <Icon
+                    icon={heartIcon}
+                    width={20}
+                    color={isLiked ? "#ff6666" : "#fff"}
+                  />
+                }
               </button>
               <button
                 className={styles.button}

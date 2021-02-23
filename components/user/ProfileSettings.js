@@ -164,6 +164,41 @@ const ProfileSettings = () => {
     }
   };
 
+  const removeProfilePic = () => {
+    auth
+      .getIdToken()
+      .then(async (idToken) => {
+        await axios.delete(`api/users/${user.uid}/profilepic`, {
+          headers: {
+            authorization: `Bearer ${idToken}`,
+          },
+          data: {
+            image: user.pfp?.name ? user.pfp?.name : null,
+          },
+        });
+
+        await axios.put(
+          `api/users/${user._id}`,
+          {
+            username: user.username,
+            fullname: user.fullname,
+            pfp: null,
+          },
+          {
+            headers: {
+              authorization: `Bearer ${idToken}`,
+            },
+          }
+        );
+      })
+      .then(() => {
+        router.reload();
+      })
+      .catch((err) => {
+        toast.error(err.message, { position: "bottom-center" });
+      });
+  };
+
   const showDeleteModal = () => {
     setDeleteModalVisible(true);
   };
@@ -236,6 +271,11 @@ const ProfileSettings = () => {
         {errors.pfp && (
           <p className={formStyles.error}>{errors?.pfp?.message}</p>
         )}
+        <div className={formStyles.inputBox}>
+          <button type="button" onClick={removeProfilePic}>
+            Remove Profile Picture
+          </button>
+        </div>
         <div className={formStyles.inputBox}>
           <button type="submit">Save Settings</button>
         </div>
