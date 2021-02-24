@@ -127,6 +127,11 @@ function useProvideAuth() {
           authorization: `Bearer ${idToken}`,
         },
       });
+      await axios.delete(`/api/lists`, {
+        headers: {
+          authorization: `Bearer ${idToken}`,
+        },
+      });
       await axios.delete(`/api/users/${user.uid}`, {
         headers: {
           authorization: `Bearer ${idToken}`,
