@@ -53,8 +53,6 @@ handler.delete(async (req, res) => {
   const { db } = await connectToDatabase();
   const { id } = await req.query;
 
-  console.log(id);
-
   const list = await db.collection("lists").findOne({ _id: ObjectID(id) });
 
   if (list.user !== req.user.uid) {

@@ -142,7 +142,7 @@ const CreateList = ({ auth, hideModal, listData }) => {
               position: "bottom-center",
             });
             hideModal();
-            router.reload();
+            router.push("/lists");
           })
           .catch((err) => {
             console.log(err.response);
