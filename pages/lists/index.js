@@ -27,15 +27,9 @@ export default function Lists() {
   const { page } = router.query;
 
   const pageNum = page || 1;
-  const pageSize = 8;
+  const pageSize = 16;
 
-  const { listsData, listsError } = useGetListsData(
-    "",
-    "",
-    "",
-    pageSize,
-    pageNum
-  );
+  const { listsData, listsError } = useGetListsData("", "", pageSize, page);
 
   if (listsError) {
     console.error("Could not load lists data");
@@ -104,7 +98,7 @@ export default function Lists() {
             </div>
           </div>
         </h2>
-        {[...Array(pageSize / 4).keys()].map((i) => (
+        {[...Array(Math.ceil(pageSize / 4)).keys()].map((i) => (
           <GameListsList
             data={listsData.lists.slice(i * 4, i * 4 + 4)}
             key={i}
