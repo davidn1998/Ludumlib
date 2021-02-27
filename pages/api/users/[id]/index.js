@@ -38,6 +38,7 @@ handler.put(async (req, res) => {
       $set: {
         username: updates.username,
         fullname: updates.fullname,
+        bio: updates.bio,
         pfp: {
           name: updates.pfp?.name,
           uri: updates.pfp?.uri,
@@ -49,6 +50,7 @@ handler.put(async (req, res) => {
   return res.status(200).json({
     username: updates.username,
     fullname: updates.fullname,
+    bio: updates.bio,
     pfp: {
       name: updates.pfp?.name,
       uri: updates.pfp?.uri,

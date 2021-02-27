@@ -11,16 +11,17 @@ import Footer from "../components/Footer";
 import ProfileSettings from "../components/user/ProfileSettings";
 import EmailSettings from "../components/user/EmailSettings";
 import PasswordSettings from "../components/user/PasswordSettings";
-import ConnectionSettings from "../components/user/ConnectionSettings";
+import FavouriteSettings from "../components/user/FavouriteSettings";
 
 import { useAuth } from "../util/auth";
 
 export default function Settings() {
   const router = useRouter();
   const auth = useAuth();
-
   const [tab, setTab] = useState(1);
   const [tabView, setTabView] = useState(null);
+
+  const { tabNum } = router.query;
 
   useEffect(() => {
     if (auth.user === false) {
@@ -28,8 +29,10 @@ export default function Settings() {
       return;
     }
 
-    changeTab(tab);
-  }, [auth.user]);
+    console.log(tabNum);
+
+    tabNum ? changeTab(parseInt(tabNum)) : changeTab(tab);
+  }, [auth.user, tabNum]);
 
   const changeTab = (tabNum) => {
     switch (tabNum) {
@@ -39,7 +42,7 @@ export default function Settings() {
         break;
       case 2:
         setTab(2);
-        setTabView(<ConnectionSettings auth={auth} />);
+        setTabView(<FavouriteSettings auth={auth} />);
         break;
       case 3:
         setTab(3);
@@ -85,7 +88,7 @@ export default function Settings() {
                       className={tab === 2 ? styles.active : null}
                       onClick={() => changeTab(2)}
                     >
-                      Connections
+                      Favourite Games
                     </a>
                   </li>
                 </div>

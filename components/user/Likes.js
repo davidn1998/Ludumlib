@@ -29,7 +29,7 @@ const Likes = ({ user }) => {
         <Icon icon={likeIcon} /> <span>Likes</span>
       </h1>
       <div>
-        {!user.likes || user.likes?.length < 1 ? (
+        {!user?.likes || user?.likes?.length < 1 ? (
           <p>No Likes...</p>
         ) : (
           <>

@@ -36,7 +36,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     changeTab(tab);
-  }, []);
+  }, [userData]);
 
   const changeTab = (tabNum) => {
     switch (tabNum) {

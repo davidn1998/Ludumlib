@@ -25,6 +25,20 @@ const Diary = ({ user }) => {
   const { logsData, logsError } = useGetLogsData(pageSize, pageNum, user._id);
   const auth = useAuth();
 
+  if (logsError) {
+    console.error("Could not load reviews data");
+  }
+
+  if (!logsData) {
+    return (
+      <div>
+        <h1 className={styles.tabHeader}>
+          <Icon icon={calendarIcon} /> <span>Diary</span>
+        </h1>
+      </div>
+    );
+  }
+
   const showLogModal = () => {
     setLogToEdit(null);
     setLogModalVisible(true);

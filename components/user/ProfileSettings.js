@@ -15,6 +15,7 @@ import DeleteAccount from "./DeleteAccount";
 import { Icon } from "@iconify/react";
 import userIcon from "@iconify/icons-fa-solid/user";
 import userAltIcon from "@iconify/icons-fa-solid/user-tie";
+import bioIcon from "@iconify/icons-fa-solid/pencil-ruler";
 
 // Authentication
 import { useAuth } from "../../util/auth";
@@ -46,11 +47,11 @@ const ProfileSettings = () => {
     }
   };
 
-  const onSubmit = ({ username, fullname, pfp }) => {
+  const onSubmit = ({ username, fullname, bio, pfp }) => {
     auth
       .getIdToken()
       .then((idToken) => {
-        updateProfile(username, fullname, pfp, idToken);
+        updateProfile(username, fullname, bio, pfp, idToken);
       })
       .catch((err) => {
         toast.error(err.message, { position: "bottom-center" });
@@ -58,7 +59,7 @@ const ProfileSettings = () => {
   };
 
   // Update user profile
-  const updateProfile = (username, fullname, pfp, idToken) => {
+  const updateProfile = (username, fullname, bio, pfp, idToken) => {
     if (pfp.length > 0) {
       if (pfp[0].size > 5000000) {
         toast.error("Failed to save settings. Max image size (5 MB) exceeded", {
@@ -104,6 +105,7 @@ const ProfileSettings = () => {
                   {
                     username,
                     fullname,
+                    bio,
                     pfp: {
                       name: pfpName,
                       uri: pfpURI,
@@ -146,6 +148,7 @@ const ProfileSettings = () => {
           {
             username,
             fullname,
+            bio,
             pfp: user.pfp,
           },
           {
@@ -182,6 +185,7 @@ const ProfileSettings = () => {
           {
             username: user.username,
             fullname: user.fullname,
+            bio: user.bio,
             pfp: null,
           },
           {
@@ -248,6 +252,29 @@ const ProfileSettings = () => {
         </div>
         {errors.fullname && (
           <p className={formStyles.error}>{errors?.fullname?.message}</p>
+        )}
+        <h5 className={formStyles.label}>Bio</h5>
+        <div className={formStyles.inputBox}>
+          <div className={formStyles.iconLeft}>
+            <Icon icon={bioIcon} />
+          </div>
+          <textarea
+            type="text"
+            name="bio"
+            placeholder="Bio"
+            defaultValue={user.bio}
+            rows="5"
+            style={{ paddingRight: "3rem" }}
+            ref={register({
+              maxLength: {
+                value: 400,
+                message: "Bio can have a maximum of 400 characters",
+              },
+            })}
+          />
+        </div>
+        {errors.bio && (
+          <p className={formStyles.error}>{errors?.bio?.message}</p>
         )}
         <h5 className={formStyles.label}>Profile Picture</h5>
         <div className={formStyles.fileInputBox}>

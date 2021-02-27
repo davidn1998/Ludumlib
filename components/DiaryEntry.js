@@ -48,7 +48,7 @@ const DiaryEntry = ({
         </Link>
       </p>
       <p className={styles.hours}>{data?.hours} Hours Played</p>
-      {auth.user ? (
+      {auth?.user ? (
         <div className={styles.glassButtons}>
           <button
             className={styles.button}
