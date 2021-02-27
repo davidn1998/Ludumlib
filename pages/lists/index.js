@@ -9,7 +9,6 @@ import styles from "../../styles/index.module.scss";
 // Components
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import MiniReview from "../../components/MiniReview";
 import GameListsList from "../../components/GameListsList";
 import ManageList from "../../components/ManageList";
 

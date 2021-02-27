@@ -51,7 +51,7 @@ const Diary = ({ user }) => {
       <h1 className={styles.tabHeader}>
         <Icon icon={calendarIcon} /> <span>Diary</span>
       </h1>
-      <div style={{ width: "200px", margin: "auto" }}>
+      <div style={{ width: "200px", margin: "50px auto" }}>
         {auth?.user && auth?.user?.username === user.username ? (
           <div className={styles.glassButtons}>
             <button className={styles.button} onClick={showLogModal}>
