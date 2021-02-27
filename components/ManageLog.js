@@ -5,6 +5,7 @@ import formStyles from "../styles/forms.module.scss";
 import axios from "axios";
 import { useGetGamesSearch } from "../util/useRequest";
 import _ from "lodash";
+import { parseISO } from "date-fns";
 
 // Components
 import { ToastContainer, toast } from "react-toastify";
@@ -26,7 +27,6 @@ import gameIcon from "@iconify/icons-fa-solid/gamepad";
 import { useForm, Controller } from "react-hook-form";
 
 const ManageLog = ({ auth, hideModal, logData, inGame }) => {
-  const [playDate, setPlayDate] = useState(new Date());
   const [gameSearch, setGameSearch] = useState("");
   const [loadingSearch, setLoadingSearch] = useState(false);
 
@@ -150,7 +150,7 @@ const ManageLog = ({ auth, hideModal, logData, inGame }) => {
               position: "bottom-center",
             });
             hideModal();
-            router.push("/logs");
+            router.reload();
           })
           .catch((err) => {
             console.log(err.response);
@@ -241,10 +241,10 @@ const ManageLog = ({ auth, hideModal, logData, inGame }) => {
               name="date"
               control={control}
               key={logData?._id}
-              defaultValue={logData?.date || null}
+              defaultValue={logData?.date ? parseISO(logData?.date) : null}
               render={({ onChange, value }) => (
                 <DatePicker
-                  selected={value || logData?.date || null}
+                  selected={value || null}
                   onChange={onChange}
                   autoComplete="off"
                   placeholderText="Select Date"
@@ -276,7 +276,7 @@ const ManageLog = ({ auth, hideModal, logData, inGame }) => {
                   control={control}
                   key={logData?._id}
                   isClearable
-                  defaultValue={logData?.games || null}
+                  defaultValue={logData?.game || null}
                   as={<Select />}
                   rules={{
                     required: {
@@ -308,6 +308,8 @@ const ManageLog = ({ auth, hideModal, logData, inGame }) => {
           </div>
           <input
             type="number"
+            min="0"
+            step="0.1"
             name="hours"
             placeholder="Hours Played"
             key={logData?._id}

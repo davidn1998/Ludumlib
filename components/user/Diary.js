@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useGetLogsData } from "../../util/useRequest";
 import ManageLog from "../ManageLog";
+import DeleteLog from "../DeleteLog";
 import DiaryEntry from "../DiaryEntry";
 
 //Authentication
@@ -17,14 +18,22 @@ import arrowIconLeft from "@iconify/icons-fa-solid/arrow-left";
 
 const Diary = ({ user }) => {
   const [logModalVisible, setLogModalVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [logToEdit, setLogToEdit] = useState(null);
   const [pageNum, setPageNum] = useState(1);
-  const pageSize = 8;
+  const pageSize = 5;
   const { logsData, logsError } = useGetLogsData(pageSize, pageNum, user._id);
   const auth = useAuth();
 
   const showLogModal = () => {
+    setLogToEdit(null);
     setLogModalVisible(true);
   };
+
+  const hideDeleteModal = () => {
+    setDeleteModalVisible(false);
+  };
+
   const hideLogModal = () => {
     setLogModalVisible(false);
   };
@@ -38,7 +47,7 @@ const Diary = ({ user }) => {
   };
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       <h1 className={styles.tabHeader}>
         <Icon icon={calendarIcon} /> <span>Diary</span>
       </h1>
@@ -55,11 +64,27 @@ const Diary = ({ user }) => {
       </div>
       <div
         className={`${styles.modal} ${
-          logModalVisible ? styles.modalVisible : styles.modalHidden
+          logModalVisible && !deleteModalVisible
+            ? styles.modalVisible
+            : styles.modalHidden
         }`}
       >
         <div className={styles.modalBackground}></div>
-        <ManageLog auth={auth} hideModal={hideLogModal} />
+        <ManageLog auth={auth} hideModal={hideLogModal} logData={logToEdit} />
+      </div>
+      <div
+        className={`${styles.modal} ${
+          deleteModalVisible && !logModalVisible
+            ? styles.modalVisible
+            : styles.modalHidden
+        }`}
+      >
+        <div className={styles.modalBackground}></div>
+        <DeleteLog
+          auth={auth}
+          hideModal={hideDeleteModal}
+          logData={logToEdit}
+        />
       </div>
       <div>
         {!logsData || logsData?.logs.length < 1 ? (
@@ -67,7 +92,13 @@ const Diary = ({ user }) => {
         ) : (
           <>
             {logsData.logs.map((data) => (
-              <DiaryEntry data={data} key={data._id} />
+              <DiaryEntry
+                data={data}
+                key={data._id}
+                setLogToEdit={setLogToEdit}
+                setLogModalVisible={setLogModalVisible}
+                setDeleteModalVisible={setDeleteModalVisible}
+              />
             ))}
             <div className={styles.pageButtons}>
               <div className={styles.glassButtons}>

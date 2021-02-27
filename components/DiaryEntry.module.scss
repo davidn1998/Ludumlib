@@ -1,3 +1,5 @@
+@use "../styles/mixins";
+
 .diaryEntry {
   width: 100%;
   display: flex;
@@ -11,6 +13,8 @@
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   position: relative;
+
+  @include mixins.glassButtons;
 
   p {
     width: 30%;
@@ -31,5 +35,14 @@
     opacity: 0.3;
     background-size: cover;
     background-position: top;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .diaryEntry {
+    flex-direction: column;
+    p {
+      width: 100%;
+    }
   }
 }
