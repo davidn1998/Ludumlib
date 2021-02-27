@@ -15,7 +15,7 @@ handler.get(async (req, res) => {
   if (game?.length > 0) queryParams.game = game;
   if (rating?.length > 0) queryParams.rating = rating;
 
-  const count = await db.collection("reviews").countDocuments();
+  const count = await db.collection("reviews").countDocuments(queryParams);
 
   const reviews = await db
     .collection("reviews")
@@ -62,7 +62,6 @@ handler.delete(async (req, res) => {
   try {
     await db.collection("reviews").deleteMany({ user: req.user.uid });
   } catch (err) {
-    console.log(err);
     return res.status(500).json({ message: "Could not delete reviews" });
   }
 

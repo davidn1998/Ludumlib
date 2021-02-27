@@ -17,7 +17,7 @@ import styles from "../../../styles/index.module.scss";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 import MiniReview from "../../../components/MiniReview";
-import ReviewGame from "../../../components/ReviewGame";
+import ManageReview from "../../../components/ManageReview";
 
 import { Icon } from "@iconify/react";
 import pencilIcon from "@iconify/icons-fa-solid/pencil-alt";
@@ -180,7 +180,7 @@ const Review = () => {
           }`}
         >
           <div className={styles.modalBackground}></div>
-          <ReviewGame
+          <ManageReview
             auth={auth}
             hideModal={hideReviewModal}
             gameId={reviewData.game}

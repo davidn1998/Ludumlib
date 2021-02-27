@@ -113,3 +113,21 @@ export const useGetListData = (id) => {
 
   return { listData, listError };
 };
+
+export const useGetLogsData = (
+  pageSize = "",
+  page = 1,
+  user = "",
+  game = "",
+  hours = "",
+  dateStart = "",
+  dateEnd = ""
+) => {
+  const url = `/api/logs?page=${page}&pageSize=${pageSize}&user=${user}&game=${game}&hours=${hours}&dateStart=${dateStart}&dateEnd=${dateEnd}`;
+
+  const { data: logsData, error: logsError } = useSWR(url, fetcher, {
+    revalidateOnFocus: false,
+  });
+
+  return { logsData, logsError };
+};

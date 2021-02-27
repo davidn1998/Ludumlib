@@ -9,13 +9,13 @@ handler.get(async (req, res) => {
   const { db } = await connectToDatabase();
   const { id } = await req.query;
 
-  const review = await db.collection("reviews").findOne({ _id: ObjectID(id) });
+  const log = await db.collection("logs").findOne({ _id: ObjectID(id) });
 
-  if (!review) {
-    return res.status(404).json({ message: `Review with id: ${id} not found` });
+  if (!log) {
+    return res.status(404).json({ message: `Log with id: ${id} not found` });
   }
 
-  return res.status(200).json(review);
+  return res.status(200).json(log);
 });
 
 handler.use(validateFirebaseIdToken);
@@ -24,28 +24,28 @@ handler.put(async (req, res) => {
   const { db } = await connectToDatabase();
   const { id } = await req.query;
 
-  const review = await db.collection("reviews").findOne({ _id: ObjectID(id) });
+  const log = await db.collection("logs").findOne({ _id: ObjectID(id) });
 
-  if (review.user !== req.user.uid) {
+  if (log.user !== req.user.uid) {
     return res.status(403).json({ message: "Unauthorized Request" });
   }
 
   const updates = await req.body;
-  await db.collection("reviews").updateOne(
+  await db.collection("logs").updateOne(
     { _id: ObjectID(id) },
     {
       $set: {
-        title: updates.title,
-        body: updates.body,
-        rating: updates.rating,
+        date: updates.date,
+        game: updates.game,
+        hours: updates.hours,
       },
     }
   );
 
   return res.status(200).json({
-    title: updates.title,
-    body: updates.body,
-    rating: updates.rating,
+    date: updates.date,
+    game: updates.game,
+    hours: updates.hours,
   });
 });
 
@@ -53,14 +53,14 @@ handler.delete(async (req, res) => {
   const { db } = await connectToDatabase();
   const { id } = await req.query;
 
-  const review = await db.collection("reviews").findOne({ _id: ObjectID(id) });
+  const log = await db.collection("logs").findOne({ _id: ObjectID(id) });
 
-  if (review.user !== req.user.uid) {
+  if (log.user !== req.user.uid) {
     return res.status(403).json({ message: "Unauthorized Request" });
   }
-  await db.collection("reviews").deleteOne({ _id: ObjectID(id) });
+  await db.collection("logs").deleteOne({ _id: ObjectID(id) });
 
-  return res.status(200).json({ Success: "Review Deleted" });
+  return res.status(200).json({ Success: "log Deleted" });
 });
 
 export default handler;

@@ -14,7 +14,7 @@ handler.get(async (req, res) => {
   if (user?.length > 0) queryParams.user = user;
   if (game?.length > 0) queryParams.games = game;
 
-  const count = await db.collection("lists").countDocuments();
+  const count = await db.collection("lists").countDocuments(queryParams);
 
   const lists = await db
     .collection("lists")

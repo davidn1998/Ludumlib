@@ -10,20 +10,23 @@ import _ from "lodash";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { css } from "@emotion/core";
 import ClipLoader from "react-spinners/ClipLoader";
 
 // UI Icons
 import { Icon } from "@iconify/react";
 import closeIcon from "@iconify/icons-fa-solid/times";
-import titleIcon from "@iconify/icons-fa-solid/tag";
-import bodyIcon from "@iconify/icons-fa-solid/pencil-ruler";
+import dateIcon from "@iconify/icons-fa-solid/calendar";
+import hoursIcon from "@iconify/icons-fa-solid/clock";
 import gameIcon from "@iconify/icons-fa-solid/gamepad";
 
 // Form
 import { useForm, Controller } from "react-hook-form";
 
-const CreateList = ({ auth, hideModal, listData }) => {
+const ManageLog = ({ auth, hideModal, logData, inGame }) => {
+  const [playDate, setPlayDate] = useState(new Date());
   const [gameSearch, setGameSearch] = useState("");
   const [loadingSearch, setLoadingSearch] = useState(false);
 
@@ -58,13 +61,18 @@ const CreateList = ({ auth, hideModal, listData }) => {
     return { value: game.id, label: game.name };
   });
 
-  const onSubmitList = ({ title, description, games }) => {
+  const onSubmitLog = ({ game, hours, date }) => {
     auth
       .getIdToken()
       .then((idToken) => {
-        listData
-          ? updateList(title, description, games, listData._id, idToken)
-          : createList(title, description, games, idToken);
+        logData
+          ? updateLog(game, hours, date, logData._id, idToken)
+          : createLog(
+              inGame ? { value: inGame.id, label: inGame.name } : game,
+              hours,
+              date,
+              idToken
+            );
       })
       .catch((err) => {
         console.log(err);
@@ -72,15 +80,15 @@ const CreateList = ({ auth, hideModal, listData }) => {
       });
   };
 
-  // Submit list or show toast error
-  const createList = (title, description, games, idToken) => {
+  // Submit log or show toast error
+  const createLog = (game, hours, date, idToken) => {
     axios
       .post(
-        `/api/lists`,
+        `/api/logs`,
         {
-          title,
-          description,
-          games,
+          game,
+          hours,
+          date,
         },
         {
           headers: {
@@ -89,7 +97,7 @@ const CreateList = ({ auth, hideModal, listData }) => {
         }
       )
       .then((res) => {
-        toast.success("List Posted", {
+        toast.success("Log Posted", {
           position: "bottom-center",
         });
         hideModal();
@@ -99,15 +107,15 @@ const CreateList = ({ auth, hideModal, listData }) => {
         toast.error(err.response.data.message, { position: "bottom-center" });
       });
   };
-  // Update list or show toast error
-  const updateList = (title, description, games, listId, idToken) => {
+  // Update log or show toast error
+  const updateLog = (game, hours, date, logId, idToken) => {
     axios
       .put(
-        `/api/lists/${listId}`,
+        `/api/logs/${logId}`,
         {
-          title,
-          description,
-          games,
+          game,
+          hours,
+          date,
         },
         {
           headers: {
@@ -116,7 +124,7 @@ const CreateList = ({ auth, hideModal, listData }) => {
         }
       )
       .then((res) => {
-        toast.success("List Updated", {
+        toast.success("Log Updated", {
           position: "bottom-center",
         });
         hideModal();
@@ -126,23 +134,23 @@ const CreateList = ({ auth, hideModal, listData }) => {
         toast.error(err.response.data.message, { position: "bottom-center" });
       });
   };
-  // Delete list or show toast error
-  const deleteList = () => {
+  // Delete log or show toast error
+  const deleteLog = () => {
     auth
       .getIdToken()
       .then((idToken) => {
         axios
-          .delete(`/api/lists/${listData._id}`, {
+          .delete(`/api/logs/${logData._id}`, {
             headers: {
               authorization: `Bearer ${idToken}`,
             },
           })
           .then((res) => {
-            toast.success("List Deleted", {
+            toast.success("Log Deleted", {
               position: "bottom-center",
             });
             hideModal();
-            router.push("/lists");
+            router.push("/logs");
           })
           .catch((err) => {
             console.log(err.response);
@@ -214,100 +222,121 @@ const CreateList = ({ auth, hideModal, listData }) => {
 
   return (
     <div className={styles.formContainer}>
-      <form className={formStyles.form} onSubmit={handleSubmit(onSubmitList)}>
+      <form className={formStyles.form} onSubmit={handleSubmit(onSubmitLog)}>
         <div className={styles.modalCloseButton}>
           <div className={styles.button} onClick={hideModal}>
             <Icon icon={closeIcon} width={20} height={20} />
           </div>
         </div>
         <h2 className={formStyles.heading}>
-          {listData ? "Edit List" : "Create List"}
+          {logData ? "Edit Log" : "Create Log"}
         </h2>
-        <h5 className={formStyles.label}>Title</h5>
+        <h5 className={formStyles.label}>Date</h5>
         <div className={formStyles.inputBox}>
           <div className={formStyles.iconLeft}>
-            <Icon icon={titleIcon} />{" "}
+            <Icon icon={dateIcon} />{" "}
+          </div>
+          <div className={formStyles.date}>
+            <Controller
+              name="date"
+              control={control}
+              key={logData?._id}
+              defaultValue={logData?.date || null}
+              render={({ onChange, value }) => (
+                <DatePicker
+                  selected={value || logData?.date || null}
+                  onChange={onChange}
+                  autoComplete="off"
+                  placeholderText="Select Date"
+                  wrapperClassName={formStyles.datePicker}
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "Date is required",
+                },
+              }}
+            />
+          </div>
+        </div>
+        {errors.date && (
+          <p className={formStyles.error}>{errors?.date?.message}</p>
+        )}{" "}
+        {!inGame ? (
+          <>
+            <h5 className={formStyles.label}>Game</h5>
+            <div className={formStyles.inputBox}>
+              <div className={formStyles.iconLeft}>
+                <Icon icon={gameIcon} />{" "}
+              </div>
+              <div className={formStyles.games}>
+                <Controller
+                  name="game"
+                  control={control}
+                  key={logData?._id}
+                  isClearable
+                  defaultValue={logData?.games || null}
+                  as={<Select />}
+                  rules={{
+                    required: {
+                      value: true,
+                      message: "Game is required",
+                    },
+                  }}
+                  options={gameOptions}
+                  styles={gameSelectStyles}
+                  onInputChange={(input) => handleGameSearch(input)}
+                  placeholder="Search for a game..."
+                />
+              </div>
+              <div style={{ width: "100%" }}>
+                <ClipLoader loading={loadingSearch} color="#fff" />
+              </div>
+            </div>
+            {errors.game && (
+              <p className={formStyles.error}>{errors?.game?.message}</p>
+            )}{" "}
+          </>
+        ) : (
+          <></>
+        )}
+        <h5 className={formStyles.label}>Hours Played</h5>
+        <div className={formStyles.inputBox}>
+          <div className={formStyles.iconLeft}>
+            <Icon icon={hoursIcon} />{" "}
           </div>
           <input
-            type="text"
-            name="title"
-            placeholder="Title"
-            key={listData?._id}
-            defaultValue={listData?.title || ""}
+            type="number"
+            name="hours"
+            placeholder="Hours Played"
+            key={logData?._id}
+            defaultValue={logData?.hours || null}
             style={{ paddingRight: "3rem" }}
             ref={register({
               required: {
                 value: true,
-                message: "Title is required",
+                message: "Hours played is required",
               },
             })}
           />
         </div>
-        {errors.title && (
-          <p className={formStyles.error}>{errors?.title?.message}</p>
-        )}
-        <h5 className={formStyles.label}>Description (Optional)</h5>
-        <div className={formStyles.inputBox}>
-          <div className={formStyles.iconLeft}>
-            <Icon icon={bodyIcon} />{" "}
-          </div>
-          <textarea
-            type="text"
-            name="description"
-            placeholder="Description"
-            key={listData?._id}
-            defaultValue={listData?.description || ""}
-            rows="5"
-            style={{ paddingRight: "3rem" }}
-            ref={register()}
-          />
-        </div>
-        {errors.description && (
-          <p className={formStyles.error}>{errors?.description?.message}</p>
-        )}
-        <h5 className={formStyles.label}>Games</h5>
-        <div className={formStyles.inputBox}>
-          <div className={formStyles.iconLeft}>
-            <Icon icon={gameIcon} />{" "}
-          </div>
-          <div className={formStyles.games}>
-            <Controller
-              name="games"
-              control={control}
-              key={listData?._id}
-              defaultValue={listData?.games || null}
-              as={<Select />}
-              rules={{
-                validate: (value) =>
-                  value?.length > 2 || "At least 3 games are required",
-              }}
-              isMulti
-              options={gameOptions}
-              styles={gameSelectStyles}
-              onInputChange={(input) => handleGameSearch(input)}
-              placeholder="Search for games..."
-            />
-          </div>
-          <div style={{ width: "100%" }}>
-            <ClipLoader loading={loadingSearch} color="#fff" />
-          </div>
-        </div>
-        {errors.games && (
-          <p className={formStyles.error}>{errors?.games?.message}</p>
+        {errors.hours && (
+          <p className={formStyles.error}>{errors?.hours?.message}</p>
         )}
         <div className={formStyles.inputBox}>
-          <button type="submit">
-            {listData ? "Save Changes" : "Create List"}
+          <button className={formStyles.formButton} type="submit">
+            {logData ? "Save Changes" : "Create Log"}
           </button>
         </div>
-        {listData ? (
+        {logData ? (
           <div className={formStyles.inputBox}>
             <button
-              onClick={deleteList}
+              onClick={deleteLog}
               type="reset"
-              className={formStyles.dangerButton}
+              className={`${formStyles.formButton} ${formStyles.dangerButton}`}
             >
-              Delete List
+              Delete Log
             </button>
           </div>
         ) : (
@@ -318,4 +347,4 @@ const CreateList = ({ auth, hideModal, listData }) => {
   );
 };
 
-export default CreateList;
+export default ManageLog;

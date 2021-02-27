@@ -11,7 +11,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import MiniReview from "../../components/MiniReview";
 import GameListsList from "../../components/GameListsList";
-import CreateList from "../../components/CreateList";
+import ManageList from "../../components/ManageList";
 
 import { Icon, InlineIcon } from "@iconify/react";
 import arrowIconRight from "@iconify/icons-fa-solid/arrow-right";
@@ -23,7 +23,7 @@ import { useAuth } from "../../util/auth";
 export default function Lists() {
   const router = useRouter();
   const auth = useAuth();
-  const [createListModalVisible, setCreateListModalVisible] = useState(false);
+  const [manageListModalVisible, setManageListModalVisible] = useState(false);
   const { page } = router.query;
 
   const pageNum = page || 1;
@@ -56,20 +56,20 @@ export default function Lists() {
     router.push(`/lists?page=${parseInt(pageNum) + 1}`);
   };
 
-  const onCreateListClick = () => {
+  const onManageListClick = () => {
     if (!auth.user) {
       router.push(`/login?nextRoute=/lists`);
       return;
     }
 
-    showCreateListModal();
+    showManageListModal();
   };
 
-  const showCreateListModal = () => {
-    setCreateListModalVisible(true);
+  const showManageListModal = () => {
+    setManageListModalVisible(true);
   };
-  const hideCreateListModal = () => {
-    setCreateListModalVisible(false);
+  const hideManageListModal = () => {
+    setManageListModalVisible(false);
   };
 
   return (
@@ -82,17 +82,17 @@ export default function Lists() {
       <div className={styles.main}>
         <div
           className={`${styles.modal} ${
-            createListModalVisible ? styles.modalVisible : styles.modalHidden
+            manageListModalVisible ? styles.modalVisible : styles.modalHidden
           }`}
         >
           <div className={styles.modalBackground}></div>
-          <CreateList auth={auth} hideModal={hideCreateListModal} />
+          <ManageList auth={auth} hideModal={hideManageListModal} />
         </div>
         <h2 className={styles.subHeading}>
           <div className={styles.profileHeading}>
             <div>Recent Lists</div>
             <div className={styles.glassButtons}>
-              <button className={styles.button} onClick={onCreateListClick}>
+              <button className={styles.button} onClick={onManageListClick}>
                 Create List
               </button>
             </div>

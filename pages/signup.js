@@ -197,7 +197,9 @@ export default function Signup() {
                 <p className={formStyles.error}>{errors?.password?.message}</p>
               )}
               <div className={formStyles.inputBox}>
-                <button type="submit">Sign Up</button>
+                <button type="submit" className={formStyles.formButton}>
+                  Sign Up
+                </button>
               </div>
               <p className={formStyles.extra}>
                 By signing up, you agree to Ludumlib’s <br />

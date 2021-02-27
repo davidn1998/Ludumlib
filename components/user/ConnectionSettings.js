@@ -57,7 +57,7 @@ const ConnectionSettings = ({ auth }) => {
           <p className={formStyles.error}>{errors?.connection?.message}</p>
         )}
         <div className={formStyles.inputBox}>
-          <button type="submit">Save Settings</button>
+          <button type="submit" className={formStyles.formButton}>Save Settings</button>
         </div>
       </form> */}
     </div>

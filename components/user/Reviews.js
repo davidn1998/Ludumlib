@@ -66,39 +66,44 @@ const Reviews = ({ user }) => {
       <h1 className={styles.tabHeader}>
         <Icon icon={bookIcon} /> <span>Reviews</span>
       </h1>
-      {reviewsData?.reviews?.length == 0 ? <p>No reviews...</p> : <></>}
-      <div className={styles.miniReviews}>
-        <div className={styles.reviewCol}>{reviewComponentsCol1}</div>
-        <div className={styles.reviewCol}>{reviewComponentsCol2}</div>
-      </div>
-      <div className={styles.pageButtons}>
-        <div className={styles.glassButtons}>
-          <button
-            className={`${styles.button} ${
-              pageNum == 1 ? styles.disabled : ""
-            }`}
-            disabled={pageNum == 1}
-            onClick={prevResults}
-          >
-            {<Icon icon={arrowIconLeft} width={25} />}
-          </button>
-          <button
-            className={`${styles.button} ${
-              pageNum == Math.ceil(reviewsData.count / pageSize) ||
-              reviewsData.count == 0
-                ? styles.disabled
-                : ""
-            }`}
-            disabled={
-              pageNum == Math.ceil(reviewsData.count / pageSize) ||
-              reviewsData.count == 0
-            }
-            onClick={nextResults}
-          >
-            {<Icon icon={arrowIconRight} width={25} />}
-          </button>
-        </div>
-      </div>
+      {!reviewsData || reviewsData?.reviews?.length == 0 ? (
+        <p>No reviews...</p>
+      ) : (
+        <>
+          <div className={styles.miniReviews}>
+            <div className={styles.reviewCol}>{reviewComponentsCol1}</div>
+            <div className={styles.reviewCol}>{reviewComponentsCol2}</div>
+          </div>
+          <div className={styles.pageButtons}>
+            <div className={styles.glassButtons}>
+              <button
+                className={`${styles.button} ${
+                  pageNum == 1 ? styles.disabled : ""
+                }`}
+                disabled={pageNum == 1}
+                onClick={prevResults}
+              >
+                {<Icon icon={arrowIconLeft} width={25} />}
+              </button>
+              <button
+                className={`${styles.button} ${
+                  pageNum == Math.ceil(reviewsData.count / pageSize) ||
+                  reviewsData.count == 0
+                    ? styles.disabled
+                    : ""
+                }`}
+                disabled={
+                  pageNum == Math.ceil(reviewsData.count / pageSize) ||
+                  reviewsData.count == 0
+                }
+                onClick={nextResults}
+              >
+                {<Icon icon={arrowIconRight} width={25} />}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

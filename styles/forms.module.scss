@@ -84,6 +84,14 @@
       border-radius: 10px;
     }
 
+    .date {
+      width: 100%;
+
+      .datePicker {
+        width: 100%;
+      }
+    }
+
     .rating {
       padding-left: 2.5rem;
       display: flex;
@@ -149,7 +157,7 @@
       height: auto;
     }
 
-    button {
+    .formButton {
       width: 50%;
       height: 40px;
       margin: 2rem auto 0;

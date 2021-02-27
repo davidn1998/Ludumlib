@@ -177,7 +177,9 @@ export default function Login() {
                   </p>
                 )}
                 <div className={formStyles.inputBox}>
-                  <button type="submit">Login</button>
+                  <button type="submit" className={formStyles.formButton}>
+                    Login
+                  </button>
                 </div>
                 <p className={formStyles.extra}>
                   Forgot your password?{" "}

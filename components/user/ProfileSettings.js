@@ -272,12 +272,18 @@ const ProfileSettings = () => {
           <p className={formStyles.error}>{errors?.pfp?.message}</p>
         )}
         <div className={formStyles.inputBox}>
-          <button type="button" onClick={removeProfilePic}>
+          <button
+            type="button"
+            onClick={removeProfilePic}
+            className={formStyles.formButton}
+          >
             Remove Profile Picture
           </button>
         </div>
         <div className={formStyles.inputBox}>
-          <button type="submit">Save Settings</button>
+          <button type="submit" className={formStyles.formButton}>
+            Save Settings
+          </button>
         </div>
         <p>
           <a onClick={showDeleteModal}>Delete Account</a>

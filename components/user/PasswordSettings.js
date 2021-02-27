@@ -112,7 +112,9 @@ const PasswordSettings = ({ auth }) => {
           <p className={formStyles.error}>{errors?.newPassword?.message}</p>
         )}
         <div className={formStyles.inputBox}>
-          <button type="submit">Change Password</button>
+          <button type="submit" className={formStyles.formButton}>
+            Change Password
+          </button>
         </div>
       </form>
     </div>

@@ -19,7 +19,7 @@ import ratingIcon from "@iconify/icons-fa-solid/medal";
 // Form
 import { useForm } from "react-hook-form";
 
-const ReviewGame = ({ auth, hideModal, gameId, reviewData }) => {
+const ManageReview = ({ auth, hideModal, gameId, reviewData }) => {
   // const defaultValues = { rating: reviewData?.rating?.toString() };
 
   const { register, handleSubmit, errors } = useForm({
@@ -287,7 +287,7 @@ const ReviewGame = ({ auth, hideModal, gameId, reviewData }) => {
           <p className={formStyles.error}>{errors?.rating?.message}</p>
         )}
         <div className={formStyles.inputBox}>
-          <button type="submit">
+          <button type="submit" className={formStyles.formButton}>
             {reviewData ? "Save Changes" : "Create Review"}
           </button>
         </div>
@@ -296,7 +296,7 @@ const ReviewGame = ({ auth, hideModal, gameId, reviewData }) => {
             <button
               onClick={deleteReview}
               type="reset"
-              className={formStyles.dangerButton}
+              className={`${formStyles.formButton} ${formStyles.dangerButton}`}
             >
               Delete Review
             </button>
@@ -309,4 +309,4 @@ const ReviewGame = ({ auth, hideModal, gameId, reviewData }) => {
   );
 };
 
-export default ReviewGame;
+export default ManageReview;

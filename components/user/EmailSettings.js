@@ -102,7 +102,9 @@ const EmailSettings = ({ auth }) => {
           <p className={formStyles.error}>{errors?.password?.message}</p>
         )}
         <div className={formStyles.inputBox}>
-          <button type="submit">Save Settings</button>
+          <button type="submit" className={formStyles.formButton}>
+            Save Settings
+          </button>
         </div>
       </form>
     </div>

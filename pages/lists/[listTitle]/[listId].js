@@ -16,7 +16,7 @@ import styles from "../../../styles/index.module.scss";
 
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
-import CreateList from "../../../components/CreateList";
+import ManageList from "../../../components/ManageList";
 import GamesList2 from "../../../components/GameList2";
 import GameListsList from "../../../components/GameListsList";
 
@@ -99,7 +99,7 @@ const List = () => {
           }`}
         >
           <div className={styles.modalBackground}></div>
-          <CreateList
+          <ManageList
             auth={auth}
             hideModal={hideEditListModal}
             listData={listData}

@@ -17,7 +17,8 @@ import styles from "../../../styles/index.module.scss";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 import MiniReview from "../../../components/MiniReview";
-import ReviewGame from "../../../components/ReviewGame";
+import ManageReview from "../../../components/ManageReview";
+import ManageLog from "../../../components/ManageLog";
 
 import { Icon } from "@iconify/react";
 import pencilIcon from "@iconify/icons-fa-solid/pencil-alt";
@@ -30,6 +31,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Game = () => {
   const [isFullAbout, setIsFullAbout] = useState(false);
+  const [logModalVisible, setLogModalVisible] = useState(false);
   const [reviewModalVisible, setReviewModalVisible] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isPlayed, setIsPlayed] = useState(false);
@@ -116,7 +118,14 @@ const Game = () => {
       return;
     }
 
-    console.log("Log Game");
+    showLogModal();
+  };
+
+  const showLogModal = () => {
+    setLogModalVisible(true);
+  };
+  const hideLogModal = () => {
+    setLogModalVisible(false);
   };
 
   const onPlayedClick = () => {
@@ -284,11 +293,23 @@ const Game = () => {
       <div className={styles.main}>
         <div
           className={`${styles.modal} ${
-            reviewModalVisible ? styles.modalVisible : styles.modalHidden
+            logModalVisible && !reviewModalVisible
+              ? styles.modalVisible
+              : styles.modalHidden
           }`}
         >
           <div className={styles.modalBackground}></div>
-          <ReviewGame
+          <ManageLog auth={auth} hideModal={hideLogModal} inGame={gameData} />
+        </div>
+        <div
+          className={`${styles.modal} ${
+            reviewModalVisible && !logModalVisible
+              ? styles.modalVisible
+              : styles.modalHidden
+          }`}
+        >
+          <div className={styles.modalBackground}></div>
+          <ManageReview
             auth={auth}
             hideModal={hideReviewModal}
             gameId={gameId}

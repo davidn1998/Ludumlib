@@ -101,7 +101,10 @@ const DeleteAccount = ({ auth, hideModal }) => {
           <p className={formStyles.error}>{errors?.password?.message}</p>
         )}
         <div className={formStyles.inputBox}>
-          <button className={formStyles.dangerButton} type="submit">
+          <button
+            className={`${formStyles.formButton} ${formStyles.dangerButton}`}
+            type="submit"
+          >
             Delete Account
           </button>
         </div>
