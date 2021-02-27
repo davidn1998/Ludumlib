@@ -98,6 +98,7 @@ const Diary = ({ user }) => {
                 setLogToEdit={setLogToEdit}
                 setLogModalVisible={setLogModalVisible}
                 setDeleteModalVisible={setDeleteModalVisible}
+                auth={auth}
               />
             ))}
             <div className={styles.pageButtons}>

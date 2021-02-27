@@ -13,6 +13,7 @@ const DiaryEntry = ({
   setLogToEdit,
   setLogModalVisible,
   setDeleteModalVisible,
+  auth,
 }) => {
   const { gameData, gameError } = useGetGameData(data.game.value);
 
@@ -47,25 +48,29 @@ const DiaryEntry = ({
         </Link>
       </p>
       <p className={styles.hours}>{data?.hours} Hours Played</p>
-      <div className={styles.glassButtons}>
-        <button
-          className={styles.button}
-          data-tip={"Edit Entry"}
-          data-type="success"
-          onClick={onEditClick}
-        >
-          {<Icon icon={pencilIcon} width={20} />}
-        </button>
-        <button
-          className={styles.button}
-          data-tip={"Delete Entry"}
-          data-type="error"
-          onClick={onDeleteClick}
-        >
-          {<Icon icon={trashIcon} width={20} />}
-        </button>
-        <ReactTooltip place="bottom" type="light" effect="solid" />
-      </div>
+      {auth.user ? (
+        <div className={styles.glassButtons}>
+          <button
+            className={styles.button}
+            data-tip={"Edit Entry"}
+            data-type="success"
+            onClick={onEditClick}
+          >
+            {<Icon icon={pencilIcon} width={20} />}
+          </button>
+          <button
+            className={styles.button}
+            data-tip={"Delete Entry"}
+            data-type="error"
+            onClick={onDeleteClick}
+          >
+            {<Icon icon={trashIcon} width={20} />}
+          </button>
+          <ReactTooltip place="bottom" type="light" effect="solid" />
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
