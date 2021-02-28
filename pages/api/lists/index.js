@@ -19,7 +19,7 @@ handler.get(async (req, res) => {
   const lists = await db
     .collection("lists")
     .find(queryParams)
-    .sort({ date: -1 })
+    .sort({ date: -1, _id: 1 })
     .skip(parseInt((page - 1) * pageSize))
     .limit(parseInt(pageSize))
     .toArray();

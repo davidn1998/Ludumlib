@@ -26,7 +26,7 @@ const Diary = ({ user }) => {
   const auth = useAuth();
 
   if (logsError) {
-    console.error("Could not load reviews data");
+    console.error("Could not load logs data");
   }
 
   if (!logsData) {

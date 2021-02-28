@@ -20,7 +20,7 @@ handler.get(async (req, res) => {
   const reviews = await db
     .collection("reviews")
     .find(queryParams)
-    .sort({ date: -1 })
+    .sort({ date: -1, _id: 1 })
     .skip(parseInt((page - 1) * pageSize))
     .limit(parseInt(pageSize))
     .toArray();

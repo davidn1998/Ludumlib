@@ -1,31 +1,23 @@
 import { connectToDatabase } from "../../../util/mongodb";
 import nextConnect from "next-connect";
 import validateFirebaseIdToken from "../../../util/authenticateUser";
+import { parseISO } from "date-fns";
 
 const handler = nextConnect();
 
 handler.get(async (req, res) => {
   const { db } = await connectToDatabase();
 
-  const {
-    user,
-    game,
-    hours,
-    dateStart,
-    dateEnd,
-    pageSize,
-    page,
-  } = await req.query;
+  const { user, game, hours, dateFrom, pageSize, page } = await req.query;
 
   const queryParams = {};
 
   if (user?.length > 0) queryParams.user = user;
-  if (game?.length > 0) queryParams.game = game;
-  if (hours?.length > 0) queryParams.hours = hours;
-  if (dateStart?.length > 0 && dateEnd?.length > 0)
+  if (game?.length > 0) queryParams["game.value"] = parseInt(game);
+  if (hours?.length > 0) queryParams.hours = parseFloat(hours);
+  if (dateFrom?.length > 0)
     queryParams.date = {
-      $gte: new ISODate(dateStart),
-      $lte: new ISODate(dateEnd),
+      $gte: parseISO(dateFrom),
     };
 
   const count = await db.collection("logs").countDocuments(queryParams);
@@ -33,7 +25,7 @@ handler.get(async (req, res) => {
   const logs = await db
     .collection("logs")
     .find(queryParams)
-    .sort({ date: -1 })
+    .sort({ date: -1, _id: 1 })
     .skip(parseInt((page - 1) * pageSize))
     .limit(parseInt(pageSize))
     .toArray();
@@ -49,7 +41,9 @@ handler.post(async (req, res) => {
   const log = await req.body;
 
   await db.collection("logs").insertOne({
-    ...log,
+    game: log.game,
+    hours: parseFloat(log.hours),
+    date: parseISO(log.date),
     user: req.user.uid,
   });
 
