@@ -30,13 +30,15 @@ export default function Dashboard() {
 
   const { userData, userError } = useGetUserData("", username);
 
+  const { tabNum } = router.query;
+
+  useEffect(() => {
+    tabNum ? changeTab(parseInt(tabNum)) : changeTab(tab);
+  }, [userData, tabNum]);
+
   if (userError) {
     return <DefaultErrorPage statusCode={404} />;
   }
-
-  useEffect(() => {
-    changeTab(tab);
-  }, [userData]);
 
   const changeTab = (tabNum) => {
     switch (tabNum) {

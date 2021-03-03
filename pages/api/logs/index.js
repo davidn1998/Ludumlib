@@ -8,17 +8,24 @@ const handler = nextConnect();
 handler.get(async (req, res) => {
   const { db } = await connectToDatabase();
 
-  const { user, game, hours, dateFrom, pageSize, page } = await req.query;
+  const {
+    user,
+    game,
+    hours,
+    dateFrom,
+    dateTo,
+    pageSize,
+    page,
+  } = await req.query;
 
   const queryParams = {};
 
   if (user?.length > 0) queryParams.user = user;
   if (game?.length > 0) queryParams["game.value"] = parseInt(game);
   if (hours?.length > 0) queryParams.hours = parseFloat(hours);
-  if (dateFrom?.length > 0)
-    queryParams.date = {
-      $gte: parseISO(dateFrom),
-    };
+  if (dateTo || dateFrom) queryParams.date = {};
+  if (dateFrom?.length > 0) queryParams.date["$gte"] = parseISO(dateFrom);
+  if (dateTo?.length > 0) queryParams.date["$lte"] = parseISO(dateTo);
 
   const count = await db.collection("logs").countDocuments(queryParams);
 

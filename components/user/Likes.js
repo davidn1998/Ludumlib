@@ -23,6 +23,16 @@ const Likes = ({ user }) => {
     setPageNum(pageNum + 1);
   };
 
+  if (!user) {
+    return (
+      <div>
+        <h1 className={styles.tabHeader}>
+          <Icon icon={likeIcon} /> <span>Likes</span>
+        </h1>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h1 className={styles.tabHeader}>

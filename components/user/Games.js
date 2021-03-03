@@ -23,6 +23,16 @@ const Games = ({ user }) => {
     setPageNum(pageNum + 1);
   };
 
+  if (!user) {
+    return (
+      <div>
+        <h1 className={styles.tabHeader}>
+          <Icon icon={gamesIcon} /> <span>Games</span>
+        </h1>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h1 className={styles.tabHeader}>

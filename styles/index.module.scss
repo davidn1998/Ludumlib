@@ -317,6 +317,16 @@
       }
     }
 
+    .userStats {
+      display: flex;
+      flex-direction: column;
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
     .tabSelect {
       display: flex;
       align-items: center;
@@ -534,6 +544,12 @@
           #row1 {
             border-bottom: 2px solid rgba(255, 255, 255, 0.5);
           }
+        }
+      }
+
+      .userStats {
+        .row {
+          flex-direction: column;
         }
       }
     }

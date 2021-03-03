@@ -20,11 +20,25 @@ const Lists = ({ user }) => {
   const [pageNum, setPageNum] = useState(1);
   const pageSize = 16;
   const { listsData, listsError } = useGetListsData(
-    user._id,
+    user?._id,
     "",
     pageSize,
     pageNum
   );
+
+  if (listsError) {
+    console.error("Could not load lists data");
+  }
+
+  if (!listsData) {
+    return (
+      <div>
+        <h1 className={styles.tabHeader}>
+          <Icon icon={listIcon} /> <span>Lists</span>
+        </h1>
+      </div>
+    );
+  }
 
   const auth = useAuth();
 

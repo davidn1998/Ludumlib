@@ -22,7 +22,7 @@ const Diary = ({ user }) => {
   const [logToEdit, setLogToEdit] = useState(null);
   const [pageNum, setPageNum] = useState(1);
   const pageSize = 5;
-  const { logsData, logsError } = useGetLogsData(pageSize, pageNum, user._id);
+  const { logsData, logsError } = useGetLogsData(pageSize, pageNum, user?._id);
   const auth = useAuth();
 
   if (logsError) {

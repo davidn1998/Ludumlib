@@ -14,6 +14,10 @@ import { Icon } from "@iconify/react";
 import profileIcon from "@iconify/icons-fa-solid/user";
 import gamesIcon from "@iconify/icons-fa-solid/gamepad";
 
+// Charts
+import RenderLineChart from "../charts/RenderLineChart";
+import RenderPie from "../charts/RenderPie";
+
 const Profile = ({ user }) => {
   const auth = useAuth();
   const router = useRouter();
@@ -87,6 +91,13 @@ const Profile = ({ user }) => {
           <GamesList2 games={user.favorites.slice(0, 6)} />
         </>
       )}
+      <h1 className={styles.subHeading}>Weekly Stats</h1>
+      <div className={styles.userStats}>
+        <div className={styles.row}>
+          <RenderLineChart user={user} />
+          <RenderPie user={user} />
+        </div>
+      </div>
       <h1 className={styles.subHeading}>Recent Activity</h1>
       {!logsData || logsError || logsData?.logs.length < 1 ? (
         <p>No Activity...</p>

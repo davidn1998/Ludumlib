@@ -29,8 +29,6 @@ export default function Settings() {
       return;
     }
 
-    console.log(tabNum);
-
     tabNum ? changeTab(parseInt(tabNum)) : changeTab(tab);
   }, [auth.user, tabNum]);
 
