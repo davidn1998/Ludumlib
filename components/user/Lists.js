@@ -16,6 +16,7 @@ import arrowIconLeft from "@iconify/icons-fa-solid/arrow-left";
 import { useAuth } from "../../util/auth";
 
 const Lists = ({ user }) => {
+  const auth = useAuth();
   const [manageListModalVisible, setManageListModalVisible] = useState(false);
   const [pageNum, setPageNum] = useState(1);
   const pageSize = 16;
@@ -39,8 +40,6 @@ const Lists = ({ user }) => {
       </div>
     );
   }
-
-  const auth = useAuth();
 
   const prevResults = () => {
     setPageNum(pageNum - 1);

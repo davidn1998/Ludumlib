@@ -3,6 +3,21 @@ import { ResponsivePie } from "@nivo/pie";
 import { useGetLogsData } from "../../util/useRequest";
 import { parseISO } from "date-fns";
 
+const monthNames = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
 const theme = {
   textColor: "#fff",
   tooltip: {
@@ -64,7 +79,13 @@ const RenderLineChart = ({ user }) => {
     return (
       <div className={styles.RenderChart}>
         <h1 className={styles.chartHeader}>Games Played</h1>
-        <p className={styles.chartInfo}>Feb 22 - Feb 28</p>
+        <p className={styles.chartInfo}>
+          {" "}
+          {monthNames[parseISO(getDate(0)).getMonth()]}{" "}
+          {parseISO(getDate(0)).getDate()} -{" "}
+          {monthNames[parseISO(getDate(6)).getMonth()]}{" "}
+          {parseISO(getDate(6)).getDate()}
+        </p>
         <p className={styles.chartInfo}>Cannot Load Data</p>
       </div>
     );
@@ -85,7 +106,13 @@ const RenderLineChart = ({ user }) => {
   return (
     <div className={styles.RenderChart}>
       <h1 className={styles.chartHeader}>Games Played</h1>
-      <p className={styles.chartInfo}>Feb 22 - Feb 28</p>
+      <p className={styles.chartInfo}>
+        {" "}
+        {monthNames[parseISO(getDate(0)).getMonth()]}{" "}
+        {parseISO(getDate(0)).getDate()} -{" "}
+        {monthNames[parseISO(getDate(6)).getMonth()]}{" "}
+        {parseISO(getDate(6)).getDate()}
+      </p>
       <ResponsivePie
         data={data}
         theme={theme}
