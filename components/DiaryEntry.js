@@ -34,6 +34,7 @@ const DiaryEntry = ({
         <Image
           layout="fill"
           objectFit="cover"
+          style={{ overflow: "visible" }}
           className={styles.gameBackground}
           src={gameData.background_image}
           alt={""}
