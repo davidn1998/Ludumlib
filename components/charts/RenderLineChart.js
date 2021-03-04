@@ -238,7 +238,6 @@ const RenderLineChart = ({ user }) => {
           }}
           colors="#77dd77"
           tooltip={(obj) => {
-            console.log(obj);
             return (
               <div className={styles.tooltip}>
                 {obj?.data?.y} hours played on {obj?.data?.day}
