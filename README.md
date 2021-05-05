@@ -12,7 +12,7 @@
 
 Ludumlib is a web application created for video game enthusiasts that enables them to discover games, track the games they have played, view their gaming habits through a personal anayltics dashboard and more.
 
-View the demo at [[https://-phi.vercel.app/](https://ludumlib.vercel.app/)](https://ludumlib.vercel.app/).
+View the demo at [Ludumlib](https://ludumlib.vercel.app/).
 
 The application is developed with [Next.js](https://nextjs.org/) - a React Framework. The backend API is developed with [Node.js](https://expressjs.com) and [Express.js](https://expressjs.com). The backend is also connected to a [MongoDB](https://mongodb.com) database.
 Authentication was built with [Firebase](https://firebase.google.com/).
@@ -58,6 +58,6 @@ yarn run dev
 
 ## Deployment
 
-I have also deployed a demo of the full application online at [[https://-phi.vercel.app/](https://ludumlib.vercel.app/)](https://ludumlib.vercel.app/).
+I have also deployed a demo of the full application online at [Ludumlib](https://ludumlib.vercel.app/).
 
 - The application was deployed on the [Vercel Platform](https://vercel.com/).
